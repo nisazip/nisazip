@@ -21,7 +21,6 @@ public class Trip {
 	private Date t_start_date;
 	private Date t_end_date;
 	private float score;
-	private String t_pic;
 	
 	public Trip() {
 		super();
@@ -30,7 +29,7 @@ public class Trip {
 
 	public Trip(String t_id, String t_name, String host_id, int t_max_num, String t_type, String language,
 			Date t_start_time, Date t_end_time, int price, String t_detail, String t_area, String t_addr, String t_loc,
-			Date t_start_date, Date t_end_date, float score, String t_pic) {
+			Date t_start_date, Date t_end_date, float score) {
 		super();
 		this.t_id = t_id;
 		this.t_name = t_name;
@@ -48,7 +47,6 @@ public class Trip {
 		this.t_start_date = t_start_date;
 		this.t_end_date = t_end_date;
 		this.score = score;
-		this.t_pic = t_pic;
 	}
 
 	public String getT_id() {
@@ -179,14 +177,6 @@ public class Trip {
 		this.score = score;
 	}
 
-	public String getT_pic() {
-		return t_pic;
-	}
-
-	public void setT_pic(String t_pic) {
-		this.t_pic = t_pic;
-	}
-
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -197,10 +187,8 @@ public class Trip {
 				+ ", t_type=" + t_type + ", language=" + language + ", t_start_time=" + t_start_time + ", t_end_time="
 				+ t_end_time + ", price=" + price + ", t_detail=" + t_detail + ", t_area=" + t_area + ", t_addr="
 				+ t_addr + ", t_loc=" + t_loc + ", t_start_date=" + t_start_date + ", t_end_date=" + t_end_date
-				+ ", score=" + score + ", t_pic=" + t_pic + "]";
+				+ ", score=" + score + "]";
 	}
-	
-	
 	
 	
 	

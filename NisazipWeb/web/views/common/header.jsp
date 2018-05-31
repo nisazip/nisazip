@@ -20,7 +20,7 @@
    width: 100%;
    height:15%;
    background:white;
-   z-index:1000;
+   z-index:5000;
 }
 
 .select {
@@ -49,7 +49,7 @@
    background: white;
    border: 1px solid white;
    color: black;
-   margin-top:15px;
+   margin-top:10px;
    left:-20px;
    margin-right:-50px;
 }

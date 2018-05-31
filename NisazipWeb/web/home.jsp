@@ -4,6 +4,7 @@
 <%
 	ArrayList<Room> rlist = (ArrayList<Room>) request.getAttribute("rlist");
 	ArrayList<Trip> tlist = (ArrayList<Trip>) request.getAttribute("tlist");
+	RecRoom rec = new RecRoom();
 %>
 
 <!DOCTYPE html>
@@ -24,7 +25,6 @@
 	text-align: right;
 }
 
-
 .select {
 	padding-left: 24px !important;
 	padding-right: 24px !important;
@@ -41,10 +41,31 @@
 	box-shadow: 0 1px 10px rgba(0, 0, 0, 0.4);
 	opacity: 0.4;
 }
-.img{
- 	  width:300px;
- 	  height:100px;
+
+.img {
+	width: 100%;
+	height: 50%;
 }
+
+.areaimg {
+	width: 100%;
+}
+
+.areathumbnail {
+	background: black;
+	color: white;
+	font-size: 13pt;
+	font-weight: bold;
+}
+
+ .tooltip > .tooltip-inner {
+      background-color: #73AD21; 
+      color: #FFFFFF; 
+      border: 1px solid green; 
+      margin-left:60px;
+      font-size: 14px;
+  }
+  
 </style>
 </head>
 <body>
@@ -176,68 +197,87 @@
 
 		<div class="container area">
 			<h2>추천 지역</h2>
+			<br /><br />
 			<div class="row">
-				<div class="col-xs-3">
+				<div class="col-sm-3">
+					<div class="container">
+						<a href="#" data-toggle="tooltip" title="<%=rec.getCntRoom()%>개 숙소"></a>
+					</div>
+
+					
 					<div class="thumbnail">
-						<a href="상세 페이지.html" target="_blank"> <img
-							src="resources/images/숙소 1.jpg" alt="Lights">
-							<div class="caption">
-								<p>예찬이네</p>
-								<p id="price"></p>
+						<a href="상세 페이지.html" target="_blank">
+							<div class="areathumbnail">
+								<img src="resources/images/애월읍.jpg" class="areaimg"
+									style="height: 160px;"> 애월읍</span>
 							</div>
 						</a>
 					</div>
 				</div>
-				<div class="col-xs-3">
+				<div class="col-sm-3">
+				<div class="container">
+						<a href="#" data-toggle="tooltip" title="<%=rec.getCntRoom()%>개 숙소"></a>
+					</div>
 					<div class="thumbnail">
-						<a href="상세 페이지.html" target="_blank"> <img
-							src="resources/images/숙소 2.jpg" alt="Nature">
-							<div class="caption">
-								<p>미연이네</p>
-								<p id="price"></p>
+						<a href="상세 페이지.html" target="_blank">
+							<div class="areathumbnail">
+								<img src="resources/images/제주시.jpg" class="areaimg"
+									style="height: 160px;"> 제주시</span>
 							</div>
 						</a>
 					</div>
 				</div>
-				<div class="col-xs-3">
+				<div class="col-sm-3">
+				<div class="container">
+						<a href="#" data-toggle="tooltip" title="<%=rec.getCntRoom()%>개 숙소"></a>
+					</div>
 					<div class="thumbnail">
-						<a href="상세 페이지.html" target="_blank"> <img
-							src="resources/images/숙소 3.jpg" alt="Fjords">
-							<div class="caption">
-								<p>수정이네</p>
-								<p id="price"></p>
+						<a href="상세 페이지.html" target="_blank">
+							<div class="areathumbnail">
+								<img src="resources/images/서귀포시.jpg" class="areaimg"
+									style="height: 160px;"> 서귀포시</span>
 							</div>
 						</a>
 					</div>
 				</div>
-				<div class="col-xs-3">
+				<div class="col-sm-3">
+				<div class="container">
+						<a href="#" data-toggle="tooltip" title="<%=rec.getCntRoom()%>개 숙소"></a>
+					</div>
 					<div class="thumbnail">
-						<a href="상세 페이지.html" target="_blank"> <img
-							src="resources/images/숙소 4.jpg" alt="Fjords">
-							<div class="caption">
-								<p>원준이네</p>
-								<p id="price"></p>
+						<a href="상세 페이지.html" target="_blank">
+							<div class="areathumbnail">
+								<img src="resources/images/우도.jpg" class="areaimg"
+									style="height: 160px;"> 우도</span>
 							</div>
 						</a>
 					</div>
 				</div>
 			</div>
 		</div>
+			<script>
+				$(document).ready(function(){
+				    $('[data-toggle="tooltip"]').tooltip('show');  
+				});
+			</script>
 		<br>
 
 		<%
 			//[START] TEST FOR NULL ARRAY
-			if(rlist != null) {
-			for (Room r : rlist) {
+			if (rlist != null) {
+				for (Room r : rlist) {
 		%>
-		
-			<%
-				} } else { %>
-				<div class="container room">
+
+		<%
+			}
+			} else {
+		%>
+		<div class="container room">
 			<h2>인기 숙소</h2>
-			<div class="row" id="inn_thumb">
-			</div>
-				<% } %>
+			<div class="row" id="inn_thumb"></div>
+			<%
+				}
+			%>
 		</div>
 		<script>
 			 $(function(){
@@ -249,10 +289,10 @@
 						var $div = $('#inn_thumb');
 						
 						for(var i in data){
-							var str = '<div class="col-xs-3">' 
+							var str = '<div class="col-sm-3">' 
 								+ '<div class="thumbnail">'
 							+'<a href="상세 페이지.html" target="_blank"> '
-							+'<img src="'+data[i].file_path+data[i].change_name+'.jpg" class="img" style="height:150px;">'
+							+'<img src="'+data[i].file_path+data[i].change_name+'.jpg" class="img" style="height:190px;">'
 							+' <div class="caption">'
 							+'<p>'+data[i].r_name+'</p>'
 							+'<p id="price">'+data[i].price+'</p>'
@@ -266,17 +306,18 @@
 		</script>
 
 		<br>
-	 	<%
+		<%
 			//[START] TEST FOR NULL ARRAY
-			if(tlist != null){
-			for (Trip t : tlist) {
+			if (tlist != null) {
+				for (Trip t : tlist) {
 		%>
-			<%
-				} } else { %>
+		<%
+			}
+			} else {
+		%>
 		<div class="container trip">
 			<h2>인기 트립</h2>
-			<div class="row" id="trip_thumb">
-			</div>
+			<div class="row" id="trip_thumb"></div>
 			<%
 				}
 			%>
@@ -285,30 +326,31 @@
 			$(function(){
 				$.ajax({
 					url:"<%=request.getContextPath()%>/tList.ho",
-					type:"get",
-					success:function(data){
-						// 전체 영역
-						var $div = $('#trip_thumb');
-						
-						for(var i in data){
-							var str = '<div class="col-xs-3">' 
-								+ '<div class="thumbnail">'
-							+'<a href="상세 페이지.html" target="_blank"> '
-							+'<img src="'+data[i].file_path+data[i].change_name+'.jpg" class="img" style="height:150px;">'
-							+' <div class="caption">'
-							+'<p>'+data[i].t_name+'</p>'
-							+'<p id="price">'+data[i].price+'</p>'
-							+'</div></a></div></div>';
-							
-							$div.append(str);
-						}
-					}, error : function(data){
-						console.log("실패!");
-					}
-				});
+							type : "get",
+							success : function(data) {
+								// 전체 영역
+								var $div = $('#trip_thumb');
+
+								for ( var i in data) {
+									var str = '<div class="col-sm-3">'
+											+ '<div class="thumbnail">'
+											+ '<a href="상세 페이지.html" target="_blank"> '
+											+ '<img src="'+data[i].file_path+data[i].change_name+'.jpg" class="img" style="height:190px;">'
+											+ ' <div class="caption">' + '<p>'
+											+ data[i].t_name + '</p>'
+											+ '<p id="price">' + data[i].price
+											+ '</p>' + '</div></a></div></div>';
+
+									$div.append(str);
+								}
+							},
+							error : function(data) {
+								console.log("실패!");
+							}
+						});
 			});
 		</script>
-	</div> 
+	</div>
 
 </body>
 </html>

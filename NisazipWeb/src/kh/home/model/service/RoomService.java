@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import kh.home.model.dao.RoomDao;
-import kh.home.model.vo.Room;
+import kh.home.model.vo.RecRoom;
 
 public class RoomService {
 
@@ -20,6 +20,16 @@ public class RoomService {
 		close(con);
 		System.out.println("rlist");
 		return rlist;
+	}
+	
+	public ArrayList<RecRoom> recRoom(){
+		Connection con = getConnection();
+		
+		ArrayList<RecRoom> reclist = new RoomDao().recRoom(con);
+		
+		close(con);
+		
+		return reclist;
 	}
 
 }

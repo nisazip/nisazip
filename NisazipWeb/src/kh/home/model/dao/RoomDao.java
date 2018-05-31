@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Properties;
 
-import kh.home.model.vo.Room;
+import kh.home.model.vo.RecRoom;
 
 public class RoomDao {
 	private Properties prop;
@@ -56,9 +56,9 @@ public class RoomDao {
 				
 				hmap.put("r_id", rset.getString("r_id"));
 				hmap.put("r_name", rset.getString("r_name"));
-				hmap.put("price", rset.getString("price"));
+				hmap.put("price", rset.getInt("price"));
 				hmap.put("r_loc", rset.getString("r_loc"));
-				hmap.put("score", rset.getString("score"));
+				hmap.put("score", rset.getFloat("score"));
 				hmap.put("file_path", rset.getString("file_path"));
 				hmap.put("change_name", rset.getString("change_name"));
 				
@@ -77,5 +77,33 @@ public class RoomDao {
 		return rlist;
 	}
 
+	public ArrayList<RecRoom> recRoom(Connection con){
+		Statement stmt = null;
+		ResultSet rset=null;
+		ArrayList<RecRoom> reclist = null;
+		
+		String query = prop.getProperty("cntRoom");
+		
+		try {
+			stmt = con.createStatement();
+			
+			rset = stmt.executeQuery(query);
+		
+			if(rset.next()){
+				RecRoom rec = new RecRoom();
+				
+				rec.setCntRoom(rset.getInt(1));
+				rec.setArea(rset.getString(2));
+				
+				reclist.add(rec);
+			}
+		} catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			close(rset);
+			close(stmt);
+		}
+		return reclist;
+	}
 
 }

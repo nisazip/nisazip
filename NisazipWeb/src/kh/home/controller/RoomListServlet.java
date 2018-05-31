@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import kh.home.model.service.RoomService;
+import kh.home.model.vo.RecRoom;
 
 /**
  * Servlet implementation class RoomListServlet
@@ -34,6 +35,7 @@ public class RoomListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ArrayList<HashMap<String, Object>> rlist = new RoomService().selectrList();
+		ArrayList<RecRoom> reclist = new RoomService().recRoom();
 		
 		response.setContentType("application/json; charset=UTF-8");
 		new Gson().toJson(rlist, response.getWriter());
