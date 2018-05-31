@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 
-<title>메인페이지</title>
+<title> 메인페이지 </title>
 </head>
 <body>
 <%@ include file ="views/common/header.jsp" %>
