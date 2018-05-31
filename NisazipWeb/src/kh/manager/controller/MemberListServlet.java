@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import kh.manager.model.service.ManagerService;
-import kh.member.model.vo.Member;
+import kh.manager.model.vo.MemeberList;
 
 
 
@@ -22,7 +22,7 @@ public class MemberListServlet extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<Member> list = new ManagerService().mList();
+		ArrayList<MemeberList> list = new ManagerService().mList();
 		String page="";
 		
 		if(list!=null){

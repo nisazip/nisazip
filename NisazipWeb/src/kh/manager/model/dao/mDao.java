@@ -5,13 +5,13 @@ import static kh.common.JDBCTemplate.close;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import kh.manager.model.vo.MemeberList;
 import kh.member.model.vo.Member;
 import kh.room.model.vo.Room;
 import kh.trip.model.vo.Trip;
@@ -31,13 +31,13 @@ public class mDao {
 		}
 	}
 	
-	public ArrayList<Member> mList(Connection con) {
+	public ArrayList<MemeberList> mList(Connection con) {
 		
 		Statement stmt = null;
 		ResultSet rset = null;
 		
-		ArrayList<Member> result = new ArrayList<Member>();
-		Member m = null;
+		ArrayList<MemeberList> result = new ArrayList<MemeberList>();
+		MemeberList m = null;
 		
 		String query = prop.getProperty("selectAllList");
 		
@@ -46,7 +46,7 @@ public class mDao {
 			rset = stmt.executeQuery(query);
 			
 			while(rset.next()) {
-				m = new Member();
+				m = new MemeberList();
 				m.setUser_no(rset.getInt("USER_NO"));
 				m.setUser_id(rset.getString("USER_ID"));
 				m.setUser_name(rset.getString("USER_NAME"));
@@ -57,9 +57,12 @@ public class mDao {
 				m.setR_hosting(rset.getInt("R_HOSTING"));
 				m.setT_hosting(rset.getInt("T_HOSTING"));
 				m.setJoin_date(rset.getDate("JOIN_DATE"));
-
-				result.add(m);
+				System.out.println("12DAO : "+m);
 				
+				m.setOauth((rset.getString("OAUTH").charAt(0)));
+				m.setrCnt(rset.getInt("RCNT"));
+				result.add(m);
+				System.out.println("DAO : "+m);
 			} 
 		} catch (SQLException e) {
 			e.printStackTrace();

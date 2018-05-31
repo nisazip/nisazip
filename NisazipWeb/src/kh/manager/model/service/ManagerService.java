@@ -1,12 +1,13 @@
 package kh.manager.model.service;
 
-import static kh.common.JDBCTemplate.*;
+import static kh.common.JDBCTemplate.close;
+import static kh.common.JDBCTemplate.getConnection;
 
 import java.sql.Connection;
 import java.util.ArrayList;
 
 import kh.manager.model.dao.mDao;
-import kh.member.model.vo.Member;
+import kh.manager.model.vo.MemeberList;
 import kh.room.model.vo.Room;
 import kh.trip.model.vo.Trip;
 
@@ -14,10 +15,10 @@ public class ManagerService {
 
 
 	
-	public ArrayList<Member> mList() {
+	public ArrayList<MemeberList> mList() {
 		Connection con = getConnection();
 		
-		ArrayList<Member> list = new mDao().mList(con);
+		ArrayList<MemeberList> list = new mDao().mList(con);
 		
 		close(con);
 		return list;

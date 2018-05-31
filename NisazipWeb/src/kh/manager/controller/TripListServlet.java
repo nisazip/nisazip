@@ -43,8 +43,23 @@ public class TripListServlet extends HttpServlet {
 
 }
 
-
-
+/*
+CREATE TABLE MEMBER(
+        USER_NO NUMBER PRIMARY KEY,                            -- 회원번호
+        USER_ID VARCHAR2(30) NOT NULL UNIQUE,                  -- 아이디
+        PASSWORD VARCHAR2(100) NOT NULL,                       -- 비밀번호
+        USER_NAME VARCHAR2(20) NOT NULL,                       -- 이름
+        EMAIL VARCHAR2(30) UNIQUE,                             -- 이메일
+        PHONE CHAR(13),                                        -- 연락처
+        GENDER CHAR(1) CHECK( GENDER IN('F','M')),             -- 성별
+        BIRTHDATE date,                                        -- 생년월일
+        LIKEROOMS VARCHAR2(1000),                              -- 찜한 숙소 
+        LIKETRIPS VARCHAR2(1000),                              -- 찜한 트립 
+        R_HOSTING NUMBER DEFAULT 0,                            -- 숙소호스팅  
+        T_HOSTING NUMBER DEFAULT 0,                            -- 트립 호스팅
+        JOIN_DATE DATE DEFAULT SYSDATE                         -- 가입일
+);
+CREATE SEQUENCE SEQ_USER_NO;*/
 
 
 

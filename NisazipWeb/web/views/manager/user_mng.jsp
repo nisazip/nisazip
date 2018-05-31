@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="kh.member.model.vo.*, java.util.*"%>
+    pageEncoding="UTF-8" import="kh.manager.model.vo.*, java.util.*"%>
     
 <%
-	ArrayList<Member> list = (ArrayList<Member>)request.getAttribute("mList");
+	ArrayList<MemeberList> list = (ArrayList<MemeberList>)request.getAttribute("mList");
 	/* 
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	int listCont = pi.getListCount();
@@ -73,7 +73,7 @@
                     </thead>
                     <tbody>
                     
-                    <% for(Member m : list){ %>
+                    <% for(MemeberList m : list){ %>
 					<tr>
 						<td><%=m.getUser_no()%></td>
 						<td><%=m.getUser_id()%></td>
@@ -83,9 +83,9 @@
 						<td><%=m.getBirthdate() %></td>
 						<td><%=m.getR_hosting() %></td>
 						<td><%=m.getT_hosting() %></td>
-						<td>X</td>
+						<td><%=m.getOauth() %></td>
 						<td><%=m.getJoin_date() %></td>
-						<td>0</td>
+						<td><%=m.getrCnt() %></td>
 					</tr>
 					<% } %>
                         
