@@ -47,7 +47,7 @@ public class TripRegistService {
 		TripRegistDao tDao = new TripRegistDao();
 				
 		int result = tDao.insertTrip(con, tregist);
-		
+		/*sdf*/
 		if(result > 0){
 			commit(con);
 		} else{
