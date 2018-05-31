@@ -59,12 +59,6 @@
 	                        <th>지역</th>
 	                        <th>평점</th>
 	                        <th>등록일</th>
-	                   <!-- <th>상세 소개</th>
-	                   <!-- <th>주소</th>
-	                        <th>시작일</th>
-	                        <th>마감일</th>
-	                        <th>예약건수</th>
-	                        <th>숙소사진경로</th> -->
 	                    </tr>
                     </thead>
                     <tbody>
@@ -77,7 +71,7 @@
                     		<td><%=r.getR_type() %></td>
                     		<td><%=r.getR_type2()%></td>
                     		<td><%=r.getPrice()%></td>
-                    		<td><%=r.getR_loc() %></td>
+                    		<td><%=r.getR_area()%></td>
                     		<td><%=r.getScore() %></td>
                     		<td><%=r.getR_date() %></td>
                     	</tr>
