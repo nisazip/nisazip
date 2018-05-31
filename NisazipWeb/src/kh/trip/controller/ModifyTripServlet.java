@@ -1,6 +1,5 @@
 package kh.trip.controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -15,29 +14,21 @@ import javax.servlet.http.HttpSession;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import com.oreilly.servlet.MultipartRequest;
-import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 import kh.common.MyFileRenamePolicy;
-import kh.trip.model.service.TripRegistService;
 import kh.trip.model.vo.Attachment;
-import kh.trip.model.vo.TripRegist;
+import kh.trip.model.vo.TripModify;
 
-@WebServlet("/insertPicture.trip")
-public class InsertTripPictureServlet extends HttpServlet {
+@WebServlet("/modifyTrip.trip")
+public class ModifyTripServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public InsertTripPictureServlet() {
+	public ModifyTripServlet() {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
-		System.out.println("사진첨부 서블릿 실행확인");
 
-		// 폼전송을 multipart/form-data로 전송하는 경우에는 기존처럼
-		// request.getParameter로 값을 받을 수 없다.
-		// cos.jar가 파일도 받고 폼의 다른 값을도 받아주는 역할을 한다.
-		// com.orelilly.servlet의 약자이다.
 		if (ServletFileUpload.isMultipartContent(request)) {
 
 			// 전송 파일 용량 제한 : 10Mbyte 제한한 경우
@@ -102,51 +93,82 @@ public class InsertTripPictureServlet extends HttpServlet {
 				at.setFilePath(savePath);
 				at.setOriginName(originFiles.get(i));
 				at.setChangeName(saveFiles.get(i));
-				
-				System.out.println("at : "+at);
+
+				System.out.println("at : " + at);
 				fileList.add(at.getChangeName());
 
 			}
-			System.out.println("fileList : "+fileList);
-			HttpSession session = request.getSession();
-			TripRegist tr = (TripRegist)session.getAttribute("tregist");
-			tr.setPic1(fileList.get(0));
-			tr.setPic2(fileList.get(1));
-			tr.setPic3(fileList.get(2));
+			System.out.println("fileList : " + fileList);
+
+			String title = multiRequest.getParameter("title");
+			int price = Integer.parseInt(multiRequest.getParameter("price"));
+			String language = multiRequest.getParameter("language");
+			String category = multiRequest.getParameter("category");
+			int people = Integer.parseInt(multiRequest.getParameter("people"));
+			String introduce = multiRequest.getParameter("introduce");
+			String zip = multiRequest.getParameter("zip");
+			String addr = multiRequest.getParameter("addr");
+			String addr_detail = multiRequest.getParameter("addr_detail");
+			String startTime = multiRequest.getParameter("startTime");
+			String endTime = multiRequest.getParameter("endTime");
+			String startReservation = multiRequest.getParameter("startReservation");
+			String endReservation = multiRequest.getParameter("endReservation");
 			
-			System.out.println("1.사진 이름 : " + fileList.get(0));
-			System.out.println("2.사진 이름 : " + fileList.get(1));
-			System.out.println("3.사진 이름 : " + fileList.get(2));
-			System.out.println("1. 사진 : " + tr.getPic1());
-			System.out.println("2. 사진 : " + tr.getPic2());
-			System.out.println("3. 사진 : " + tr.getPic3());
+			System.out.println("title : " + title);
+			System.out.println("price : " + price);
+			System.out.println("lang : " + language);
+			System.out.println("cate : " + category);
+			System.out.println("people : " + people);
+			System.out.println("intro : " + introduce);
+			System.out.println("zip : " + zip);
+			System.out.println("addr : " + addr);
+			System.out.println("addr-d : " + addr_detail);
+			System.out.println("st : " + startTime);
+			System.out.println("et : " + endTime);
+			System.out.println("sr : " + startReservation);
+			System.out.println("er : " + endReservation);
 			
-			session.setAttribute("tregist", tr);
-			// service로 전송
-//			int result = new TripRegistService().insertThumbnail(tregist, fileList);
-//
-//			System.out.println(result);
-//
-//			if (result > 0) {
-//				response.sendRedirect(request.getContextPath() + "/selectList.tn");
-//			} else {
-//				// 실패시 저장된 사진 삭제
-//				for (int i = 0; i < saveFiles.size(); i++) {
-//					// 파일시스템에 저장된 이름으로 파일 객체 생성함
-//					File failedFile = new File(savePath + saveFiles.get(i));
-//					System.out.println(failedFile);
-//					// true false 리턴됨
-//					// 실행하고 출력하면 당연히 false나오기 때문에 출력하면서 삭제
-//					System.out.println(failedFile.delete());
-//				}
-//				// 에러페이지로 메세지 전달
-//				request.setAttribute("msg", "사진게시판 등록 실패!");
-//				request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
-//
-//			}
+			TripModify tmodify = new TripModify();
+
+			tmodify.setTitle(title);
+			tmodify.setPrice(price);
+			tmodify.setLanguage(language);
+			tmodify.setcategory(category);
+			tmodify.setPeople(people);
+			tmodify.setIntroduce(introduce);
+			tmodify.setZip(zip);
+			tmodify.setAddr(addr);
+			tmodify.setAddr_detail(addr_detail);
+			tmodify.setStartTime(startTime);
+			tmodify.setEndTime(endTime);
+			tmodify.setStartReservation(startReservation);
+			tmodify.setEndReservation(endReservation);
+			
+			if(fileList.size() > 0){
+				
+				for(int i = 0 ; i < fileList.size() ; i ++){
+					String fileName = fileList.get(i);
+					switch(i){
+						case 0: tmodify.setPic1(fileName);
+								System.out.println("1 : " + fileName);
+								break; 
+						case 1: tmodify.setPic2(fileName); 
+								System.out.println("2 : " + fileName);
+								break;
+						case 2: tmodify.setPic3(fileName);
+								System.out.println("3 : " + fileName);
+								break;
+					}
+					
+				}
+			}
+
+			request.setAttribute("tmodify", tmodify);
+			
 		}
 
-		request.getRequestDispatcher("/views/regist/10trip_price.jsp").forward(request, response);
+		request.getRequestDispatcher("/views/regist/14trip_modified.jsp").forward(request, response);
+
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

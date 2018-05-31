@@ -1,4 +1,4 @@
-package kh.semi.trip.controller;
+package kh.trip.controller;
 
 import java.io.IOException;
 
@@ -9,7 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import kh.semi.trip.model.vo.TripRegist;
+import kh.trip.model.service.TripRegistService;
+import kh.trip.model.vo.TripRegist;
 
 @WebServlet("/insertPrice.trip")
 public class InsertTripPriceServlet extends HttpServlet {
@@ -31,11 +32,24 @@ public class InsertTripPriceServlet extends HttpServlet {
 		
 		System.out.println("가격 : " + price);
 		
-		System.out.println("객체에 담긴 가격 : " + tregist);
+		System.out.println("객체 정보 : " + tregist);
 		
-//		session.getAttribute("tregist");
+		int result = new TripRegistService().insertTrip(tregist);
 		
-		request.getRequestDispatcher("/views/regist/11trip_registed.jsp").forward(request, response);
+		String page ="";
+		if(result > 0){
+			
+			page = "/views/regist/11trip_registed.jsp";
+			request.getRequestDispatcher(page).forward(request, response);
+			
+		} else {
+			
+			page = "/views/common/errorPage.jsp";
+			request.getRequestDispatcher(page).forward(request, response);
+
+		}
+		
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

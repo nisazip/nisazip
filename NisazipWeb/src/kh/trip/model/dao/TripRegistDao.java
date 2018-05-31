@@ -1,4 +1,4 @@
-package kh.semi.trip.model.dao;
+package kh.trip.model.dao;
 
 import java.io.FileReader;
 import java.sql.Connection;
@@ -10,10 +10,10 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Properties;
 
-import kh.semi.trip.model.vo.Attachment;
-import kh.semi.trip.model.vo.TripRegist;
+import kh.trip.model.vo.Attachment;
+import kh.trip.model.vo.TripRegist;
 
-import static kh.semi.common.JDBCTemplate.*;
+import static kh.common.JDBCTemplate.*;
 
 public class TripRegistDao {
 	
@@ -30,31 +30,6 @@ public class TripRegistDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-
-	public int insertTripName(Connection con, TripRegist tregist) {
-		
-		PreparedStatement pstmt = null;
-		int result = 0;
-		
-		System.out.println("tregistDAO : " + tregist);
-		
-		String query = prop.getProperty("insertName");
-		
-		try {
-			pstmt = con.prepareStatement(query);
-			pstmt.setString(1, tregist.getTrip_name());
-			
-			result = pstmt.executeUpdate();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			close(pstmt);
-		}
-		
-		System.out.println("result : "+ result);
-		return result;
 	}
 
 	public int insertThumbnailContent(Connection con, TripRegist tregist) {
@@ -137,5 +112,7 @@ public class TripRegistDao {
 
 		return result;
 	}
+	
+	
 
 }

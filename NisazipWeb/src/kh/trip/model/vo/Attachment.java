@@ -1,7 +1,7 @@
-package kh.semi.trip.model.vo;
+package kh.trip.model.vo;
 
 import java.sql.Date;
-import java.util.ArrayList;
+import java.util.*;
 
 public class Attachment {
 	private int fno;

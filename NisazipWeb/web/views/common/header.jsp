@@ -97,7 +97,7 @@
                   <div class="collapse navbar-collapse" id="myNavbar">
                      <ul class="nav navbar-nav">
                         <li class="navbtn"><a href="#">숙소</a></li>
-                        <li class="navbtn"><a href="#">트립</a></li>
+                        <li class="navbtn"><a href="<%=request.getContextPath()%>/views/regist/1trip_name.jsp">트립</a></li>
                         <li class="dropdown navbtn"><a class="dropdown-toggle"
                            data-toggle="dropdown" href="#">호스트 <span class="caret"></span></a>
                            <ul class="dropdown-menu">

@@ -1,4 +1,4 @@
-package kh.semi.trip.model.vo;
+package kh.trip.model.vo;
 
 public class TripRegist {
 

@@ -1,4 +1,4 @@
-package kh.semi.trip.controller;
+package kh.trip.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,7 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import kh.semi.trip.model.vo.TripRegist;
+import kh.trip.model.service.TripRegistService;
+import kh.trip.model.vo.TripRegist;
 
 @WebServlet("/insertName.trip")
 public class InsertTripNameServlet extends HttpServlet {
@@ -23,8 +24,6 @@ public class InsertTripNameServlet extends HttpServlet {
 		System.out.println("1trip_title : " + trip_title);
 		
 		HttpSession session = request.getSession();
-		
-//		TripRegist tregist = (TripRegist) session.getAttribute("member");
 		
 		TripRegist tregist = new TripRegist();
 

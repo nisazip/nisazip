@@ -1,4 +1,4 @@
-package kh.semi.trip.controller;
+package kh.trip.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import kh.semi.trip.model.vo.TripRegist;
+import kh.trip.model.vo.TripRegist;
 
 @WebServlet("/insertCategory.trip")
 public class InsertTripCategoryServlet extends HttpServlet {

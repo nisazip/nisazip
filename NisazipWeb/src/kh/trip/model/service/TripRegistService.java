@@ -1,14 +1,14 @@
-package kh.semi.trip.model.service;
+package kh.trip.model.service;
 
 import java.sql.Connection;
 import java.util.ArrayList;
 
 
-import kh.semi.trip.model.dao.TripRegistDao;
-import kh.semi.trip.model.vo.Attachment;
-import kh.semi.trip.model.vo.TripRegist;
+import kh.trip.model.dao.TripRegistDao;
+import kh.trip.model.vo.Attachment;
+import kh.trip.model.vo.TripRegist;
 
-import static kh.semi.common.JDBCTemplate.*;
+import static kh.common.JDBCTemplate.*;
 
 public class TripRegistService {
 
@@ -33,6 +33,24 @@ public class TripRegistService {
 			commit(con);
 			result = 1;
 		}else{
+			rollback(con);
+		}
+		
+		close(con);
+		
+		return result;
+	}
+
+	public int insertTrip(TripRegist tregist) {
+
+		Connection con = getConnection();
+		TripRegistDao tDao = new TripRegistDao();
+				
+		int result = tDao.insertTrip(con, tregist);
+		
+		if(result > 0){
+			commit(con);
+		} else{
 			rollback(con);
 		}
 		
