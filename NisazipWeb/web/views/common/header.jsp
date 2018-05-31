@@ -66,6 +66,7 @@
 
 <div id="header">
    <div class="container-fluid">
+   		
       <div class="row">
 
          <div class="col-sm-4"
@@ -105,7 +106,7 @@
                               <li><a href="#">트립 등록/관리</a></li>
                            </ul></li>
                         <li class="navbtn"><a href="#">메시지</a></li>
-                        <li class="navbtn"><a href="#">마이페이지</a></li>
+                        <li class="navbtn"><a href="/semi/views/member/myBin.jsp">마이페이지</a></li>
                      </ul>
                   </div>
                </div>

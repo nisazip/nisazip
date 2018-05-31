@@ -49,14 +49,14 @@ li a{
 
 <div class="container-fluid">
   <div class="row content">
-    <div class="col-sm-3 sidenav">
+    <div class="col-sm-2 sidenav">
       <h3>네가 사는 그집</h3>
       <br> <br> <br>
       <ul class="nav nav-pills nav-stacked">
         <br>
-        <li><a href="#section1">프로필수정</a></li>
+        <li><a href="#section1">사용자 정보 수정/추가</a></li>
         <li><a href="#section2">사진 등록 및 인증</a></li>
-        <li><a href="#section3">내 숙소 내 트립</a></li>
+        <li><a href="/semi/views/member/myBin.jsp">보관 목록</a></li>
       </ul><br>
       <br><br><br><br><br><br><br>
     </div>
