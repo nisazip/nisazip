@@ -31,16 +31,16 @@
                         <a href="#" onclick="goRoom();" class="col-sm-12">숙소 관리</a>
                     </li>
                     <li>
-                        <a href="" class="col-sm-12">트립 관리</a>
+                        <a href="#" onclick="goTrip();" class="col-sm-12">트립 관리</a>
                     </li>
                     <li>
-                        <a href="" class="col-sm-12">댓글 관리</a>
+                        <a href="#" onclick="goBoard();" class="col-sm-12">댓글 관리</a>
                     </li>
                     <li>
-                        <a href="" class="col-sm-12">신고 관리</a>
+                        <a href="#" onclick="goReport();" class="col-sm-12">신고 관리</a>
                     </li>
                     <li>
-                        <a href="" class="col-sm-12">통계</a>
+                        <a href="#" onclick="goAdmin();" class="col-sm-12">통계</a>
                     </li>
                 </ul>
                 <!-- 모바일 용 메뉴  -->
@@ -65,16 +65,16 @@
 		                        <a href="#" onclick="goRoom();" class="col-sm-12">숙소 관리</a>
 		                    </li>
 		                    <li>
-		                        <a href="" class="col-sm-12">트립 관리</a>
+		                        <a href="#" onclick="goTrip();" class="col-sm-12">트립 관리</a>
 		                    </li>
 		                    <li>
-		                        <a href="" class="col-sm-12">댓글 관리</a>
+		                        <a href="#" onclick="goBoard();" class="col-sm-12">댓글 관리</a>
 		                    </li>
 		                    <li>
-		                        <a href="" class="col-sm-12">신고 관리</a>
+		                        <a href="#" onclick="goReport();" class="col-sm-12">신고 관리</a>
 		                    </li>
 		                    <li>
-		                        <a href="" class="col-sm-12">통계</a>
+		                        <a href="#" onclick="goAdmin();" class="col-sm-12">통계</a>
 		                    </li>
 		                </ul>
 		                </div>
@@ -82,7 +82,7 @@
 	       		</div>
             </div>
 <script>
-	
+
 	function goMember(){
 		location.href="<%=request.getContextPath()%>/memberList.mg";
 		$('li').removeClass("active");
@@ -93,6 +93,27 @@
 		$('li').removeClass("active");
 		$('li:nth-child(2)').addClass("active");
 	}
+	function goTrip(){
+		location.href="<%=request.getContextPath()%>/tripList.mg";
+		$('li').removeClass("active");
+		$('li:nth-child(2)').addClass("active");
+	}
+	function goBoard(){
+		location.href="";
+		$('li').removeClass("active");
+		$('li:nth-child(2)').addClass("active");
+	}
+	function goReport(){
+		location.href="";
+		$('li').removeClass("active");
+		$('li:nth-child(2)').addClass("active");
+	}
+	function goAdmin(){
+		location.href="";
+		$('li').removeClass("active");
+		$('li:nth-child(2)').addClass("active");
+	}
+	
 	/* 
 	$('li').click(function(){
 	 $('li').removeClass("active");

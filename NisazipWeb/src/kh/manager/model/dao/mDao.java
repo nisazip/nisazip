@@ -14,6 +14,7 @@ import java.util.Properties;
 
 import kh.member.model.vo.Member;
 import kh.room.model.vo.Room;
+import kh.trip.model.vo.Trip;
 
 public class mDao {
 
@@ -109,6 +110,54 @@ public class mDao {
 				r.setR_date(rset.getDate("R_DATE"));
 				System.out.println("dao"+r);
 				result.add(r);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(stmt);
+		}
+		
+		
+		return result;
+	}
+
+	public ArrayList<Trip> tList(Connection con) {
+
+		Statement stmt = null;
+		ResultSet rset = null;
+		
+		ArrayList<Trip> result = new ArrayList<Trip>();
+		Trip t = null;
+		
+		String query = prop.getProperty("selectAllTrip");
+		
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			while(rset.next()){
+				t = new Trip();
+				
+				t.setT_id(rset.getString("T_ID"));
+				t.setT_name(rset.getString("T_NAME"));
+				t.setHost_id(rset.getString("HOST_ID"));
+				t.setT_max_num(rset.getInt("T_MAX_NUM"));
+				t.setT_type(rset.getString("T_TYPE"));
+				t.setLanguage(rset.getString("LANGUAGE"));
+				t.setT_start_time(rset.getDate("T_START_TIME"));
+				t.setT_end_time(rset.getDate("T_END_TIME"));
+				t.setPrice(rset.getInt("PRICE"));
+				t.setT_detail(rset.getString("T_DETAIL"));
+				t.setT_area(rset.getString("T_AREA"));
+				t.setT_addr(rset.getString("T_ADDR"));
+				t.setT_loc(rset.getString("T_LOC"));
+				t.setT_start_date(rset.getDate("T_START_DATE"));
+				t.setT_end_date(rset.getDate("T_END_DATE"));
+				t.setScore(rset.getFloat("SCORE"));
+				t.setT_date(rset.getDate("T_DATE"));
+				System.out.println("dao"+t);
+				result.add(t);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

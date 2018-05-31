@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import kh.manager.model.dao.mDao;
 import kh.member.model.vo.Member;
 import kh.room.model.vo.Room;
+import kh.trip.model.vo.Trip;
 
 public class ManagerService {
 
@@ -26,6 +27,16 @@ public class ManagerService {
 		Connection con = getConnection();
 		
 		ArrayList<Room> list = new mDao().rList(con);
+		
+		close(con);
+		
+		return list;
+	}
+
+	public ArrayList<Trip> tList() {
+		Connection con = getConnection();
+		
+		ArrayList<Trip> list = new mDao().tList(con);
 		
 		close(con);
 		
