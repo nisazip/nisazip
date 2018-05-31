@@ -1,7 +1,7 @@
 package kh.room.model.vo;
 
 import java.sql.Date;
-/*JIHO*/
+/*JIHOsdf*/
 public class Room {
 	private String r_id;
 	private String r_name;
