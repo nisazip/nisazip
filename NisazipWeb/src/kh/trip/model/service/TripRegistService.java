@@ -49,8 +49,10 @@ public class TripRegistService {
 		int result = tDao.insertTrip(con, tregist);
 		/*sdf*/
 		if(result > 0){
+			
 			commit(con);
 		} else{
+			
 			rollback(con);
 		}
 		
