@@ -6,18 +6,61 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<!-- customCSS -->
-    <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/manage.css">
     
     <!-- bootStrapCDN -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/holder/2.9.4/holder.js"></script>
     
     <!-- 차트에 쓰이는 canvas -->
     <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+    <style>
+	    
+	.table th, a{
+	    text-align: center;
+	}
+	
+	ul{
+	    list-style-type: none;
+	}
+	
+	header, footer{
+	    background : green;
+	    text-aline:center;
+	}
+	
+	.home_btn{
+	    border: none;
+	    font-weight: 700;
+	    font-size : 27px;
+	    letter-spacing: 1px;
+	    text-transform: uppercase;
+	    background: green;
+	    color: white;
+	    text-align: center;
+	    padding: 15px 30px;
+	    
+	}
+	
+	.cst_div{
+		background: gray;
+		
+	}
+	/* 
+	.graphs{
+		height: 350px; 
+		width: 100%;
+		background:gray;
+		
+	} */
+
+li:hover{
+	font-weight: bold;
+	cursor: pointer;
+}
     
+    </style>
 </head>
 <body>
 

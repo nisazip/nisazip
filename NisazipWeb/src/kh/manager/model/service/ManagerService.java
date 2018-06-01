@@ -5,6 +5,7 @@ import static kh.common.JDBCTemplate.getConnection;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import kh.manager.model.dao.mDao;
 import kh.manager.model.vo.MemeberList;
@@ -42,6 +43,17 @@ public class ManagerService {
 		close(con);
 		
 		return list;
+	}
+
+	public HashMap<String, Object> selectOneMember(int userNo) {
+		Connection con = getConnection();
+		
+		HashMap<String, Object> m = new mDao().selectMember(con, userNo);
+		
+		close(con);
+		
+
+		return m;
 	}
 
 }

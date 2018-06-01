@@ -5,10 +5,12 @@ import static kh.common.JDBCTemplate.close;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Properties;
 
 import kh.manager.model.vo.MemeberList;
@@ -39,7 +41,7 @@ public class mDao {
 		ArrayList<MemeberList> result = new ArrayList<MemeberList>();
 		MemeberList m = null;
 		
-		String query = prop.getProperty("selectAllList");
+		String query = prop.getProperty("selectAllMember");
 		
 		try {
 			stmt = con.createStatement();
@@ -50,17 +52,14 @@ public class mDao {
 				m.setUser_no(rset.getInt("USER_NO"));
 				m.setUser_id(rset.getString("USER_ID"));
 				m.setUser_name(rset.getString("USER_NAME"));
-				m.setEmail(rset.getString("EMAIL"));
 				m.setPhone(rset.getString("PHONE"));
 				m.setGender(rset.getString("GENDER").charAt(0));
 				m.setBirthdate(rset.getString("BIRTH"));
 				m.setR_hosting(rset.getInt("R_HOSTING"));
 				m.setT_hosting(rset.getInt("T_HOSTING"));
 				m.setJoin_date(rset.getDate("JOIN_DATE"));
-				System.out.println("12DAO : "+m);
-				
-				m.setOauth((rset.getString("OAUTH").charAt(0)));
 				m.setrCnt(rset.getInt("RCNT"));
+				m.setOauth((rset.getString("OAUTH").charAt(0)));
 				result.add(m);
 				System.out.println("DAO : "+m);
 			} 
@@ -171,6 +170,47 @@ public class mDao {
 		
 		
 		return result;
+	}
+
+	public HashMap<String, Object> selectMember(Connection con, int userNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		HashMap<String, Object> m = null;
+		
+		String query = prop.getProperty("selectOneMember");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, userNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				m = new HashMap<String, Object>();
+				
+				m.put("USER_NO", rset.getInt("USER_NO"));
+				m.put("USER_ID",rset.getString("USER_ID"));
+				m.put("USER_NAME",rset.getString("USER_NAME"));
+				m.put("EMAIL",rset.getString("EMAIL"));
+				m.put("PHONE",rset.getString("PHONE"));
+				m.put("GENDER",rset.getString("GENDER").charAt(0));
+				m.put("BIRTH",rset.getString("BIRTH"));
+				m.put("R_HOSTING",rset.getInt("R_HOSTING"));
+				m.put("T_HOSTING",rset.getInt("T_HOSTING"));
+				m.put("JOIN_DATE", rset.getDate("JOIN_DATE"));
+				m.put("RCNT",rset.getInt("RCNT"));
+				m.put("OAUTH",rset.getString("OAUTH").charAt(0));
+
+				System.out.println("selectOneMemeber : "+m);
+			} 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+				
+		return m;
 	}
 
 }

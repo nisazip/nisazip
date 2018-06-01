@@ -22,7 +22,8 @@
     
 </head>
 <body>
- 	<%@ include file="common/admin_header.jsp" %>
+ 	
+	<%@ include file="common/admin_header.jsp" %>
     <div class="container">
         <div class="row">
             <%@ include file="common/admin_menu.jsp" %>
@@ -105,18 +106,24 @@
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">회원정보</h4>
+                    <button type="button" class="close" data-dismiss="modal" id="close2">&times;</button>
+                    <h4 class="modal-title">회원 관리</h4>
                 </div>
                 <!-- 모달 body -->
                 <div class="modal-body">
                     <div class="container-fluid">
                         <div class="form-group">
-                            <h3>회원 정보</h3>
+                            <h3>회원 상세 정보</h3>
                         </div>
-                        <form class="form-horizontal" role="form">
+                        <form class="form-horizontal" role="form" >
                             <div class="form-group form-group-sm form-group-xs text-center">
                                 <img data-src="holder.js/140x140" alt="프로필 사진" class="img-circle">
+                            </div>
+                            <div class="form-group form-group-sm form-group-xs">
+                                <label for="userNo" class="col-sm-3 col-xs-3">회원번호 : </label>
+                                <div class="col-sm-9 col-xs-9">
+                                    <input type="email" id="userNo" name="userNo" class="form-control" disabled>
+                                </div>
                             </div>
                             <div class="form-group form-group-sm form-group-xs">
                                 <label for="userId" class="col-sm-3 col-xs-3">아이디 : </label>
@@ -131,7 +138,13 @@
                                 </div>  
                             </div>
                             <div class="form-group form-group-sm form-group-xs">
-                                <label for="phone" class="col-sm-3 col-xs-3">전화번호 : </label>
+                                <label for="email" class="col-sm-3 col-xs-3">이메일 : </label>
+                                <div class="col-sm-9 col-xs-9">
+                                    <input type="email" id="email" name="email" class="form-control" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group form-group-sm form-group-xs">
+                                <label for="phone" class="col-sm-3 col-xs-3">연락처 : </label>
                                 <div class="col-sm-9 col-xs-9">
                                     <input type="text" id="phone" name="phone" class="form-control" disabled>
                                 </div>
@@ -150,15 +163,15 @@
                             </div>
 
                             <div class="form-group form-group-sm form-group-xs">
-                                <label for="age" class="col-sm-3 col-xs-3">나이 : </label>
+                                <label for="birth" class="col-sm-3 col-xs-3">생년월일 : </label>
                                 <div class="col-sm-9 col-xs-9">
-                                    <input type="number" id="age" name="age" class="form-control" disabled>
+                                    <input type="text" id="birth" name="birth" class="form-control" disabled>
                                 </div>
                             </div>
                             <div class="form-group form-group-sm form-group-xs">
-                                <label for="roomshosting" class="col-sm-3 col-xs-3">숙소호스팅:</label>
+                                <label for="roomhosting" class="col-sm-3 col-xs-3">숙소호스팅:</label>
                                 <div class="col-sm-9 col-xs-9">
-                                    <input type="number" id="roomshosting" name="roomshosting" class="form-control" disabled>
+                                    <input type="number" id="roomHosting" name="roomshosting" class="form-control" disabled>
                                 </div>
                             </div>
                             <div class="form-group form-group-sm form-group-xs">
@@ -174,13 +187,13 @@
                                 </div>
                             </div>
                             <div class="form-group form-group-sm form-group-xs">
-                                <label for="oAuth" class="col-sm-3 col-xs-3">가입날짜:</label>
+                                <label for="joinDate" class="col-sm-3 col-xs-3">가입날짜:</label>
                                 <div class="col-sm-9 col-xs-9">
                                     <input types="text" id="joinDate" name="joinDate" class="form-control" disabled>
                                 </div>
                             </div>
                             <div class="form-group form-group-sm form-group-xs">
-                                <label for="oAuth" class="col-sm-3 col-xs-3">신고:</label>
+                                <label for="report" class="col-sm-3 col-xs-3">신고당한횟수:</label>
                                 <div class="col-sm-9 col-xs-9">
                                     <input types="number" id="report" name="report" class="form-control" disabled>
                                 </div>
@@ -198,7 +211,7 @@
                     <div>
                         <button type="button" class="btn btn-primary" id="modify">수정하기</button>
                         <button type="button" class="btn btn-primary" id="saveData" >저장하기</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-default" id="close" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
@@ -207,7 +220,7 @@
     <!-- 모달 끝 -->
     
     <script>
-    
+
     //테이블 hover 효과 지정
     $('#userTable td').mouseenter(function(){
 		$(this).parent().css({
@@ -225,43 +238,66 @@
             var tdArr = new Array();
             var tr = $(this);
             var td = tr.children();
- 
-            /*
-             //데이터값을 받아 배열에 담음 
-             // ## 필요하지는 않음
-             td.each(function (i) {
-                 tdArr.push(td.eq(i).text());
-             });
-             console.log("데이터 값 : " + tdArr);
-            */
 
             //테이블의 첫 행을 클릭했을 때는 모달창을 띄우지 않는다.
             if(td.eq(0).text()!="회원 번호"){
-                
-                //모달 안에 넣어줄 값 세팅
-                console.log("정상적으로 모달에 전달 : "+td.eq(1).text());
-                
-                $('#userId').val(td.eq(1).text());
-                $('#userName').val(td.eq(2).text());
-                $('#phone').val(td.eq(3).text());
+            	
 
-                if (td.eq(4).text() == "남성") {
-                    $('input:radio[name=gender]:input[value=F]').attr("checked", false);
-                    $('input:radio[name=gender]:input[value=M]').attr("checked", true);
-                } else if (td.eq(4).text() == "여성") {
-                    $('input:radio[name=gender]:input[value=M]').attr("checked", false);
-                    $('input:radio[name=gender]:input[value=F]').attr("checked", true);
-                } else alert("성별 Error" + (td.eq(4).text()));
+             $.ajax({
+         		url : "getMember.mg",
+         		type: "GET",
+         		data : {
+         			userNo : td.eq(0).text()
+         		},success : function(data){
+         			//성공했을 때 
+         			
+         			//모달 안에 넣어줄 값 세팅 
+         			$('#userNo').val(data.USER_NO);
+                    $('#userId').val(data.USER_ID);
+                    $('#userName').val(data.USER_NAME);
+             		
+             
+             		$('#userName').val(data.USER_NAME);
+			        $('#email').val(data.EMAIL);
+			        $('#phone').val(data.PHONE);
+			      
+			        
+			        console.log(data.GENDER);
+			        
+			        if (data.GENDER == 'M') {
+	                    $('input:radio[name=gender]:input[value=F]').attr("checked", false);
+	                    $('input:radio[name=gender]:input[value=M]').attr("checked", true);
+	                } else if (data.GENDER == 'F') {
+	                    $('input:radio[name=gender]:input[value=M]').attr("checked", false);
+	                    $('input:radio[name=gender]:input[value=F]').attr("checked", true);
+	                }else{
+	                	$('input:radio[name=gender]:input[value=M]').attr("checked", false);
+	                    $('input:radio[name=gender]:input[value=F]').attr("checked", false);
+	                }
+			        
+			        $('#birth').val(data.BIRTH);
+			        $('#roomHosting').val(data.R_HOSTING);
+			        $('#tripHosting').val(data.T_HOSTING);
+			        $('#joinDate').val(data.JOIN_DATE);
+			        $('#report').val(data.RCNT);
+			        $('#oAuth').val(data.OAUTH);
+			        
+			      
+         			// 모달 안에 값을 채워 넣는다.
+         		}, error : function(request, status, error){
+    				// 연결에 실패했을 때
+    				console.log("에러 코드 : "+request.status
+    						+ "에러 내용 : "+ request.responseText 
+    						+ "에러 메시지 : " + error);
+    				
+    				alert("데이터 전달 실패");
+    				
+    			}
+         	});
 
-                $('#age').val(td.eq(5).text());
-                $('#roomshosting').val(td.eq(6).text());
-                $('#tripHosting').val(td.eq(7).text());
-                $('#oAuth').val(td.eq(8).text());
-                $('#joinDate').val(td.eq(9).text());
-                $('#report').val(td.eq(10).text());
             }
-            
-            });
+
+           });
         
         $('#saveData').hide();
         
@@ -277,6 +313,21 @@
             $('#modify').show();
             $(this).hide();
         });
+        
+        //모달 - 취소 버튼
+        $('#close').click(function(){
+        	$('#myModal input').attr("disabled",true);
+        	$('#saveData').hide();
+        	$('#modify').show()
+        });
+        
+      //모달 - 취소 버튼
+        $('#close2').click(function(){
+        	$('#myModal input').attr("disabled",true);
+        	$('#saveData').hide();
+        	$('#modify').show()
+        });
+        
 	
         //dropdown menu
         $('#sId').click(function(){
