@@ -20,6 +20,7 @@ public class InsertTripPriceServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		//String tno = request.getParameter("tripNumber");
 		int price =Integer.parseInt(request.getParameter("price"));
 		
 		HttpSession session = request.getSession();
@@ -27,14 +28,19 @@ public class InsertTripPriceServlet extends HttpServlet {
 		TripRegist tregist = (TripRegist)session.getAttribute("tregist");
 		
 		tregist.setTrip_price(price);
+		//tregist.setTno(tno);
 		
-		session.setAttribute("tregist", tregist);
+		//System.out.println("시퀀스 : " + tregist.getTno());
 		
 		System.out.println("가격 : " + price);
 		
 		System.out.println("객체 정보 : " + tregist);
 		
 		int result = new TripRegistService().insertTrip(tregist);
+		
+		tregist = new TripRegistService().selectRecent();
+		
+		session.setAttribute("tregist", tregist);
 		
 		String page ="";
 		if(result > 0){

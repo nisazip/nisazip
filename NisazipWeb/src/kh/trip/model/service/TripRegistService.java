@@ -47,7 +47,7 @@ public class TripRegistService {
 		TripRegistDao tDao = new TripRegistDao();
 				
 		int result = tDao.insertTrip(con, tregist);
-		/*sdf*/
+
 		if(result > 0){
 			
 			commit(con);
@@ -59,6 +59,45 @@ public class TripRegistService {
 		close(con);
 		
 		return result;
+	}
+
+	public TripRegist selectOne(String tno) {
+
+
+		Connection con = getConnection();
+		TripRegistDao tDao = new TripRegistDao();
+		
+		TripRegist tregist = tDao.selectOne(con, tno);
+		
+		close(con);
+		return tregist;
+		
+	}
+
+	public int updateTrip(TripRegist tregist) {
+		
+		Connection con = getConnection();
+		int result = new TripRegistDao().updateTrip(con, tregist);
+		
+		if( result > 0 ){
+			commit(con);
+		} else {
+			rollback(con);
+		}
+		
+		close(con);
+		
+		return result;
+	}
+
+	public TripRegist selectRecent(String tno) {
+		Connection con = getConnection();
+		TripRegistDao tDao = new TripRegistDao();
+		
+		TripRegist tregist = tDao.selectOne(con, tno);
+		
+		close(con);
+		return tregist;
 	}
 
 }

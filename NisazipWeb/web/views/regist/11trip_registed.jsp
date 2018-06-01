@@ -15,7 +15,7 @@
 <body>
 	<%@ include file="../common/trip_header.jsp"%>
 	<!-- !PAGE CONTENT! -->
-	<form action="<%=request.getContextPath()%>/registedTrip.trip" method="post">
+	
 		<div class="w3-main" style="margin-left: 340px; margin-right: 40px">
 
 			<!-- Header -->
@@ -24,7 +24,7 @@
 					<b>등록한 Trip 정보</b><br> <br>
 					<h3 class="w3-center">
 						<b>등록한 숙소 정보 (호스트 용)</b> &nbsp; 
-						 <a href="<%=request.getContextPath() %>/views/regist/13trip_modify.jsp" id="btn_style" class="w3-padding-large w3-button w3-center">수정하기</a>&nbsp; 
+						 <button class="w3-padding-large w3-button w3-center" id="btn_style" onclick="location.href='<%=request.getContextPath()%>/modifyTrip.trip?tripNumber=<%=tr.getTno()%>'">수정하기</button>&nbsp; 
 						 <input type="button" id="btn_style" value="게스트용" onclick="location.href='<%=request.getContextPath() %>/views/regist/12trip_registed(guest).jsp'">&nbsp; 
 						 <a id="btn_style" onclick="goMain();">메인으로</a>
 					</div>
@@ -37,12 +37,13 @@
 			<div class="w3-container" style="margin-top: 80px" id="showcase">
 
 			</div>
+			<form action="" method="post" encType="multipart/form-data">
 			<div style="font-weight: bold; font-size: 29px;" class="w3-center">
 				<div style="width: 1400px; margin-left:300px;">
 					<div style="width: 1400px; margin:auto;">
 						<table border="1" style="width:1400px; height:800px;">
 							<tr>
-								<td style="width: 250px">트립 제목 :</td>
+								<td style="width: 250px">트립 제목 :<%=tr.getTno() %></td>
 								<td style= "width: 730px; text-align: left; padding-left: 20px;"><input style="width: 100%; border: none; background: white; color: black;" size="50" type="text" disabled value="<%=tr.getTrip_name()%>"/></td>
 								<td style= "width: 420px;">대표 사진</td>
 							</tr>
@@ -120,15 +121,6 @@
 						</table>
 						<br>
 						<br>
-						
-					</div>
-					
-					<div>
-						<table>
-							<tr>
-								<td></td>
-							</tr>
-						</table>
 					</div>
 				</div>
 			</div>
@@ -140,7 +132,10 @@
 			$('#zip').val(addr[0]);
 			$('#addr').val(addr[1]);
 			$('#addr_detail').val(addr[2]);
+			
+			console.log(<%=tr.getTno()%>);
 		});
+		
 		
 	</script>
 </body>

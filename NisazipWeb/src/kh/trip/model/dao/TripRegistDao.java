@@ -22,7 +22,7 @@ public class TripRegistDao {
 	public TripRegistDao() {
 		prop = new Properties();
 		
-		String fileName = TripRegistDao.class.getResource("/config/trip/tripName.properties").getPath();
+		String fileName = TripRegistDao.class.getResource("/config/trip/trip-query.properties").getPath();
 		
 		try {
 			prop.load(new FileReader(fileName));
@@ -111,6 +111,186 @@ public class TripRegistDao {
 		}
 
 		return result;
+	}
+
+	public int insertTrip(Connection con, TripRegist tregist) {
+		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertTrip");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setString(1, tregist.getTrip_name());
+			pstmt.setInt(2, tregist.getTrip_maxPeople());
+			pstmt.setString(3, tregist.getTrip_category());
+			pstmt.setString(4, tregist.getTrip_language());
+			pstmt.setString(5, tregist.getTrip_startTime());
+			pstmt.setString(6, tregist.getTrip_endTime());
+			pstmt.setInt(7, tregist.getTrip_price());
+			pstmt.setString(8, tregist.getTrip_introduce());
+			pstmt.setString(9, tregist.getTrip_address());
+			pstmt.setString(10, tregist.getTrip_stratReservation());
+			pstmt.setString(11, tregist.getTrip_endReservation());
+			
+			result = pstmt.executeUpdate();
+			
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+
+	public TripRegist selectOne(Connection con, String tno) {
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		TripRegist tregist = new TripRegist();
+		
+		String query = prop.getProperty("selectOne");
+		
+		try {
+			
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setString(1, tno);
+			
+			System.out.println("시퀀스 번호 뭐임 ? " + tno);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()){
+				tregist.setTno(rset.getString("T_ID"));
+				tregist.setTrip_name(rset.getString("T_NAME"));
+				tregist.setUserId(rset.getString("HOST_ID"));
+				tregist.setTrip_maxPeople(rset.getInt("T_MAX_NUM"));
+				tregist.setTrip_category(rset.getString("T_TYPE"));
+				tregist.setTrip_language(rset.getString("LANGUAGE"));
+				tregist.setTrip_startTime(rset.getString("T_START_TIME"));
+				tregist.setTrip_endTime(rset.getString("T_END_TIME"));
+				tregist.setTrip_price(rset.getInt("PRICE"));
+				tregist.setTrip_introduce(rset.getString("T_DETAIL"));
+				tregist.setTrip_area(rset.getString("T_AREA"));
+				tregist.setTrip_address(rset.getString("T_ADDR"));
+				tregist.setTrip_stratReservation(rset.getString("T_START_DATE"));
+				tregist.setTrip_endReservation(rset.getString("T_END_DATE"));
+				tregist.setTrip_score(rset.getFloat("SCORE"));
+				tregist.setTrip_enrolldate(rset.getString("T_DATE"));
+				
+			}
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+			
+		} finally {
+			
+			close(rset);
+			close(pstmt);
+			
+		}
+		
+		return tregist;
+		
+	}
+
+	public int updateTrip(Connection con, TripRegist tregist) {
+
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateTrip");
+		
+		try {
+			
+			pstmt = con.prepareStatement(query);
+			
+
+			pstmt.setString(1, tregist.getTrip_name());
+			pstmt.setInt(2, tregist.getTrip_maxPeople());
+			pstmt.setString(3, tregist.getTrip_category());
+			pstmt.setString(4, tregist.getTrip_language());
+			pstmt.setString(5, tregist.getTrip_startTime());
+			pstmt.setString(6, tregist.getTrip_endTime());
+			pstmt.setInt(7, tregist.getTrip_price());
+			pstmt.setString(8, tregist.getTrip_introduce());
+			pstmt.setString(9, tregist.getTrip_area());
+			pstmt.setString(10, tregist.getTrip_address());
+			pstmt.setString(11, tregist.getTrip_stratReservation());
+			pstmt.setString(12, tregist.getTrip_endReservation());
+			pstmt.setString(13, tregist.getTno());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		} finally {
+			
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+
+	public TripRegist selectOne(Connection con, String tno) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		TripRegist tregist = new TripRegist();
+		
+		String query = prop.getProperty("selectOne");
+		
+		try {
+			
+			pstmt = con.prepareStatement(query);
+			
+			System.out.println("시퀀스 번호 뭐임 ? " + tregist.getTno());
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()){
+				tregist.setTno(rset.getString("T_ID"));
+				tregist.setTrip_name(rset.getString("T_NAME"));
+				tregist.setUserId(rset.getString("HOST_ID"));
+				tregist.setTrip_maxPeople(rset.getInt("T_MAX_NUM"));
+				tregist.setTrip_category(rset.getString("T_TYPE"));
+				tregist.setTrip_language(rset.getString("LANGUAGE"));
+				tregist.setTrip_startTime(rset.getString("T_START_TIME"));
+				tregist.setTrip_endTime(rset.getString("T_END_TIME"));
+				tregist.setTrip_price(rset.getInt("PRICE"));
+				tregist.setTrip_introduce(rset.getString("T_DETAIL"));
+				tregist.setTrip_area(rset.getString("T_AREA"));
+				tregist.setTrip_address(rset.getString("T_ADDR"));
+				tregist.setTrip_stratReservation(rset.getString("T_START_DATE"));
+				tregist.setTrip_endReservation(rset.getString("T_END_DATE"));
+				tregist.setTrip_score(rset.getFloat("SCORE"));
+				tregist.setTrip_enrolldate(rset.getString("T_DATE"));
+				
+			}
+			
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+			
+		} finally {
+			
+			close(rset);
+			close(pstmt);
+			
+		}
+		
+		return tregist;
 	}
 	
 	

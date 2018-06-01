@@ -2,7 +2,9 @@ package kh.trip.model.vo;
 
 public class TripRegist {
 
+	private String tno; // 시퀀스번호 객체
 	private String trip_name;
+	private String userId; // 멤버정보 받아오는 객체
 	private String trip_address;
 	private String trip_category;
 	private String trip_language;
@@ -16,15 +18,20 @@ public class TripRegist {
 	private String pic1;
 	private String pic2;
 	private String pic3;
-	
+	private String trip_area;
+	private float trip_score;
+	private String trip_enrolldate;
+
 	public TripRegist(){}
 
-	public TripRegist(String trip_name, String trip_address, String trip_category, String trip_language,
-			int trip_maxPeople, String trip_startTime, String trip_endTime, String trip_introduce,
+	public TripRegist(String tno, String trip_name, String userId, String trip_address, String trip_category,
+			String trip_language, int trip_maxPeople, String trip_startTime, String trip_endTime, String trip_introduce,
 			String trip_stratReservation, String trip_endReservation, int trip_price, String pic1, String pic2,
-			String pic3) {
+			String pic3, String trip_area, float trip_score, String trip_enrolldate) {
 		super();
+		this.tno = tno;
 		this.trip_name = trip_name;
+		this.userId = userId;
 		this.trip_address = trip_address;
 		this.trip_category = trip_category;
 		this.trip_language = trip_language;
@@ -38,6 +45,17 @@ public class TripRegist {
 		this.pic1 = pic1;
 		this.pic2 = pic2;
 		this.pic3 = pic3;
+		this.trip_area = trip_area;
+		this.trip_score = trip_score;
+		this.trip_enrolldate = trip_enrolldate;
+	}
+
+	public String getTno() {
+		return tno;
+	}
+
+	public void setTno(String tno) {
+		this.tno = tno;
 	}
 
 	public String getTrip_name() {
@@ -46,6 +64,14 @@ public class TripRegist {
 
 	public void setTrip_name(String trip_name) {
 		this.trip_name = trip_name;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public String getTrip_address() {
@@ -152,14 +178,39 @@ public class TripRegist {
 		this.pic3 = pic3;
 	}
 
+	public String getTrip_area() {
+		return trip_area;
+	}
+
+	public void setTrip_area(String trip_area) {
+		this.trip_area = trip_area;
+	}
+
+	public float getTrip_score() {
+		return trip_score;
+	}
+
+	public void setTrip_score(float trip_score) {
+		this.trip_score = trip_score;
+	}
+
+	public String getTrip_enrolldate() {
+		return trip_enrolldate;
+	}
+
+	public void setTrip_enrolldate(String trip_enrolldate) {
+		this.trip_enrolldate = trip_enrolldate;
+	}
+
 	@Override
 	public String toString() {
-		return "TripRegist [trip_name=" + trip_name + ", trip_address=" + trip_address + ", trip_category="
-				+ trip_category + ", trip_language=" + trip_language + ", trip_maxPeople=" + trip_maxPeople
-				+ ", trip_startTime=" + trip_startTime + ", trip_endTime=" + trip_endTime + ", trip_introduce="
-				+ trip_introduce + ", trip_stratReservation=" + trip_stratReservation + ", trip_endReservation="
-				+ trip_endReservation + ", trip_price=" + trip_price + ", pic1=" + pic1 + ", pic2=" + pic2 + ", pic3="
-				+ pic3 + "]";
+		return "TripRegist [tno=" + tno + ", trip_name=" + trip_name + ", userId=" + userId + ", trip_address="
+				+ trip_address + ", trip_category=" + trip_category + ", trip_language=" + trip_language
+				+ ", trip_maxPeople=" + trip_maxPeople + ", trip_startTime=" + trip_startTime + ", trip_endTime="
+				+ trip_endTime + ", trip_introduce=" + trip_introduce + ", trip_stratReservation="
+				+ trip_stratReservation + ", trip_endReservation=" + trip_endReservation + ", trip_price=" + trip_price
+				+ ", pic1=" + pic1 + ", pic2=" + pic2 + ", pic3=" + pic3 + ", trip_area=" + trip_area + ", trip_score="
+				+ trip_score + ", trip_enrolldate=" + trip_enrolldate + "]";
 	}
 
 	@Override
@@ -169,17 +220,22 @@ public class TripRegist {
 		result = prime * result + ((pic1 == null) ? 0 : pic1.hashCode());
 		result = prime * result + ((pic2 == null) ? 0 : pic2.hashCode());
 		result = prime * result + ((pic3 == null) ? 0 : pic3.hashCode());
+		result = prime * result + ((tno == null) ? 0 : tno.hashCode());
 		result = prime * result + ((trip_address == null) ? 0 : trip_address.hashCode());
+		result = prime * result + ((trip_area == null) ? 0 : trip_area.hashCode());
 		result = prime * result + ((trip_category == null) ? 0 : trip_category.hashCode());
 		result = prime * result + ((trip_endReservation == null) ? 0 : trip_endReservation.hashCode());
 		result = prime * result + ((trip_endTime == null) ? 0 : trip_endTime.hashCode());
+		result = prime * result + ((trip_enrolldate == null) ? 0 : trip_enrolldate.hashCode());
 		result = prime * result + ((trip_introduce == null) ? 0 : trip_introduce.hashCode());
 		result = prime * result + ((trip_language == null) ? 0 : trip_language.hashCode());
 		result = prime * result + trip_maxPeople;
 		result = prime * result + ((trip_name == null) ? 0 : trip_name.hashCode());
 		result = prime * result + trip_price;
+		result = prime * result + Float.floatToIntBits(trip_score);
 		result = prime * result + ((trip_startTime == null) ? 0 : trip_startTime.hashCode());
 		result = prime * result + ((trip_stratReservation == null) ? 0 : trip_stratReservation.hashCode());
+		result = prime * result + ((userId == null) ? 0 : userId.hashCode());
 		return result;
 	}
 
@@ -207,10 +263,20 @@ public class TripRegist {
 				return false;
 		} else if (!pic3.equals(other.pic3))
 			return false;
+		if (tno == null) {
+			if (other.tno != null)
+				return false;
+		} else if (!tno.equals(other.tno))
+			return false;
 		if (trip_address == null) {
 			if (other.trip_address != null)
 				return false;
 		} else if (!trip_address.equals(other.trip_address))
+			return false;
+		if (trip_area == null) {
+			if (other.trip_area != null)
+				return false;
+		} else if (!trip_area.equals(other.trip_area))
 			return false;
 		if (trip_category == null) {
 			if (other.trip_category != null)
@@ -226,6 +292,11 @@ public class TripRegist {
 			if (other.trip_endTime != null)
 				return false;
 		} else if (!trip_endTime.equals(other.trip_endTime))
+			return false;
+		if (trip_enrolldate == null) {
+			if (other.trip_enrolldate != null)
+				return false;
+		} else if (!trip_enrolldate.equals(other.trip_enrolldate))
 			return false;
 		if (trip_introduce == null) {
 			if (other.trip_introduce != null)
@@ -246,6 +317,8 @@ public class TripRegist {
 			return false;
 		if (trip_price != other.trip_price)
 			return false;
+		if (Float.floatToIntBits(trip_score) != Float.floatToIntBits(other.trip_score))
+			return false;
 		if (trip_startTime == null) {
 			if (other.trip_startTime != null)
 				return false;
@@ -255,6 +328,11 @@ public class TripRegist {
 			if (other.trip_stratReservation != null)
 				return false;
 		} else if (!trip_stratReservation.equals(other.trip_stratReservation))
+			return false;
+		if (userId == null) {
+			if (other.userId != null)
+				return false;
+		} else if (!userId.equals(other.userId))
 			return false;
 		return true;
 	}

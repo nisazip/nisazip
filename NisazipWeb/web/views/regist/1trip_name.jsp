@@ -30,6 +30,7 @@
                 <br><br>
 
                 <input type="text" name="trip_title" class="w3-center">
+                
                 <br>
                 <br>
                 <button type="submit" id="btn_style" class="w3-padding-large w3-button w3-center">다음단계</button>

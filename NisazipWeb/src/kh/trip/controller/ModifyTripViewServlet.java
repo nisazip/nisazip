@@ -11,35 +11,37 @@ import javax.servlet.http.HttpSession;
 import kh.trip.model.service.TripRegistService;
 import kh.trip.model.vo.TripRegist;
 
-@WebServlet("/insertName.trip")
-public class InsertTripNameServlet extends HttpServlet {
+@WebServlet("/modifyTrip.trip")
+public class ModifyTripViewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    public InsertTripNameServlet() { }
+    public ModifyTripViewServlet() { }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 		
-		String trip_title = request.getParameter("trip_title");
 		
-		System.out.println("1trip_title : " + trip_title);
+		String tno = request.getParameter("tripNumber");
+		
+		System.out.println("시퀀스 번호 : " + tno);
 		
 		HttpSession session = request.getSession();
 		
-		TripRegist tregist = new TripRegist();
-
-//		session.getAttribute(arg0) // 미연씨 멤버정보 받아오는 주석
+		TripRegist tregist = new TripRegistService().selectOne(tno);
 		
-		tregist.setTrip_name(trip_title);	
+		System.out.println("tregist : " + tregist);
 		
-		session.setAttribute("tregist", tregist);
-	
-		System.out.println("Trip명 : " + tregist);
-	
-		request.getRequestDispatcher("/views/regist/2trip_add.jsp").forward(request, response);
+		String page ="";
 		
+		if( tregist != null){
+			page = "views/regist/13trip_modify.jsp";
+			session.setAttribute("tregist", tregist);
+		} else {
+			page="views/common/erroPage.jsp";
+			session.setAttribute("msg", "수정 페이지 접근 실패!!");
+		}
 		
-		
-		
+		request.getRequestDispatcher(page).forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

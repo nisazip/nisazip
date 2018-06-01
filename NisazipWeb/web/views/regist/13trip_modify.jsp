@@ -33,7 +33,7 @@
 </head>
 <body>
 	<%@ include file="../common/trip_header.jsp"%>
-	<form action="<%=request.getContextPath()%>/modifyTrip.trip" method="post" encType="multipart/form-data">
+	<form id="updateForm" method="post" encType="multipart/form-data">
 		<div class="w3-main" style="margin-left: 340px; margin-right: 40px">
 			<!-- Header -->
 			<div class="w3-container" style="margin-top: 80px" id="showcase">
@@ -63,6 +63,7 @@
 								</td>
 								<td rowspan="4">
 									<div id="titleImgArea1" >
+										<input type="file" name="pic1" id="titleImg" />
 										<img id="titleImg" name="pic1" src="<%=request.getContextPath() %>/resources/host_images/<%= tr.getPic1() %>">
 									</div>
 								</td>
@@ -94,6 +95,7 @@
 								</td>
 								<td rowspan="3">
 									<div id="contentImgArea2">
+										<input type="file" name="pic2" id="contentImg1" />
 										<img id="contentImg1" name="pic2" src="<%=request.getContextPath() %>/resources/host_images/<%= tr.getPic2() %>">
 									</div>
 								</td>
@@ -126,6 +128,7 @@
 								</td>
 								<td rowspan="3">
 									<div id="contentImgArea3">
+										<input type="file" name="pic3" id="contentImg2" />
 										<img id="contentImg2" name="pic3" src="<%=request.getContextPath() %>/resources/host_images/<%= tr.getPic3() %>">
 									</div>
 								</td>
@@ -151,8 +154,8 @@
 						</div>
 						<br>
 						<br>
-						<button id="modify" type="submit">수정 완료</button>
-						<button id="cancel" onclick="">취소</button>
+						<button type="submit" onclick="complete();" >수정 완료</button>
+						<button onclick="deleteTrip();">취소</button>
 						<br>
 						<br>
 					</div>
@@ -161,44 +164,54 @@
 			</div>
 	</form>
 	<script>
-	$(function(){
-		var addr = '<%=tr.getTrip_address()%>'.split('| ');
-		$('#zip').val(addr[0]);
-		$('#addr').val(addr[1]);
-		$('#addr_detail').val(addr[2]);
-
-		$("#fileArea").hide();
-			
-		$("#titleImgArea1").click(function(){
-			$("#thumbnailImg1").click();
+		$(function(){
+			var addr = '<%=tr.getTrip_address()%>'.split('| ');
+			$('#zip').val(addr[0]);
+			$('#addr').val(addr[1]);
+			$('#addr_detail').val(addr[2]);
+	
+			$("#fileArea").hide();
+				
+			$("#titleImgArea1").click(function(){
+				$("#thumbnailImg1").click();
+			});
+			$("#contentImgArea2").click(function(){
+				$("#thumbnailImg2").click();
+			});
+			$("#contentImgArea3").click(function(){
+				$("#thumbnailImg3").click();
+			});
 		});
-		$("#contentImgArea2").click(function(){
-			$("#thumbnailImg2").click();
-		});
-		$("#contentImgArea3").click(function(){
-			$("#thumbnailImg3").click();
-		});
-	});
-
-	function LoadImg(value, num) {
-		if (value.files && value.files[0]) {
-			var reader = new FileReader();
-			reader.onload = function(e) {
-				switch(num){
-				case 1:
-					$("#titleImg").attr("src", e.target.result);
-					break;
-				case 2:
-					$("#contentImg1").attr("src", e.target.result);
-					break;
-				case 3:
-					$("#contentImg2").attr("src", e.target.result);
-					break;
+	
+		function LoadImg(value, num) {
+			if (value.files && value.files[0]) {
+				var reader = new FileReader();
+				reader.onload = function(e) {
+					switch(num){
+					case 1:
+						$("#titleImg").attr("src", e.target.result);
+						break;
+					case 2:
+						$("#contentImg1").attr("src", e.target.result);
+						break;
+					case 3:
+						$("#contentImg2").attr("src", e.target.result);
+						break;
+					}
 				}
+				reader.readAsDataURL(value.files[0]);
 			}
-			reader.readAsDataURL(value.files[0]);
 		}
-	}
+		
+	 function complete(){
+	       $("#updateForm").attr("action","<%=request.getContextPath() %>/modifiedTrip.trip");
+	       
+	    }
+	    
+	    function deleteTrip(){
+	       // delete 는 예약어 이므로 deleteNotice 로 ...!
+	       $("#updateForm").attr("action","<%=request.getContextPath() %>/deleteBoard.bo");
+	    }
 </script>
 </body>
 </html>
