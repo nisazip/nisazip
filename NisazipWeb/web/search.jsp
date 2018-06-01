@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="kh.home.model.vo.*, java.util.*"%>
-<%
-	ArrayList<Room> rlist = (ArrayList<Room>) request.getAttribute("rlist");
-	ArrayList<Trip> tlist = (ArrayList<Trip>) request.getAttribute("tlist");
-%>
+
     
 <!DOCTYPE html>
 <html>
@@ -59,7 +56,7 @@
 	max-width: 1080px !important;
 }
 
-.search {
+#search {
 	background: rgb(77, 60, 23);
 	color: white;
 }
@@ -135,11 +132,60 @@ ul {
                 &nbsp;&nbsp;&nbsp;
                 
                 <div class="col-sm-5" style="top:15px;">
-	                <input type="text" id="search" placeholder="지역이나 숙소이름을 검색하세요" style="width: 300px; height: 40px;">
-	                <a href="search.html" style="color: white">
-	                    <button type="button" class="search">검색하기</button>
+	                <input type="search" id="keyword" placeholder="지역이나 숙소이름을 검색하세요" style="width: 300px; height: 40px;">
+	                <a href="#" style="color: white">
+	                    <button type="button" id="search" onclick="search();">검색하기</button>
 	                </a>
                 </div>
+                <script>
+                function search(){
+        			$.ajax({
+    					url:'<%=request.getContextPath()%>/keywordSearch.ho',
+    					type:"get",
+    					data : {
+    						keyword : $('#keyword').val()
+    					},
+    					success:function(data){
+    						
+    						console.log(data);
+    						console.log(data.rlist);
+    						console.log(data.tlist);
+    						// 전체 영역
+    						var $div = $('#inn2_thumb');
+    						$div.text("");
+    						
+    						for(var i in data.rlist){
+    							var str = '<div class="col-md-6">' 
+    								+ '<div class="thumbnail">'
+    							+'<a href="상세 페이지.html" target="_blank"> '
+    							+'<img src="'+data.rlist[i].file_path+data.rlist[i].change_name+'.jpg" class="img" style="height:190px;">'
+    							+' <div class="caption">'
+    							+'<p>'+data.rlist[i].r_name+'</p>'
+    							+'<p id="price">'+data.rlist[i].price+'</p>'
+    							+'</div></a></div></div>';
+    							
+    							$div.append(str);
+    						}
+    						
+    						$div = $('#trip2_thumb');
+    						$div.text("");
+    						
+    						for(var i in data.tlist){
+    							var str = '<div class="col-md-6">' 
+    								+ '<div class="thumbnail">'
+    							+'<a href="상세 페이지.html" target="_blank"> '
+    							+'<img src="'+data.tlist[i].file_path+data.tlist[i].change_name+'.jpg" class="img" style="height:190px;">'
+    							+' <div class="caption">'
+    							+'<p>'+data.tlist[i].t_name+'</p>'
+    							+'<p id="price">'+data.tlist[i].price+'</p>'
+    							+'</div></a></div></div>';
+    							
+    							$div.append(str);
+    						}
+    					}
+    				});
+        		};
+                </script>
 
                 
                 <div class="col-sm-5" style="right:15%;">
@@ -222,14 +268,7 @@ ul {
         </script>
         
   
-            	<%
-			//[START] TEST FOR NULL ARRAY
-			if(rlist != null) {
-			for (Room r : rlist) {
-		%>
-		
-			<%
-				} } else { %>
+         
 				<div class="container room">
 			<h2>인기 숙소</h2>
 			<div class="row">
@@ -238,7 +277,7 @@ ul {
 					</div>
 				</div>
 			</div>
-				<% } %>
+		
 		</div>
 		<script>
 			 $(function(){
@@ -263,17 +302,11 @@ ul {
 						}
 					}
 				});
+				
 			}); 
 		</script>
     
-              	<%
-			//[START] TEST FOR NULL ARRAY
-			if(tlist != null) {
-			for (Trip t : tlist) {
-		%>
-		
-			<%
-				} } else { %>
+             
 				<div class="container room">
 			<h2>인기 트립</h2>
 			<div class="row">
@@ -282,7 +315,7 @@ ul {
 					</div>
 				</div>
 			</div>
-				<% } %>
+			
 		</div>
 		<script>
 			 $(function(){
@@ -307,6 +340,7 @@ ul {
 						}
 					}
 				});
+				
 			}); 
 		</script>
         

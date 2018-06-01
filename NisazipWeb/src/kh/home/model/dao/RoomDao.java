@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.Properties;
 
 import kh.home.model.vo.RecRoom;
+import kh.home.model.vo.Room;
 
 public class RoomDao {
 	private Properties prop;
@@ -66,7 +67,6 @@ public class RoomDao {
 				rlist.add(hmap);
 				
 			}
-			System.out.println("rlist");
 		}catch(SQLException e){
 			e.printStackTrace();
 		}finally{
@@ -89,7 +89,9 @@ public class RoomDao {
 			
 			rset = stmt.executeQuery(query);
 		
-			if(rset.next()){
+			reclist = new ArrayList<RecRoom>();
+			
+			while(rset.next()){
 				RecRoom rec = new RecRoom();
 				
 				rec.setCntRoom(rset.getInt(1));
@@ -105,5 +107,51 @@ public class RoomDao {
 		}
 		return reclist;
 	}
+
+	public ArrayList<HashMap<String, Object>> searchKeyword(Connection con,String keyword) {
+		PreparedStatement pstmt = null;
+		ArrayList<HashMap<String,Object>> rlist = null;
+		HashMap<String, Object> hmap = null;
+		ResultSet rset = null;
+		
+		
+		String query = prop.getProperty("searchrKeyword");
+		
+		try{
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setString(1, keyword);
+			pstmt.setString(2, keyword);
+			pstmt.setString(3, keyword);
+			
+			rset = pstmt.executeQuery();
+				
+			rlist = new ArrayList<HashMap<String,Object>>();
+			
+			while(rset.next()){
+				hmap = new HashMap<String, Object>();
+				
+				hmap.put("r_id", rset.getString("r_id"));
+				hmap.put("r_name", rset.getString("r_name"));
+				hmap.put("price", rset.getInt("price"));
+				hmap.put("r_loc", rset.getString("r_loc"));
+				hmap.put("score", rset.getFloat("score"));
+				hmap.put("file_path", rset.getString("file_path"));
+				hmap.put("change_name", rset.getString("change_name"));
+				
+				
+				rlist.add(hmap);
+				
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			close(rset);
+			close(pstmt);
+		}
+		
+		return rlist;
+	}
+
 
 }

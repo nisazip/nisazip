@@ -9,6 +9,7 @@ import java.util.HashMap;
 
 import kh.home.model.dao.RoomDao;
 import kh.home.model.vo.RecRoom;
+import kh.home.model.vo.Room;
 
 public class RoomService {
 
@@ -18,7 +19,6 @@ public class RoomService {
 		ArrayList<HashMap<String,Object>> rlist = new RoomDao().selectrList(con);
 		
 		close(con);
-		System.out.println("rlist");
 		return rlist;
 	}
 	
@@ -30,6 +30,29 @@ public class RoomService {
 		close(con);
 		
 		return reclist;
+	}
+
+/*	public ArrayList<Room> searchRoom(String location, String checkin, String checkout, String adults,
+			String children) {
+		Connection con = getConnection();
+		
+		ArrayList<Room> rlist = new RoomDao().searchrlist(con);
+		
+		close(con);
+		
+		return rlist;
+	}
+*/
+	public ArrayList<HashMap<String, Object>> searchKeyword(String keyword) {
+		Connection con = getConnection();
+		
+		RoomDao rDao = new RoomDao();
+		
+		ArrayList<HashMap<String,Object>> rlist =  new RoomDao().searchKeyword(con,keyword);
+		
+		close(con);
+		
+		return rlist;
 	}
 
 }

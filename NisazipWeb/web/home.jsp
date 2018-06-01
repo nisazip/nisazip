@@ -2,8 +2,7 @@
 	pageEncoding="UTF-8" import="kh.home.model.vo.*, java.util.*"%>
 
 <%
-	ArrayList<Room> rlist = (ArrayList<Room>) request.getAttribute("rlist");
-	ArrayList<Trip> tlist = (ArrayList<Trip>) request.getAttribute("tlist");
+
 	RecRoom rec = new RecRoom();
 %>
 
@@ -201,7 +200,7 @@
 			<div class="row">
 				<div class="col-sm-3">
 					<div class="container">
-						<a href="#" data-toggle="tooltip" title="<%=rec.getCntRoom()%>개 숙소"></a>
+						<a href="#" id="애월읍" data-toggle="tooltip" title="<%=rec.getCntRoom()%>개 숙소"></a>
 					</div>
 
 					
@@ -216,7 +215,7 @@
 				</div>
 				<div class="col-sm-3">
 				<div class="container">
-						<a href="#" data-toggle="tooltip" title="<%=rec.getCntRoom()%>개 숙소"></a>
+						<a href="#" id="제주시" data-toggle="tooltip" title="<%=rec.getCntRoom()%>개 숙소"></a>
 					</div>
 					<div class="thumbnail">
 						<a href="상세 페이지.html" target="_blank">
@@ -229,7 +228,7 @@
 				</div>
 				<div class="col-sm-3">
 				<div class="container">
-						<a href="#" data-toggle="tooltip" title="<%=rec.getCntRoom()%>개 숙소"></a>
+						<a href="#" id="서귀포시" data-toggle="tooltip" title="<%=rec.getCntRoom()%>개 숙소"></a>
 					</div>
 					<div class="thumbnail">
 						<a href="상세 페이지.html" target="_blank">
@@ -242,7 +241,7 @@
 				</div>
 				<div class="col-sm-3">
 				<div class="container">
-						<a href="#" data-toggle="tooltip" title="<%=rec.getCntRoom()%>개 숙소"></a>
+						<a href="#" id="우도" data-toggle="tooltip" title="<%=rec.getCntRoom()%>개 숙소"></a>
 					</div>
 					<div class="thumbnail">
 						<a href="상세 페이지.html" target="_blank">
@@ -262,25 +261,32 @@
 			</script>
 		<br>
 
-		<%
-			//[START] TEST FOR NULL ARRAY
-			if (rlist != null) {
-				for (Room r : rlist) {
-		%>
-
-		<%
-			}
-			} else {
-		%>
 		<div class="container room">
 			<h2>인기 숙소</h2>
 			<div class="row" id="inn_thumb"></div>
-			<%
-				}
-			%>
+			
 		</div>
 		<script>
 			 $(function(){
+				 $.ajax({
+					 url: "<%=request.getContextPath()%>/areaCount.ho",
+					 type: "get",
+					 success : function(data){
+						 for(var i in data){
+							 console.log(data[i].area+" : "+data[i].cntRoom);
+							 $('#'+data[i].area).text(data[i].cntRoom+"개 숙소");
+							 /* var str = $('#'+data[i].area).text(data[i].cntRoom+"개 숙소");
+							
+							 $('.tooltip'){
+								 title: str;
+							 } */
+							 
+							 //var str = '<a href="#" data-toggle="tooltip" title="'+data[i].area+data[i].cntRoom+'개 숙소")"></a>';
+							
+						 }
+					 }
+				 });
+				 
 				$.ajax({
 					url:"<%=request.getContextPath()%>/rList.ho",
 					type:"get",
@@ -306,21 +312,11 @@
 		</script>
 
 		<br>
-		<%
-			//[START] TEST FOR NULL ARRAY
-			if (tlist != null) {
-				for (Trip t : tlist) {
-		%>
-		<%
-			}
-			} else {
-		%>
+		
 		<div class="container trip">
 			<h2>인기 트립</h2>
 			<div class="row" id="trip_thumb"></div>
-			<%
-				}
-			%>
+		
 		</div>
 		<script>
 			$(function(){
