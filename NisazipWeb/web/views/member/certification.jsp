@@ -10,25 +10,26 @@
 <style type="text/css">
 
 
- select {
-    width: 21%;
-    height: 30px;
-    padding-left: 10px;
-    font-size: 18px;
-    color: gray;
-    border: 1px solid lightgray;
-    border-radius: 3px;
+.btn-file{
+position :relative;
+overflow: hidden;
+}
+.btn-file input[type=file]{
+	position :absolute;
+	top :0;
+	right :0;
+	min-width:100%;
+	min-height:100%;
+	font-size:100px;
+	text-align :right;
+	filter :alpha(opacity=0);
+	opacity :0;
+	outline : none;
+	background :white;
+	cursor :inherit;
+	display: block;
 }
 
-.phone input[type=text]{
-    width: 21%;
-    height: 30px;
-    padding-left: 10px;
-    font-size: 18px;
-    color: gray;
-    border: 1px solid lightgray;
-    border-radius: 3px;
-}
 </style>
 </head>
 
@@ -59,13 +60,12 @@
     <div class="col-sm-5"> 
     
     	
-    		<form action="">
-    		<fieldset>
-    		<legend>
-    		프로필 사진 추가
-    		</legend>
-    		
-    		</fieldset>
+    		<form action="" enctype="multipart/form-data" method="post">
+    			<h2>사진 업로드</h2>
+    			<span class="btn btn-default btn-file">이미지를 업로드 하세요
+    			<input type="file" name="userProfile">
+    			</span>
+    			
     		</form>
     
         	

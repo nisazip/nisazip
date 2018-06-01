@@ -59,15 +59,14 @@
     <div class="col-sm-5"> 
     
     	
-    		<form action="">
-    		<fieldset>
-    		<legend>
-    		프로필 사진 추가
-    		</legend>
-    		
-    		</fieldset>
+    		<form action="profile.pic" enctype="multipart/form-data" method="post">
+    			<h2>사진 업로드</h2>
+    			<span class="btn btn-default btn-file">이미지를 업로드 하세요
+    			<input type="file" name="userProfile">
+    			</span>
+    			
     		</form>
-    
+    		<hr>
         	<form  class="form-horizontal" action="<%=request.getContextPath()%>/Update.me" method="post">  
       		<fieldset>
         		<legend>프로필 수정</legend>
