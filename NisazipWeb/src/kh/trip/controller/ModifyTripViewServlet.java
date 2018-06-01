@@ -19,8 +19,6 @@ public class ModifyTripViewServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		
-		
 		String tno = request.getParameter("tripNumber");
 		
 		System.out.println("시퀀스 번호 : " + tno);

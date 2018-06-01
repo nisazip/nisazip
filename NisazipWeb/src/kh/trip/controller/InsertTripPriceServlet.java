@@ -20,7 +20,7 @@ public class InsertTripPriceServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		//String tno = request.getParameter("tripNumber");
+		String tno = request.getParameter("tripNumber");
 		int price =Integer.parseInt(request.getParameter("price"));
 		
 		HttpSession session = request.getSession();
@@ -38,7 +38,7 @@ public class InsertTripPriceServlet extends HttpServlet {
 		
 		int result = new TripRegistService().insertTrip(tregist);
 		
-		tregist = new TripRegistService().selectRecent();
+		tregist = new TripRegistService().selectRecent(tno);
 		
 		session.setAttribute("tregist", tregist);
 		

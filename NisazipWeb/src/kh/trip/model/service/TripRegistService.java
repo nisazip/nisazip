@@ -94,10 +94,9 @@ public class TripRegistService {
 		Connection con = getConnection();
 		TripRegistDao tDao = new TripRegistDao();
 		
-		TripRegist tregist = tDao.selectOne(con, tno);
+		TripRegist tregist = tDao.selectRecent(con, tno);
 		
 		close(con);
 		return tregist;
 	}
-
 }

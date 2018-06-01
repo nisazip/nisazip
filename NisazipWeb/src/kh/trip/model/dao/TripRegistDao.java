@@ -243,13 +243,13 @@ public class TripRegistDao {
 		
 	}
 
-	public TripRegist selectOne(Connection con, String tno) {
+	public TripRegist selectRecent(Connection con, String tno) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
 		TripRegist tregist = new TripRegist();
 		
-		String query = prop.getProperty("selectOne");
+		String query = prop.getProperty("selectRecent");
 		
 		try {
 			
@@ -292,7 +292,6 @@ public class TripRegistDao {
 		
 		return tregist;
 	}
-	
 	
 
 }
