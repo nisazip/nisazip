@@ -121,7 +121,7 @@ public class MemberDao {
 				member.setUser_no(rset.getInt("USER_NO"));
 				member.setUser_name(rset.getString("USER_NAME"));
 				member.setGender(rset.getString("GENDER").charAt(0));	
-				
+				member.setBirthdate(rset.getString("BIRTHDATE"));
 				member.setEmail(rset.getString("EMAIL"));
 				member.setPhone(rset.getString("PHONE"));
 				System.out.println("sel"+m);
@@ -161,6 +161,7 @@ public class MemberDao {
 				member.setEmail(m.getEmail());
 				member.setUser_name(rset.getString("USER_NAME"));
 				member.setGender(rset.getString("GENDER").charAt(0));	
+				member.setBirthdate(rset.getString("BIRTHDATE"));
 				
 				member.setPhone(rset.getString("PHONE"));
 				System.out.println("sel"+m);

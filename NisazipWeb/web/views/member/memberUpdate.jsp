@@ -1,14 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="kh.member.model.vo.Member"%>
+    pageEncoding="UTF-8" %>
 
 <!DOCTYPE html>
 <html>
 <head>
        <title>Join</title>      
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      
 
 <style type="text/css">
 
@@ -51,8 +48,8 @@
   
       <ul class="nav nav-pills nav-stacked">
         
-        <li><a href="#section1">사용자 정보 수정/추가</a></li>
-        <li><a href="#section2">사진 등록 및 인증</a></li>
+        <li><a href="/semi/views/member/memberUpdate.jsp">사용자 정보 수정/추가</a></li>
+        <li><a href="/semi/views/member/certification.jsp">사진 등록 및 인증</a></li>
         <li><a href="/semi/views/member/myBin.jsp">보관 목록</a></li>
       </ul><br>
       <br><br><br><br><br><br><br>
@@ -221,32 +218,32 @@
 			          <option value="1938">1938</option></select>
 			
 			          &nbsp;
-			        <select id="user[birthday_month]" name="upBirthday_month" class="_10ukhb4t">
+			        <select id="upBirthday_month" name="upBirthday_month" class="_10ukhb4t">
 			          <option disabled="" value="" selected>월</option>
-			          <option value="1">1월</option>
-			          <option value="2">2월</option>
-			          <option value="3">3월</option>
-			          <option value="4">4월</option>
-			          <option value="5">5월</option>
-			          <option value="6">6월</option>
-			          <option value="7">7월</option>
-			          <option value="8">8월</option>
-			          <option value="9">9월</option>
+			          <option value="01">1월</option>
+			          <option value="02">2월</option>
+			          <option value="03">3월</option>
+			          <option value="04">4월</option>
+			          <option value="05">5월</option>
+			          <option value="06">6월</option>
+			          <option value="07">7월</option>
+			          <option value="08">8월</option>
+			          <option value="09">9월</option>
 			          <option value="10">10월</option>
 			          <option value="11">11월</option>
 			          <option value="12">12월</option></select>
 						&nbsp;
-			        <select id="user[birthday_day]" name="upBirthday_day" class="_10ukhb4t">
+			        <select id="upBirthday_day" name="upBirthday_day" class="_10ukhb4t">
 			            <option disabled="" value="" selected>일</option>
-			            <option value="1">1</option>
-			            <option value="2">2</option>
-			            <option value="3">3</option>
-			            <option value="4">4</option>
-			            <option value="5">5</option>
-			            <option value="6">6</option>
-			            <option value="7">7</option>
-			            <option value="8">8</option>
-			            <option value="9">9</option>
+			            <option value="01">1일</option>
+			            <option value="02">2</option>
+			            <option value="03">3</option>
+			            <option value="04">4</option>
+			            <option value="05">5</option>
+			            <option value="06">6</option>
+			            <option value="07">7</option>
+			            <option value="08">8</option>
+			            <option value="09">9</option>
 			            <option value="10">10</option>
 			            <option value="11">11</option>
 			            <option value="12">12</option>
@@ -308,11 +305,16 @@
 						$(this).val(phoneArr[index+1]);
 					});
 					
-					var addressArr = '<%=m.getBirthdate()%>'.split('-');
+					var birthArrST = '<%=m.getBirthdate()%>'.substring(0,10)
+					var birthArr = birthArrST.split('-');
+					console.log(birthArrST);
+					console.log(birthArr[0]);
+					console.log(birthArr[1]);
+					console.log(birthArr[2]);
 					
-					$('#zipCode').val(addressArr[0]);
-					$('#address1').val(addressArr[1]);
-					$('#address2').val(addressArr[2]);
+					$('#upBirthday_year').val(birthArr[0]);
+					$('#upBirthday_month').val(birthArr[1]);
+					$('#upBirthday_day').val(birthArr[2]);
 					
 					
 				});
@@ -334,9 +336,7 @@
 				
 				
 				
-				function goMain(){
-					location.href='<%=request.getContextPath()%>/index.jsp';
-				};
+				
 				
 			</script>
 

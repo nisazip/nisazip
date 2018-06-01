@@ -51,15 +51,20 @@ public class MemberUpdateServlet extends HttpServlet {
 		m.setGender(gender);
 		m.setPhone(phone);
 		m.setBirthdate(bDate);
+		System.out.println("bDate"+bDate);
 		
-		System.out.println("회원 기존 정보 : "+session.getAttribute("m"));
+		System.out.println("회원 기존 정보 : "+session.getAttribute("member"));
 		
 		System.out.println("회원 정보 수정 시 전달 받은 값 : "+m);
 		
 		if(ms.updateMember(m) > 0) {
 			System.out.println("회원 정보 수정 완료! : "+m);
-			session.invalidate();
 			
+			
+			//session.invalidate();
+
+			
+			session.setAttribute("member", m);
 
 			response.sendRedirect("views/member/memberUpdate.jsp");
 			

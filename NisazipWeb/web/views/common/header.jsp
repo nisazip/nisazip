@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8" import="kh.member.model.vo.*" %>
 <%
-	Member m = (Member) session.getAttribute("member");
+	Member m = (Member)session.getAttribute("member");
 %>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -120,7 +120,9 @@
                               <li><a href="#">트립 등록/관리</a></li>
                            </ul></li>
                         <li class="navbtn"><a href="#">메시지</a></li>
+                         <% if(m != null){ %>
                         <li class="navbtn"><a href="/semi/views/member/memberUpdate.jsp">마이페이지</a></li>
+                        <%} %>
                      </ul>
                   </div>
                </div>

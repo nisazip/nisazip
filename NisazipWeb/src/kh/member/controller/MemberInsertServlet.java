@@ -57,7 +57,7 @@ public class MemberInsertServlet extends HttpServlet {
 		
 		if(ms.insertMember(m) > 0) {
 			System.out.println("회원 가입 완료! : "+m);
-			request.setAttribute("member",m);
+			request.setAttribute("member", m);
 			response.sendRedirect("index.jsp");
 			
 		} else {

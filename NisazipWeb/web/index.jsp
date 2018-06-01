@@ -11,6 +11,6 @@
 <%@ include file ="views/common/header.jsp" %>
 
 <%@ include file ="views/member/modal.jsp" %>
-
+<%@ include file ="views/member/newModal.jsp" %>
 </body>
 </html>
