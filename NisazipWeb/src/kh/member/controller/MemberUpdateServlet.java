@@ -1,6 +1,7 @@
 package kh.member.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -59,7 +60,8 @@ public class MemberUpdateServlet extends HttpServlet {
 			System.out.println("회원 정보 수정 완료! : "+m);
 			session.invalidate();
 			
-			response.sendRedirect("index.jsp");
+
+			response.sendRedirect("views/member/memberUpdate.jsp");
 			
 		} else {
 			request.setAttribute("msg", "회원 정보 수정 중 에러가 발생하였습니다.");

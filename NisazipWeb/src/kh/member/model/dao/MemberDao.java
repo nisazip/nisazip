@@ -158,11 +158,10 @@ public class MemberDao {
 				
 				member.setUser_id("USER_ID");
 				member.setPassword(m.getPassword());
-				
+				member.setEmail(m.getEmail());
 				member.setUser_name(rset.getString("USER_NAME"));
 				member.setGender(rset.getString("GENDER").charAt(0));	
 				
-				member.setEmail(rset.getString(m.getEmail()));
 				member.setPhone(rset.getString("PHONE"));
 				System.out.println("sel"+m);
 				

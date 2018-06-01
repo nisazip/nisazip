@@ -18,10 +18,11 @@ public class BinService {
 	}
 	
 	
-	public ArrayList<HashMap<String, Object>> myTripsListP(Member m){
+	public ArrayList<HashMap<String, Object>> myTripsListP(String id){
 		
 		Connection con = getConnection();
-		 ArrayList<HashMap<String,Object>> tCompleteList = bDao.myTripsListP(con,m);
+		
+		 ArrayList<HashMap<String,Object>> tCompleteList = bDao.myTripsListP(con,id);
 		
 		return tCompleteList;
 	}

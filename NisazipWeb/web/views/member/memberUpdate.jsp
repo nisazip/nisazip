@@ -11,13 +11,8 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <style type="text/css">
-.sidenav {
-      background-color: #009100;
-      height: 100%;
-}
-li a{
-  color: snow;
-}
+
+
  select {
     width: 21%;
     height: 30px;
@@ -47,13 +42,15 @@ li a{
 
 <%@ include file= "../../views/common/header.jsp" %>
 
+
+<div id="main">
 <div class="container-fluid">
+
   <div class="row content">
-    <div class="col-sm-2 sidenav">
-      <h3>네가 사는 그집</h3>
-      <br> <br> <br>
+    <div class="col-sm-3 sidenav">
+  
       <ul class="nav nav-pills nav-stacked">
-        <br>
+        
         <li><a href="#section1">사용자 정보 수정/추가</a></li>
         <li><a href="#section2">사진 등록 및 인증</a></li>
         <li><a href="/semi/views/member/myBin.jsp">보관 목록</a></li>
@@ -68,7 +65,7 @@ li a{
     		<form action="">
     		<fieldset>
     		<legend>
-    		프로필 샂
+    		프로필 사진 추가
     		</legend>
     		
     		</fieldset>
@@ -90,7 +87,7 @@ li a{
        			
       			<div class="form-group"> 
               		<label class="control-label col-sm-4" for="name">이름:</label>
-        			<div class="col-sm-8"><input type="text" class="form-control" id="updateName" placeholder="<%= m.getUser_name()%>" name="updateName"  ></div>
+        			<div class="col-sm-8"><input type="text" class="form-control" id="updateName" value="<%= m.getUser_name()%>"  name="updateName"  ></div>
       			</div>
        
       			<div class="form-group ">
@@ -290,14 +287,17 @@ li a{
 
      </form>
     </div>
-
+</div>
 <script>
 				$(function(){
 					if('<%=m.getGender()%>' != null){
 					$('input:radio').each(function(){
-						if( $(this).val() == '<%=m.getGender()%>')
+						if( $(this).val() == '<%=m.getGender()%>'){
 						  $(this).prop('checked', true);
-						else 
+						  $(this).parent().addClass('active');
+						//console.log( $(this).parent().children().eq(0));
+						//console.log( $(this).parent());
+						}else 
 						  $(this).prop('checked', false);
 						//$(this).prop('disabled', true);
 					});

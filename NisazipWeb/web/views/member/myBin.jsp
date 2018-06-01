@@ -28,7 +28,13 @@
       </ul><br>
       <br><br><br><br><br><br><br>
     </div>
-	<input type="hidden" value=<%=m.getUser_id()%>>
+    
+    
+	<input type="hidden" value=<%=m.getUser_id()%> name="userIDtoBin">  
+	
+	
+	
+	
 	<div class="col-sm-8 col-xs-12">
 		<div class="row">
 		<div class="col-sm-6 col-xs-12">

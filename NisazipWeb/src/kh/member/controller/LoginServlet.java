@@ -25,7 +25,7 @@ public class LoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String id = request.getParameter("loginId");
-		String pwd = request.getParameter("Pwd");
+		String pwd = request.getParameter("pwd");
 				
 		System.out.println(id);
 		
@@ -42,14 +42,13 @@ public class LoginServlet extends HttpServlet {
 		if(id.contains(at)){
 			m.setEmail(id);
 			m.setPassword(pwd);
-			System.out.println("login시 전달 받은 값:"+m);
-
+			System.out.println("email login시 전달 받은 값:"+m);
 			m = ms.selectMemberE(m);
 			
 		}else{
 			m.setUser_id(id);
 			m.setPassword(pwd);
-			System.out.println("login시 전달 받은 값:"+m);
+			System.out.println(" id login시 전달 받은 값:"+m);
 			m = ms.selectMemberI(m);
 			}
 		
@@ -61,7 +60,7 @@ public class LoginServlet extends HttpServlet {
 			
 			session.setAttribute("member", m);
 			
-			response.sendRedirect("index.jsp");
+			response.sendRedirect(request.getHeader("referer")); 
 			
 		} else {
 			request.setAttribute("msg", "회원 로그인 실패!!");
