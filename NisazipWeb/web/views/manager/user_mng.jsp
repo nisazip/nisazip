@@ -350,9 +350,9 @@
         
       	//모달  - 삭제하기 버튼
         $('#deleteMemeber').click(function(){
-        	if (confirm("정말 삭제하시겠습니까??") == true){    //확인
+        	if (confirm("정말 삭제하시겠습니까??") == true){//확인
         		location.href="<%=request.getContextPath()%>/deleteMember.mg?userNo="+$('#userNo').val();
-        	}else{   //취소
+        	}else{//취소
         	    return;
         	}
         });
