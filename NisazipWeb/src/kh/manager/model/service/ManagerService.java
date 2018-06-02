@@ -1,6 +1,6 @@
 package kh.manager.model.service;
 
-import static kh.common.JDBCTemplate.close;
+import static kh.common.JDBCTemplate.*;
 import static kh.common.JDBCTemplate.getConnection;
 
 import java.sql.Connection;
@@ -54,6 +54,18 @@ public class ManagerService {
 		
 
 		return m;
+	}
+
+	public int updateMemeber(MemeberList m) {
+		Connection con = getConnection();
+		
+		int result = new mDao().updateMember(con, m);
+		if(result >0) commit(con);
+		else rollback(con);
+		
+		close(con);
+
+		return result;
 	}
 
 }

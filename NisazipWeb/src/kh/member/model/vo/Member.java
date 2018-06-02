@@ -41,6 +41,19 @@ public class Member {
 		this.t_hosting = t_hosting;
 		this.join_date = join_date;
 	}
+	
+	public Member(int user_no, String user_id, String user_name, String email, String phone, String birthdate,
+			int r_hosting, int t_hosting) {
+		super();
+		this.user_no = user_no;
+		this.user_id = user_id;
+		this.user_name = user_name;
+		this.email = email;
+		this.phone = phone;
+		this.birthdate = birthdate;
+		this.r_hosting = r_hosting;
+		this.t_hosting = t_hosting;
+	}
 
 	public int getUser_no() {
 		return user_no;

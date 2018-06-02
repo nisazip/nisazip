@@ -213,4 +213,45 @@ public class mDao {
 		return m;
 	}
 
+	public int updateMember(Connection con, MemeberList m) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "";
+		
+		String[] a = m.getBirthdate().split(", ");
+		String[] b = m.getBirthdate().split(",");
+		
+		if(b[1].equals(" ")||a[0].equals(" ")){
+			//birth가 null일때
+			query = prop.getProperty("updateBirthNull");
+		}else{
+			query = prop.getProperty("UpdateMember");
+		}
+
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, m.getUser_id());
+			pstmt.setString(2, m.getUser_name());
+			pstmt.setString(3, m.getEmail());
+			pstmt.setString(4, m.getPhone());
+			pstmt.setInt(5, m.getR_hosting());
+			pstmt.setInt(6, m.getT_hosting());
+			
+			if(b[1].equals(" ")|| a[0].equals(" ")){
+				pstmt.setInt(7, m.getUser_no());
+			}else{
+				pstmt.setString(7, m.getBirthdate());
+				pstmt.setInt(8, m.getUser_no());
+			}
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+				
+		return result;
+	}
+
 }

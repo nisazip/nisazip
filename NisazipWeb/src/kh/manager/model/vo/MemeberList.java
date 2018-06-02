@@ -20,6 +20,15 @@ public class MemeberList extends Member{
 		this.oAuth = oAuth;
 	}
 
+	
+	
+	
+
+	public MemeberList(int user_no, String user_id, String user_name, String email, String phone, String birthdate,
+			int r_hosting, int t_hosting) {
+		super(user_no, user_id, user_name, email, phone, birthdate, r_hosting, t_hosting);
+	}
+
 	public int getrCnt() {
 		return rCnt;
 	}

@@ -26,7 +26,6 @@ public class MemberListServlet extends HttpServlet {
 		String page="";
 		
 		if(list!=null){
-			System.out.println(list);
 			request.setAttribute("mList",list);
 			page="views/manager/user_mng.jsp";
 			request.getRequestDispatcher(page).forward(request, response);

@@ -128,25 +128,39 @@
                             <div class="form-group form-group-sm form-group-xs">
                                 <label for="userId" class="col-sm-3 col-xs-3">아이디 : </label>
                                 <div class="col-sm-9 col-xs-9">
-                                    <input type="email" id="userId" name="userId" class="form-control" disabled>
+                                    <input type="email" id="userId" name="userId" class="form-control udInput" disabled>
                                 </div>
                             </div>
                             <div class="form-group form-group-sm form-group-xs">
                                 <label for="userName" class="col-sm-3 col-xs-3">이름 : </label>
                                 <div class="col-sm-9 col-xs-9">
-                                    <input type="text" id="userName" name="userName" class="form-control" disabled>
+                                    <input type="text" id="userName" name="userName" class="form-control udInput" disabled>
                                 </div>  
                             </div>
                             <div class="form-group form-group-sm form-group-xs">
                                 <label for="email" class="col-sm-3 col-xs-3">이메일 : </label>
                                 <div class="col-sm-9 col-xs-9">
-                                    <input type="email" id="email" name="email" class="form-control" disabled>
+                                    <input type="email" id="email" name="email" class="form-control udInput" disabled>
                                 </div>
                             </div>
                             <div class="form-group form-group-sm form-group-xs">
                                 <label for="phone" class="col-sm-3 col-xs-3">연락처 : </label>
-                                <div class="col-sm-9 col-xs-9">
-                                    <input type="text" id="phone" name="phone" class="form-control" disabled>
+                                <div class="col-sm-9 col-xs-9 d-inline">
+                                	<div class="col-sm-3 col-xs-3">
+                                		<input type="text" id="phone1" name="phone" class="form-control udInput" disabled>
+                                	</div>
+                                	<div class="col-sm-1 col-xs-1">
+                                		-
+                                	</div>
+                                	<div class="col-sm-3 col-xs-3">
+                                		<input type="text" id="phone2" name="phone" class="form-control udInput" disabled>
+                                	</div>
+                                	<div class="col-sm-1 col-xs-1">
+                                		-
+                                	</div>
+                                	<div class="col-sm-3 col-xs-3">
+                                    	<input type="text" id="phone3" name="phone" class="form-control udInput" disabled>
+                                    </div>
                                 </div>
                             </div>
 
@@ -165,19 +179,36 @@
                             <div class="form-group form-group-sm form-group-xs">
                                 <label for="birth" class="col-sm-3 col-xs-3">생년월일 : </label>
                                 <div class="col-sm-9 col-xs-9">
-                                    <input type="text" id="birth" name="birth" class="form-control" disabled>
+                                    <div class="col-sm-3 col-xs-3">
+                                    	<input type="text" id="birth1" name="birth" class="form-control udInput" disabled>
+                                    </div>
+                                    <div class="col-sm-1 col-xs-1">
+                                    	<p>년</p>	
+                                	</div>
+                                	<div class="col-sm-3 col-xs-3">
+                                    	<input type="text" id="birth2" name="birth" class="form-control udInput" disabled>
+                                    </div>
+                                    <div class="col-sm-1 col-xs-1">
+                                    	<p>월</p>	
+                                	</div>
+                                	<div class="col-sm-3 col-xs-3">
+                                    	<input type="text" id="birth3" name="birth" class="form-control udInput" disabled>
+                                    </div>
+                                    <div class="col-sm-1 col-xs-1">
+                                    	<p>일</p>	
+                                	</div>
                                 </div>
                             </div>
                             <div class="form-group form-group-sm form-group-xs">
                                 <label for="roomhosting" class="col-sm-3 col-xs-3">숙소호스팅:</label>
                                 <div class="col-sm-9 col-xs-9">
-                                    <input type="number" id="roomHosting" name="roomshosting" class="form-control" disabled>
+                                    <input type="number" id="roomHosting" name="roomshosting" class="form-control udInput" disabled>
                                 </div>
                             </div>
                             <div class="form-group form-group-sm form-group-xs">
                                 <label for="tripHosting" class="col-sm-3 col-xs-3">트립호스팅:</label>
                                 <div class="col-sm-9 col-xs-9">
-                                    <input type="number" id="tripHosting" name="tripHosting" class="form-control" disabled>
+                                    <input type="number" id="tripHosting" name="tripHosting" class="form-control udInput" disabled>
                                 </div>
                             </div>
                             <div class="form-group form-group-sm form-group-xs">
@@ -241,7 +272,6 @@
 
             //테이블의 첫 행을 클릭했을 때는 모달창을 띄우지 않는다.
             if(td.eq(0).text()!="회원 번호"){
-            	
 
              $.ajax({
          		url : "getMember.mg",
@@ -255,15 +285,22 @@
          			$('#userNo').val(data.USER_NO);
                     $('#userId').val(data.USER_ID);
                     $('#userName').val(data.USER_NAME);
-             		
-             
-             		$('#userName').val(data.USER_NAME);
+                    
 			        $('#email').val(data.EMAIL);
-			        $('#phone').val(data.PHONE);
-			      
 			        
-			        console.log(data.GENDER);
-			        
+			        if(data.BIRTH!=null){
+				        var phone = data.PHONE.split('-');
+				        var phone1 = phone[0];
+				        var phone2 = phone[1];
+				        var phone3 = phone[2];
+				        $('#phone1').val(phone1);
+				        $('#phone2').val(phone2);
+				        $('#phone3').val(phone3);
+			        }else{
+			        	 $('#phone1').val(" ");
+					     $('#phone2').val(" ");
+					     $('#phone3').val(" ");
+			        }  
 			        if (data.GENDER == 'M') {
 	                    $('input:radio[name=gender]:input[value=F]').attr("checked", false);
 	                    $('input:radio[name=gender]:input[value=M]').attr("checked", true);
@@ -274,16 +311,27 @@
 	                	$('input:radio[name=gender]:input[value=M]').attr("checked", false);
 	                    $('input:radio[name=gender]:input[value=F]').attr("checked", false);
 	                }
+			        if(data.BIRTH!=null){
+				        var birth = data.BIRTH.split(', ');
+				        var birth1 = birth[0];
+				        var birth2 = birth[1];
+				        var birth3 = birth[2];
+				        $('#birth1').val(birth1);
+				        $('#birth2').val(birth2);
+				        $('#birth3').val(birth3);
+			        }else{
+			        	 $('#birth1').val(" ");
+					     $('#birth2').val(" ");
+					     $('#birth3').val(" ");
+			        }
+			       
 			        
-			        $('#birth').val(data.BIRTH);
 			        $('#roomHosting').val(data.R_HOSTING);
 			        $('#tripHosting').val(data.T_HOSTING);
 			        $('#joinDate').val(data.JOIN_DATE);
 			        $('#report').val(data.RCNT);
 			        $('#oAuth').val(data.OAUTH);
-			        
 			      
-         			// 모달 안에 값을 채워 넣는다.
          		}, error : function(request, status, error){
     				// 연결에 실패했을 때
     				console.log("에러 코드 : "+request.status
@@ -296,19 +344,46 @@
          	});
 
             }
-
            });
         
         $('#saveData').hide();
         
         //모달 - 수정하기 버튼
         $('#modify').click(function(){
-            $('#myModal input').attr("disabled",false);
+        	var $update = $('.udInput');
+            /* $('#myModal input').attr("disabled",false); */
+            $update.attr("disabled",false);
             $('#saveData').show();
             $(this).hide();
         });
         //모달 - 저장하기 버튼
         $('#saveData').click(function(){
+        	$.ajax({
+        		url : "upMemeber.mg",
+        		type:"POST",
+        		data:{
+	      			userNo : $('#userNo').val(),
+        			userId : $('#userId').val(),
+        			userName : $('#userName').val(),
+        			email : $('#email').val(),
+        			phone : $('#phone1').val()+"-"+$('#phone2').val()+"-"+$('#phone3').val(),
+        			birth : $('#birth1').val()+", "+$('#birth2').val()+", "+$('#birth3').val(),
+        			roomHosting : $('#roomHosting').val(),
+        			tripHosting : $('#tripHosting').val()
+        		}, success : function(data){
+        			alert(data);
+        			
+        		}, error : function(request, status, error){
+    				// 연결에 실패했을 때
+    				console.log("에러 코드 : "+request.status
+    						+ "에러 내용 : "+ request.responseText 
+    						+ "에러 메시지 : " + error);
+    				
+    				alert("데이터 전달 실패");
+    				
+    			}
+        		
+        	});
             $('#myModal input').attr("disabled",true);
             $('#modify').show();
             $(this).hide();
@@ -328,19 +403,19 @@
         	$('#modify').show()
         });
         
-	
+		
         //dropdown menu
         $('#sId').click(function(){
                         console.log($(this).parent());
                         $('#sName').parent().removeClass('active');
                         $(this).parent().addClass('active');
         });
+        
         $('#sName').click(function(){
             console.log($(this).parent());
             $('#sId').parent().removeClass('active');
             $(this).parent().addClass('active');
         });
-        
         
         $('#home_btn').click(function(){
         	location.href="admin_home.jsp";
