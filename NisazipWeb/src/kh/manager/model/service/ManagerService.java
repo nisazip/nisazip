@@ -1,14 +1,16 @@
 package kh.manager.model.service;
 
-import static kh.common.JDBCTemplate.*;
+import static kh.common.JDBCTemplate.close;
+import static kh.common.JDBCTemplate.commit;
 import static kh.common.JDBCTemplate.getConnection;
+import static kh.common.JDBCTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import kh.manager.model.dao.mDao;
-import kh.manager.model.vo.MemeberList;
+import kh.manager.model.vo.MemberList;
 import kh.room.model.vo.Room;
 import kh.trip.model.vo.Trip;
 
@@ -16,10 +18,10 @@ public class ManagerService {
 
 
 	
-	public ArrayList<MemeberList> mList() {
+	public ArrayList<MemberList> mList() {
 		Connection con = getConnection();
 		
-		ArrayList<MemeberList> list = new mDao().mList(con);
+		ArrayList<MemberList> list = new mDao().mList(con);
 		
 		close(con);
 		return list;
@@ -56,7 +58,7 @@ public class ManagerService {
 		return m;
 	}
 
-	public int updateMemeber(MemeberList m) {
+	public int updateMember(MemberList m) {
 		Connection con = getConnection();
 		
 		int result = new mDao().updateMember(con, m);

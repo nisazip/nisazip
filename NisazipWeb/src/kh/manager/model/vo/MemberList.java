@@ -4,15 +4,15 @@ import java.sql.Date;
 
 import kh.member.model.vo.Member;
 
-public class MemeberList extends Member{
+public class MemberList extends Member{
 	private int rCnt;
 	private char oAuth;
 	
-	public MemeberList() {
+	public MemberList() {
 		super();
 	}
 
-	public MemeberList(int user_no, String user_id, String password, String user_name, String email, String phone,
+	public MemberList(int user_no, String user_id, String password, String user_name, String email, String phone,
 			char gender, String birthdate, String likerooms, String liketrips, int r_hosting, int t_hosting,
 			Date join_date, int rCnt, char oAuth) {
 		super(user_no, user_id, password, user_name, email, phone, gender, birthdate, likerooms, liketrips, r_hosting, t_hosting, join_date);
@@ -24,7 +24,7 @@ public class MemeberList extends Member{
 	
 	
 
-	public MemeberList(int user_no, String user_id, String user_name, String email, String phone, String birthdate,
+	public MemberList(int user_no, String user_id, String user_name, String email, String phone, String birthdate,
 			int r_hosting, int t_hosting) {
 		super(user_no, user_id, user_name, email, phone, birthdate, r_hosting, t_hosting);
 	}
@@ -55,9 +55,5 @@ public class MemeberList extends Member{
 				+ ", getJoin_date()=" + getJoin_date() + ", hashCode()=" + hashCode() + ", toString()="
 				+ super.toString() + ", getClass()=" + getClass() + "]";
 	}
-	
-	
-	
-	
-	
+
 }

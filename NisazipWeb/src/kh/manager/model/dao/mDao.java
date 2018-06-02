@@ -13,8 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Properties;
 
-import kh.manager.model.vo.MemeberList;
-import kh.member.model.vo.Member;
+import kh.manager.model.vo.MemberList;
 import kh.room.model.vo.Room;
 import kh.trip.model.vo.Trip;
 
@@ -33,13 +32,13 @@ public class mDao {
 		}
 	}
 	
-	public ArrayList<MemeberList> mList(Connection con) {
+	public ArrayList<MemberList> mList(Connection con) {
 		
 		Statement stmt = null;
 		ResultSet rset = null;
 		
-		ArrayList<MemeberList> result = new ArrayList<MemeberList>();
-		MemeberList m = null;
+		ArrayList<MemberList> result = new ArrayList<MemberList>();
+		MemberList m = null;
 		
 		String query = prop.getProperty("selectAllMember");
 		
@@ -48,7 +47,7 @@ public class mDao {
 			rset = stmt.executeQuery(query);
 			
 			while(rset.next()) {
-				m = new MemeberList();
+				m = new MemberList();
 				m.setUser_no(rset.getInt("USER_NO"));
 				m.setUser_id(rset.getString("USER_ID"));
 				m.setUser_name(rset.getString("USER_NAME"));
@@ -213,7 +212,7 @@ public class mDao {
 		return m;
 	}
 
-	public int updateMember(Connection con, MemeberList m) {
+	public int updateMember(Connection con, MemberList m) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		String query = "";

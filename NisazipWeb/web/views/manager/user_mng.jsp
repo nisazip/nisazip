@@ -2,7 +2,7 @@
     pageEncoding="UTF-8" import="kh.manager.model.vo.*, java.util.*"%>
     
 <%
-	ArrayList<MemeberList> list = (ArrayList<MemeberList>)request.getAttribute("mList");
+	ArrayList<MemberList> list = (ArrayList<MemberList>)request.getAttribute("mList");
 	/* 
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	int listCont = pi.getListCount();
@@ -74,7 +74,7 @@
                     </thead>
                     <tbody>
                     
-                    <% for(MemeberList m : list){ %>
+                    <% for(MemberList m : list){ %>
 					<tr>
 						<td><%=m.getUser_no()%></td>
 						<td><%=m.getUser_id()%></td>

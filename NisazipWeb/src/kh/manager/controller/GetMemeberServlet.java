@@ -1,7 +1,6 @@
 package kh.manager.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.ServletException;
@@ -10,14 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-
 import com.google.gson.Gson;
 
-import kh.home.model.service.RoomService;
 import kh.manager.model.service.ManagerService;
-import kh.manager.model.vo.MemeberList;
 
 
 @WebServlet("/getMember.mg")

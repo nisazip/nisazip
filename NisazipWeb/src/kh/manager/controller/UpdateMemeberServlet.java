@@ -1,7 +1,6 @@
 package kh.manager.controller;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import kh.manager.model.service.ManagerService;
-import kh.manager.model.vo.MemeberList;
+import kh.manager.model.vo.MemberList;
 
 @WebServlet("/upMemeber.mg")
 public class UpdateMemeberServlet extends HttpServlet {
@@ -31,8 +30,8 @@ public class UpdateMemeberServlet extends HttpServlet {
 		int roomHosting = Integer.parseInt(request.getParameter("roomHosting"));
 		int tripHosting = Integer.parseInt(request.getParameter("tripHosting"));
 
-		MemeberList m = new MemeberList(userNo, userId, userName, email, phone, birth, roomHosting, tripHosting);
-		int result = new ManagerService().updateMemeber(m); 
+		MemberList m = new MemberList(userNo, userId, userName, email, phone, birth, roomHosting, tripHosting);
+		int result = new ManagerService().updateMember(m); 
 		System.out.println("m:"+m);
 		String msg = "";
 		
