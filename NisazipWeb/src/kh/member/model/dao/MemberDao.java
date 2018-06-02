@@ -207,4 +207,33 @@ public class MemberDao {
 		return 0;
 	}
 
+
+	public int checkEmail(Connection con, String email) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		System.out.println("dao:" + email);		
+
+		try { 
+			String query = prop.getProperty("checkEmail");	
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, email);
+			rset = pstmt.executeQuery();
+			if(rset.next()){
+				System.out.println("rset:" + email);		
+				return 1;
+			
+			}else{
+				
+				return 0;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return 0;
+	}
+
 }

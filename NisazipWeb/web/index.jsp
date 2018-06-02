@@ -9,8 +9,8 @@
 </head>
 <body>
 <%@ include file ="views/common/header.jsp" %>
-
-<%@ include file ="views/member/modal.jsp" %>
-<%@ include file ="views/member/newModal.jsp" %>
+<%@ include file= "views/member/joinmodal.jsp" %>
+<%@ include file ="views/member/loginmodal.jsp" %>
+<%@ include file ="views/member/resetpwdModal.jsp" %>
 </body>
 </html>

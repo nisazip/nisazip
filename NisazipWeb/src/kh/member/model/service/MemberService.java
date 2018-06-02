@@ -85,6 +85,15 @@ public class MemberService {
 	}
 
 
+	public int checkEmail(String email) {
+		int result =0;	
+		Connection con = getConnection();
+		result = mDao.checkEmail(con, email);
+		close(con);
+		return result ;
+	}
+
+
 	
 
 }

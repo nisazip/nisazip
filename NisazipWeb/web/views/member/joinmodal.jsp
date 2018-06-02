@@ -36,67 +36,6 @@
 <body>
 
 
- 
-
-  <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header" style="padding:35px 50px;">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4><span class="glyphicon glyphicon-user"></span> Login</h4>
-        </div>
-        
-        
-        
-        
-        
-        
-        
-        <div class="modal-body" style="padding:40px 50px;">
-          <form  id="loginForm" role="form" action="<%= request.getContextPath()%>/login.me" method="POST">
-            
-             <div class="form-group">
-              <label for="loginId"><span class="glyphicon glyphicon-eye-open"></span> 계정 </label>
-              <input type="text" class="form-control" id="loginId" name="loginId" placeholder="ID나 EMAIL을 입력하세요">
-            </div>
-            <div class="form-group">
-              <label for="loginPwd"><span class="glyphicon glyphicon-lock"></span> 비밀번호</label>
-              <input type="password" class="form-control" id="loginPwd" name="pwd" placeholder="패스워드를 입력하세요">
-            </div>
-            <div class="checkbox">
-              <label><input type="checkbox" value="" checked>Remember me</label>
-            </div>
-              <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span>Login</button>
-          </form>
-        </div>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <div class="modal-footer">
-          <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
-          <p>Not a member?   <a data-target="#myModal2" data-toggle="modal" class="MainNavText" data-dismiss="modal" id="MainNavHelp" 
-       href="#myModal">Join</a></p>
-          <p>Forgot <a data-target="#myModal3" data-toggle="modal" class="findPwd" data-dismiss="modal" id="" 
-       href="#myModal">Password?</a></p>
-          
-        </div>
-      </div>
-      
-    </div>
-  </div><!-- modal2 end-->
-
-
-
  <!-- Modal 회원가입-->
   <div class="modal fade" id="myModal2" role="dialog">
     <div class="modal-dialog">
@@ -107,36 +46,45 @@
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4><span class="glyphicon glyphicon-lock"></span> Join</h4>
         </div>
+        
+        
+        
         <div class="modal-body" style="padding:40px 50px;">
+        
+        
+        
           <form id="joinForm" role="form" action="join.me" method="POST">
-          
-          
-          
-          <div class="form-group">
-                <center><input type="text" class="form-control" id="user_id" placeholder="ID" name="user_id" style="width:80%;" onkeyup="checkId();" ></center>
-            	<center>	<span id = "chkMsg"></span> </center>
-            </div>
-            
-            <div class="form-group">
-                <center><input type="text" class="form-control" id="name" placeholder="이름" name="name" style="width: 80%" ></center>
-            </div>
-            <div class="form-group">
-                <center><input type="email" class="form-control" id="email" placeholder="이메일주소" name="email" style="width: 80%" ></center>
-            </div>
-            <div class="form-group">
-                <center><input type="password" class="form-control" id="pwd" placeholder="비밀번호" name="pwd" style="width: 80%"></center>    
-                <center>
-                  <div style="width: 80%; text-align: left;" >
-                  <span class="pwdRef2" style="display: none; color: #228b22;">유효한 비밀번호입니다.<br></span>
-
-                  <span class="pwdRef" style="display: none;">비밀번호는 8자 이상이어야 합니다.<br></span>
-
-                  <span class="pwdRef" style="display: none;">숫자나 특수문자를 포함하세요 </span>
-
-                  </div>
-                </center>
-                 
-            </div>
+           
+	          <div class="form-group">
+	                <center>
+	                <input type="text" class="form-control" id="user_id" placeholder="ID" name="user_id" style="width:80%;" >
+	                
+	                </center>
+	            	<center>	<span id = "chkMsg"></span> </center>
+	            </div>
+	            
+	            <div class="form-group">
+	                <center><input type="text" class="form-control" id="name" placeholder="이름" name="name" style="width: 80%" ></center>
+	            	<center>	<span id = "chkMsg2"></span> </center>
+	            </div>
+	            <div class="form-group">
+	                <center><input type="email" class="form-control" id="email" placeholder="이메일주소" name="email" style="width: 80%" ></center>
+	                <center>	<span id = "chkMsg3"></span> </center>
+	            </div>
+	            <div class="form-group">
+	                <center><input type="password" class="form-control" id="pwd" placeholder="비밀번호" name="pwd" style="width: 80%"></center>    
+	                <center>
+	                  <div style="width: 80%; text-align: left;" >
+	                  <span class="pwdRef2" style="display: none; color: #228b22;">유효한 비밀번호입니다.<br></span>
+	
+	                  <span class="pwdRef" style="display: none;">비밀번호는 8자 이상이어야 합니다.<br></span>
+	
+	                  <span class="pwdRef" style="display: none;">숫자나 특수문자를 포함하세요 </span>
+	
+	                  </div>
+	                </center>
+	                 
+	            </div>
             
             <div class="form-group">
                 <center><input type="password" class="form-control" id="pwd2" placeholder="비밀번호 확인" name="pwd2" style="width: 80%" >  </center>
@@ -308,19 +256,7 @@
 </div>
  
 <script>
-var check =false;
 
-
-
-var pwd = $("#pwd").val();
-
-
-
-
-$("#loginModalOpen").on("click",function(e){
-    $("#myModal2").modal();
-
-  });
 
 $("#loginModalOpen").on("click",function(e){
     $("#myModal").modal();
@@ -334,6 +270,52 @@ $("joinFormOpen").on("click",function(e){
 
 
 
+var ch1 =false;
+var ch2 = false;
+var ch3 = false;
+var ch4 = false;
+
+$("#user_id").on("blur",function(){
+	var id = $('#user_id').val();
+
+	$.ajax({
+	      url:'/semi/chk.do',
+	      type:'get',
+	      data:{id:id},
+	      success:function(result){
+	    	  	
+	            if( result != 1){
+	            	if(!/^\w{5,}$/.test(id)){
+	            		$("#chkMsg").text("아이디는 5자 이상이어야 합니다. 문자는 알파벳만 가능합니다. ");
+		   	            $("#user_id").css("border","1px solid red");
+		   	         	var ch1 =false;
+	            	}
+	            	else $("#user_id").css("border","2px solid lightgreen"); $("#chkMsg").text(""); ch1=true;
+	            	 
+	           
+	            }else{
+	            	$("#chkMsg").text("사용할 수 없는 아이디입니다.");
+	   	            $("#user_id").css("border","1px solid red");
+	            	//console.log('0'+data);
+	            	var ch1 =false;
+	           
+	           }
+	       },
+	       error:function(){
+	               alert("에러입니다");
+	       }
+	    });
+});
+
+
+var pwd = $("#pwd").val();
+
+
+
+
+
+
+
 $("#pwd").on("focus",function(){
   $(".pwdRef").show();
 });
@@ -342,19 +324,38 @@ $("#pwd").on("blur",function(){
 });
 
 
-$("#email").keyup(function (event) {
 
-            regexp = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
 
-            v = $(this).val();
+$("#email").on("blur",function(){
+	var email = $("#email").val();
 
-            if (regexp.test(v)) {
-                $("#email").css("border","2px solid lightgreen");
-
-            }else {
-               $("#email").css("border","1px solid red");
-            }
-
+	$.ajax({
+	      url:'/semi/chk2.do',
+	      type:'get',
+	      data:{email:email},
+	      success:function(result){
+	    	  	
+	            if( result != 1){
+	            	if(!/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/.test(email)){
+	            		$("#chkMsg3").text("이메일 형식을 확인하세요 ");
+		   	            $("#email").css("border","1px solid red");
+		   	         	var ch2 =false;
+	            	}
+	            	else $("#email").css("border","2px solid lightgreen"); $("#chkMsg3").text(""); ch2=true;
+	            	 
+	           
+	            }else{
+	            	$("#chkMsg3").text("사용할 수 없는 이메일입니다.");
+	   	            $("#email").css("border","1px solid red");
+	            	//console.log('0'+data);
+	            	var ch2 =false;
+	           
+	           }
+	       },
+	       error:function(){
+	               alert("에러입니다");
+	       }
+	    });
 });
 
 $("#name").keyup(function (event) {
@@ -435,55 +436,21 @@ $("select").keyup(function(event){
                }
 });
 
-/*$("#user_id").keyup(function (event) {
 
-    regexp = /^(?=.*[a-zA-Z])((?=.*\d)|(?=.*\W)).{8,}$/;
 
-    v = $(this).val();
 
-    if (regexp.test(v)) {
 
-    	
 
-       }else{
-        $("#user_id").css("border","1px solid red");
 
-       }
-});*/
 
-function checkId(){
-    var id = $('#user_id').val();
+$(document).ready(function(){
+	if(!ch1 || !ch2){
+		$("#joinsubmit").attr('disabled','disabled');
+	}else{
+		$("#joinsubmit").removeAttr('disabled');
+	}
+});  
  	
-    $.ajax({
-	      url:'/semi/chk.do',
-	      type:'get',
-	      data:{id:id},
-	      success:function(data){
-	            if( data != 1 && id.length >7 ){
-	            	 $("#user_id").css("border","2px solid lightgreen");
-	           
-	            }else{
-	            	$("#chkMsg").text("아이디는 7자 이상이어야 합니다.");
-	   	            $("#user_id").css("border","1px solid red");
-	            	console.log('2'+data);
-	           
-	           }
-	       },
-	       error:function(){
-	               alert("에러입니다");
-	       }
-	    });
-   
-};
-
-$("#joinForm").submit(function(event){
-	if($("#userPwd").val() == "" || $("#userId").val() == "") alert("아이디나 비밀번호는 필수 값입니다.");
-	else if($('#userPwd').val() != $('#userPwd2').val()) alert("비밀번호 확인 값과 다릅니다.");
-	else return;
-	event.preventDefault();
-});
-
-   $("joinsubmit").attr("disabled");
 
 
 
