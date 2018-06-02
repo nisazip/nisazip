@@ -68,4 +68,17 @@ public class ManagerService {
 		return result;
 	}
 
+	public int deleteMember(int mNo) {
+		Connection con = getConnection();
+		
+		int result = new mDao().deleteMember(con, mNo);
+		
+		if(result >0) commit(con);
+		else rollback(con);
+		
+		close(con);
+
+		return result;
+	}
+
 }

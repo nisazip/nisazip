@@ -254,4 +254,25 @@ public class mDao {
 		return result;
 	}
 
+	public int deleteMember(Connection con, int mNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("deleteMember");
+
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, mNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+				
+		return result;
+	}
+
 }

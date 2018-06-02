@@ -237,7 +237,7 @@
                 <!-- 모달 footer -->
                 <div class="modal-footer">
                     <div class="pull-left">
-                        <button type="button" class="btn btn-danger">삭제하기</button>
+                        <button type="button" class="btn btn-danger" id="deleteMemeber">삭제하기</button>
                     </div>
                     <div>
                         <button type="button" class="btn btn-primary" id="modify">수정하기</button>
@@ -348,6 +348,16 @@
         
         $('#saveData').hide();
         
+      	//모달  - 삭제하기 버튼
+        $('#deleteMemeber').click(function(){
+        	if (confirm("정말 삭제하시겠습니까??") == true){    //확인
+        		location.href="<%=request.getContextPath()%>/deleteMember.mg?userNo="+$('#userNo').val();
+        	}else{   //취소
+        	    return;
+        	}
+        });
+        
+        
         //모달 - 수정하기 버튼
         $('#modify').click(function(){
         	var $update = $('.udInput');
@@ -417,6 +427,7 @@
             $(this).parent().addClass('active');
         });
         
+        //관리자 홈 화면 클릭시 이동
         $('#home_btn').click(function(){
         	location.href="admin_home.jsp";
         });
