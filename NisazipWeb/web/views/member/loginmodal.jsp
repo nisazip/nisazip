@@ -39,7 +39,7 @@
             <div class="checkbox">
               <label><input type="checkbox" value="" checked>Remember me</label>
             </div>
-              <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span>Login</button>
+              <button type="submit" id="loginSubmit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span>Login</button>
           </form>
         </div>
         
@@ -68,7 +68,25 @@
 
  
 <script>
+$(document).ready(function(){
+	$("#loginSubmit").removeAttr("disabled");
+});
 
+$("#loginId").on("keyup",function(){
+	if($("#loginId").val() == null || $("#loginId").val()== ""|| $("#logPwd").val()== null ||$("#loginPwd").val()== "" ){
+		$("#loginSubmit").attr('disabled','disabled');
+		//$("#loginSubmit").removeAttr("disabled")
+	}else{$("#loginSubmit").removeAttr("disabled")}
+});
+
+$("#loginPwd").on("keyup",function(){
+	if($("#loginId").val()== null ||$("#loginId").val()== ""|| $("#logPwd").val()== null ||$("#loginPwd").val()== "" ){
+		$("#loginSubmit").attr('disabled','disabled');
+		//$("#loginSubmit").removeAttr("disabled")
+	}else{$("#loginSubmit").removeAttr("disabled")}
+});
+
+</script>
 
 </body>
 </html>

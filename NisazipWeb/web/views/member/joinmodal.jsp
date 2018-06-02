@@ -202,8 +202,8 @@
                   <option value="11">11월</option>
                   <option value="12">12월</option></select>
         
-                <select id="birthday_day" name="birthday_day" class="_10ukhb4t">
-                    <option disabled="" value="" selected>일</option>
+                <select id="birthday_day" name="birthday_day" >
+                    <option disabled="" value="unchoiced" selected>일</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -274,6 +274,14 @@ var ch1 =false;
 var ch2 = false;
 var ch3 = false;
 var ch4 = false;
+var ch5 = false;
+var ch6 = false;
+var ch7 = false;
+var ch8 = false;
+
+if(ch1 == false ){
+	$("#joinsubmit").attr('disabled','disabled');
+}
 
 $("#user_id").on("blur",function(){
 	var id = $('#user_id').val();
@@ -283,21 +291,25 @@ $("#user_id").on("blur",function(){
 	      type:'get',
 	      data:{id:id},
 	      success:function(result){
-	    	  	
+	    	
 	            if( result != 1){
-	            	if(!/^\w{5,}$/.test(id)){
+	            	if(!/^\w{5,19}$/.test(id)){
 	            		$("#chkMsg").text("아이디는 5자 이상이어야 합니다. 문자는 알파벳만 가능합니다. ");
 		   	            $("#user_id").css("border","1px solid red");
-		   	         	var ch1 =false;
+		   	         	ch1 =false;
+	            	}else {ch1=true; $("#user_id").css("border","2px solid lightgreen"); $("#chkMsg").text(""); 
+			            	if(ch1 ==true && ch2 ==true && ch3 ==true && ch4 ==true && ch5 ==true  && ch6 ==true  && ch7 ==true  && ch8 ==true ){
+			            	$("#joinsubmit").removeAttr("disabled")
+			            	}
+	            	
 	            	}
-	            	else $("#user_id").css("border","2px solid lightgreen"); $("#chkMsg").text(""); ch1=true;
 	            	 
 	           
 	            }else{
 	            	$("#chkMsg").text("사용할 수 없는 아이디입니다.");
 	   	            $("#user_id").css("border","1px solid red");
 	            	//console.log('0'+data);
-	            	var ch1 =false;
+	            	ch1 =false;
 	           
 	           }
 	       },
@@ -307,20 +319,22 @@ $("#user_id").on("blur",function(){
 	    });
 });
 
+$("#name").on("blur",function(){
+	var regexp =/^[가-힣]{2,4}|[a-zA-Z]{5,20}\s[a-zA-Z]{5,20}$/;
+    v = $(this).val();
 
-var pwd = $("#pwd").val();
+    if (regexp.test(v)) {
 
-
-
-
-
-
-
-$("#pwd").on("focus",function(){
-  $(".pwdRef").show();
-});
-$("#pwd").on("blur",function(){
-  $(".pwdRef").hide();
+    $("#name").css("border","2px solid lightgreen");
+    ch2= true
+    if(ch1 ==true && ch2 ==true && ch3 ==true && ch4 ==true && ch5 ==true  && ch6 ==true  && ch7 ==true  && ch8 ==true ){
+    	$("#joinsubmit").removeAttr("disabled")
+    	}
+    }else{
+       $("#name").css("border","1px solid red");
+       $("#chkMsg2").text("입력값을 확인하세요");
+       ch2= false;
+    }
 });
 
 
@@ -339,16 +353,20 @@ $("#email").on("blur",function(){
 	            	if(!/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/.test(email)){
 	            		$("#chkMsg3").text("이메일 형식을 확인하세요 ");
 		   	            $("#email").css("border","1px solid red");
-		   	         	var ch2 =false;
+		   	         	ch3 =false;
 	            	}
-	            	else $("#email").css("border","2px solid lightgreen"); $("#chkMsg3").text(""); ch2=true;
-	            	 
+	            	else{  ch3=true; $("#email").css("border","2px solid lightgreen"); $("#chkMsg3").text(""); 
+	            	
+	            	if(ch1 ==true && ch2 ==true && ch3 ==true && ch4 ==true && ch5 ==true  && ch6 ==true  && ch7 ==true  && ch8 ==true ){
+		            	$("#joinsubmit").removeAttr("disabled")
+		            	}
+	            	}
 	           
 	            }else{
 	            	$("#chkMsg3").text("사용할 수 없는 이메일입니다.");
 	   	            $("#email").css("border","1px solid red");
 	            	//console.log('0'+data);
-	            	var ch2 =false;
+	            	ch3 =false;
 	           
 	           }
 	       },
@@ -358,29 +376,16 @@ $("#email").on("blur",function(){
 	    });
 });
 
-$("#name").keyup(function (event) {
-
-            regexp =/^[가-힣]{2,4}|[a-zA-Z]{2,10}\s[a-zA-Z]{2,10}$/;
 
 
-            v = $(this).val();
 
-            if (regexp.test(v)) {
-
-            $("#name").css("border","2px solid lightgreen");
-
-            }else{
-               $("#name").css("border","1px solid red");
-
-            }
-
+$("#pwd").on("focus",function(){
+  $(".pwdRef").show();
 });
-
-
-
-
-$("#pwd").keyup(function (event) {
-
+$("#pwd").on("blur",function(){
+  $(".pwdRef").hide();
+});
+$("#pwd").on("blur",function(){
             regexp = /^(?=.*[a-zA-Z])((?=.*\d)|(?=.*\W)).{8,}$/;
 
             v = $(this).val();
@@ -391,14 +396,17 @@ $("#pwd").keyup(function (event) {
                $(".pwdRef2").show().fadeOut(2000);
 
                 $("#pwd").css("border","2px solid lightgreen");
-
+				ch4= true;
+				if(ch1 ==true && ch2 ==true && ch3 ==true && ch4 ==true && ch5 ==true  && ch6 ==true  && ch7 ==true  && ch8 ==true ){
+	            	$("#joinsubmit").removeAttr("disabled")
+	            	}
                }else{
                 $("#pwd").css("border","1px solid red");
-
+				ch4= false
                }
 });
 
-$("#pwd2").keyup(function(event){
+$("#pwd2").on("blur",function(){
                $(".pwd2Ref2").show();
 
 
@@ -408,31 +416,54 @@ $("#pwd2").keyup(function(event){
                 $(".pwd2Ref").show().fadeOut(2000);
 
                  $(".pwd2Ref2").hide();
-
-
+                 ch5 =true
+                 if(ch1 ==true && ch2 ==true && ch3 ==true && ch4 ==true && ch5 ==true  && ch6 ==true  && ch7 ==true  && ch8 ==true ){
+		            	$("#joinsubmit").removeAttr("disabled")
+		            	}
+					
                }else{
                 $("#pwd2").css("border","1px solid red");
-
+				ch5= false;
 
                }
 });
 
+$("#birthday_year").on("click",function(){
+    if($(this).val()!=null){
+         $("#birthday_year").css("border","2px solid lightgreen");    
+          ch6= true;
+          if(ch1 ==true && ch2 ==true && ch3 ==true && ch4 ==true && ch5 ==true  && ch6 ==true  && ch7 ==true  && ch8 ==true ){
+          	$("#joinsubmit").removeAttr("disabled")
+          }
+    }else{
+     $("#birthday_year").css("border","1px solid red");
+ 		ch6= false;
+    }
+});
 
+$("#birthday_month").on("click",function(){
+    if($(this).val()!=null){
+         $("#birthday_month").css("border","2px solid lightgreen");
+          ch7= true;
+          if(ch1 ==true && ch2 ==true && ch3 ==true && ch4 ==true && ch5 ==true  && ch6 ==true  && ch7 ==true  && ch8 ==true ){
+          	$("#joinsubmit").removeAttr("disabled")
+          }
+    }else{
+     $("#birthday_month").css("border","1px solid red");
+ 	ch7= false;
+    }
+});
 
-$("select").keyup(function(event){
-               $(".pwd2Ref2").show();
-
-               if($(this).val()==$("#pwd").val()){
-
-
-                $("#pwd2").css("border","2px solid lightgreen");
-                $(".pwd2Ref").show().fadeOut(2000);
-
-                 $(".pwd2Ref2").hide();
-                 check =true;
-
+$("#birthday_day").on("click",function(){
+               if($(this).val()!=null){
+	                $("#birthday_day").css("border","2px solid lightgreen");	
+	                 ch8= true;
+	                 if(ch1 ==true && ch2 ==true && ch3 ==true && ch4 ==true && ch5 ==true  && ch6 ==true  && ch7 ==true  && ch8 ==true ){
+	                   	$("#joinsubmit").removeAttr("disabled")
+	                  }
                }else{
-                $("#pwd2").removeAttr('style:border');
+           	    	 $("#birthday_day").css("border","1px solid red");
+            		ch8= false;
                }
 });
 
@@ -441,15 +472,8 @@ $("select").keyup(function(event){
 
 
 
+	
 
-
-$(document).ready(function(){
-	if(!ch1 || !ch2){
-		$("#joinsubmit").attr('disabled','disabled');
-	}else{
-		$("#joinsubmit").removeAttr('disabled');
-	}
-});  
  	
 
 

@@ -198,7 +198,7 @@
 
 $(document).ready(function(){
    
-       location.href="/semi/storage.do";
+       //location.href="/semi/storage.do";
   
 });
 

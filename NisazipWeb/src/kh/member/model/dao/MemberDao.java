@@ -24,7 +24,98 @@ public class MemberDao {
 		
 	}
 
-
+	public Member selectMemberI(Connection con, Member m) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Member member = null;
+		
+		try { 
+			
+			String query = prop.getProperty("loginMemberI");
+					
+			pstmt = con.prepareStatement(query);
+			System.out.println("dao"+m);
+			pstmt.setString(1, m.getUser_id());
+			pstmt.setString(2, m.getPassword());
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()){
+				member = new Member();
+				
+				member.setUser_id(m.getUser_id());
+				member.setPassword(m.getPassword());
+				member.setUser_no(rset.getInt("USER_NO"));
+				member.setUser_name(rset.getString("USER_NAME"));
+				member.setGender(rset.getString("GENDER").charAt(0));	
+				member.setBirthdate(rset.getString("BIRTHDATE"));
+				member.setEmail(rset.getString("EMAIL"));
+				member.setPhone(rset.getString("PHONE"));
+				member.setJoin_date(new Date(rset.getDate("JOIN_DATE").getTime()));
+				//System.out.println("date:"+new Date(rset.getDate("JOIN_DATE").getTime()));
+				member.setLikerooms(rset.getString("LIKEROOMS"));
+				member.setLiketrips(rset.getString("LIKETRIPS"));
+				member.setR_hosting(rset.getInt("R_HOSTING"));
+				member.setT_hosting(rset.getInt("T_HOSTING"));
+			
+				System.out.println("sel"+m);
+				
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return member;
+	}
+	public Member selectMemberE(Connection con, Member m) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Member member = null;
+		
+		try { 
+			
+			String query = prop.getProperty("loginMemberE");
+					
+			pstmt = con.prepareStatement(query);
+			System.out.println("dao"+m);
+			pstmt.setString(1, m.getEmail());
+			pstmt.setString(2, m.getPassword());
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()){
+				member = new Member();
+				member.setUser_no(rset.getInt("USER_NO"));
+				member.setUser_id(rset.getString("USER_ID"));
+				member.setPassword(m.getPassword());
+				member.setEmail(m.getEmail());
+				member.setUser_name(rset.getString("USER_NAME"));
+				member.setGender(rset.getString("GENDER").charAt(0));	
+				member.setBirthdate(rset.getString("BIRTHDATE"));
+				member.setJoin_date(new Date(rset.getDate("JOIN_DATE").getTime()));
+				//System.out.println("date:"+new Date(rset.getDate("JOIN_DATE").getTime()));
+				member.setPhone(rset.getString("PHONE"));
+				member.setLikerooms(rset.getString("LIKEROOMS"));
+				member.setLiketrips(rset.getString("LIKETRIPS"));
+				member.setR_hosting(rset.getInt("R_HOSTING"));
+				member.setT_hosting(rset.getInt("T_HOSTING"));
+				System.out.println("sel"+m);
+				
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return member;
+	}
 	public int insertMember(Connection con, Member m) {
 		int result = 0;
 		PreparedStatement pstmt = null;
@@ -97,86 +188,7 @@ public class MemberDao {
 		
 		return result;
 	}
-	public Member selectMemberI(Connection con, Member m) {
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		Member member = null;
-		
-		try { 
-			
-			String query = prop.getProperty("loginMemberI");
-					
-			pstmt = con.prepareStatement(query);
-			System.out.println("dao"+m);
-			pstmt.setString(1, m.getUser_id());
-			pstmt.setString(2, m.getPassword());
-			
-			rset = pstmt.executeQuery();
-			
-			if(rset.next()){
-				member = new Member();
-				
-				member.setUser_id(m.getUser_id());
-				member.setPassword(m.getPassword());
-				member.setUser_no(rset.getInt("USER_NO"));
-				member.setUser_name(rset.getString("USER_NAME"));
-				member.setGender(rset.getString("GENDER").charAt(0));	
-				member.setBirthdate(rset.getString("BIRTHDATE"));
-				member.setEmail(rset.getString("EMAIL"));
-				member.setPhone(rset.getString("PHONE"));
-				System.out.println("sel"+m);
-				
-				
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			close(rset);
-			close(pstmt);
-		}
-		
-		return member;
-	}
-	public Member selectMemberE(Connection con, Member m) {
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		Member member = null;
-		
-		try { 
-			
-			String query = prop.getProperty("loginMemberE");
-					
-			pstmt = con.prepareStatement(query);
-			System.out.println("dao"+m);
-			pstmt.setString(1, m.getEmail());
-			pstmt.setString(2, m.getPassword());
-			
-			rset = pstmt.executeQuery();
-			
-			if(rset.next()){
-				member = new Member();
-				
-				member.setUser_id("USER_ID");
-				member.setPassword(m.getPassword());
-				member.setEmail(m.getEmail());
-				member.setUser_name(rset.getString("USER_NAME"));
-				member.setGender(rset.getString("GENDER").charAt(0));	
-				member.setBirthdate(rset.getString("BIRTHDATE"));
-				
-				member.setPhone(rset.getString("PHONE"));
-				System.out.println("sel"+m);
-				
-				
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			close(rset);
-			close(pstmt);
-		}
-		
-		return member;
-	}
+	
 
 
 	public int checkId(Connection con, String id) {
