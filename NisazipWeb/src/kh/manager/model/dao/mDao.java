@@ -312,4 +312,63 @@ public class mDao {
 		return t;
 	}
 
+	public int updateRoom(Connection con, Trip t) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "";
+		
+			query = prop.getProperty("updateRoom");
+/*			 T_NAME =?, T_MAX_NUM =?, T_TYPE =?, LANGUAGE = ?, 
+		     T_START_TIME=?, T_END_TIME=?, 
+		    		 PRICE=?, T_DETAIL=?, T_AREA=?, T_ADDR=?, T_LOC=?, T_START_DATE=?, T_END_DATE=? 
+		    				 WHERE T_ID = ?*/
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, t.getT_name());
+			pstmt.setInt(2, t.getT_max_num());
+			pstmt.setString(3, t.getT_type());
+			pstmt.setString(4, t.getLanguage());
+			pstmt.setString(5, t.getT_start_time());
+			pstmt.setString(6, t.getT_end_time());
+			pstmt.setInt(7, t.getPrice());
+			pstmt.setString(8, t.getT_detail());
+			pstmt.setString(9, t.getT_area());
+			pstmt.setString(10, t.getT_addr());
+			pstmt.setString(11, t.getT_loc());
+			pstmt.setString(12, t.getT_start_date());
+			pstmt.setString(13, t.getT_end_date());
+			pstmt.setString(14, t.getT_id());
+
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+				
+		return result;
+	}
+
+	public int deleteMember(Connection con, String tno) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("deleteRoom");
+
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, tno);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+				
+		return result;
+	}
+
 }

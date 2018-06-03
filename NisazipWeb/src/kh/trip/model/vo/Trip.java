@@ -48,6 +48,27 @@ public class Trip {
 		this.t_date = t_date;
 	}
 
+
+	public Trip(String t_id, String t_name, int t_max_num, String t_type, String language, String t_start_time,
+			String t_end_time, int price, String t_detail, String t_area, String t_addr, String t_loc,
+			String t_start_date, String t_end_date) {
+		super();
+		this.t_id = t_id;
+		this.t_name = t_name;
+		this.t_max_num = t_max_num;
+		this.t_type = t_type;
+		this.language = language;
+		this.t_start_time = t_start_time;
+		this.t_end_time = t_end_time;
+		this.price = price;
+		this.t_detail = t_detail;
+		this.t_area = t_area;
+		this.t_addr = t_addr;
+		this.t_loc = t_loc;
+		this.t_start_date = t_start_date;
+		this.t_end_date = t_end_date;
+	}
+
 	public String getT_id() {
 		return t_id;
 	}

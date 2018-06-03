@@ -8,7 +8,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
+<!-- 다음 주소 검색 API -->
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=912ba5ded38a05dd53c37b8850dd2427&libraries=services"></script>
    <title>관리자 페이지_트립관리</title>
     
 </head>
@@ -171,25 +173,31 @@
                                     <input type="text" id="area" name="area" class="form-control udInput" disabled>
                                 </div>
                             </div>
+                            
                             <div class="form-group form-group-sm form-group-xs">
-                                <label for="addr" class="col-sm-3 col-xs-3">주소:</label>
-                                <div class="col-sm-9 col-xs-9">
-                                    <input type="text" id="addr" name="addr" class="form-control udInput" disabled>
+                                <label for="zipCode" class="col-sm-3 col-xs-3">우편 번호:</label>
+                                <div class="col-sm-3 col-xs-3">
+                                    	<input type="text" id="zipCode" name="zipCode" class="form-control udInput" disabled>
                                 </div>
-                            </div>
-                            <div class="form-group form-group-sm form-group-xs">
-                                <label for="rating" class="col-sm-3 col-xs-3">평점:</label>
-                                <div class="col-sm-9 col-xs-9">
-                                    <input type="number" id="rating" name="rating" class="form-control" disabled>
+                                <div class="col-sm-3 col-xs-3">
+                                    	<button type="button" id="ckZip" onclick="addrSearch();"class=" btn btn-primary udInput" disabled>검색</button>
                                 </div>
                             </div>
                             
                             <div class="form-group form-group-sm form-group-xs">
-                                <label for="regiDate" class="col-sm-3 col-xs-3">등록일:</label>
+                                <label for="address1" class="col-sm-3 col-xs-3">주소:</label>
                                 <div class="col-sm-9 col-xs-9">
-                                    <input type="date" id="regiDate" name="regiDate" class="form-control" disabled>
+                                    	<input type="text" id="address1" name="address1" class="form-control udInput" disabled>
                                 </div>
                             </div>
+                            
+                            <div class="form-group form-group-sm form-group-xs">
+                                <label for="address2" class="col-sm-3 col-xs-3">상세 주소:</label>
+                                <div class="col-sm-9 col-xs-9">
+                                    	<input type="text" id="address2" name="address2" class="form-control udInput" disabled>
+                                </div>
+                            </div>
+                            
                             <div class="form-group form-group-sm form-group-xs">
                                 <label for="startDate" class="col-sm-3 col-xs-3 ">시작일:</label>
                                 <div class="col-sm-9 col-xs-9">
@@ -208,6 +216,18 @@
                                     <input type="text" id="count" name="count" class="form-control" disabled>
                                 </div>
                             </div>
+                            <div class="form-group form-group-sm form-group-xs">
+                                <label for="rating" class="col-sm-3 col-xs-3">평점:</label>
+                                <div class="col-sm-9 col-xs-9">
+                                    <input type="number" id="rating" name="rating" class="form-control" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group form-group-sm form-group-xs">
+                                <label for="regiDate" class="col-sm-3 col-xs-3">등록일:</label>
+                                <div class="col-sm-9 col-xs-9">
+                                    <input type="date" id="regiDate" name="regiDate" class="form-control" disabled>
+                                </div>
+                            </div>
                         </form>
 
                     </div>
@@ -216,7 +236,7 @@
                 <!-- 모달 footer -->
                 <div class="modal-footer">
                     <div class="pull-left">
-                        <button type="button" class="btn btn-danger">삭제하기</button>
+                        <button type="button" class="btn btn-danger" id="deleteRoom">삭제하기</button>
                     </div>
                     <div>
                         <button type="button" class="btn btn-primary" id="modify">수정하기</button>
@@ -272,7 +292,13 @@
 			        $('#price').val(data.PRICE);
 			        $('#detail').val(data.T_DETAIL);
 			        $('#area').val(data.T_AREA);
-			        $('#addr').val(data.T_ADDR);
+
+			         
+			        var addr = data.T_ADDR.split('| ');
+			        $('#zipCode').val(addr[0]);
+			        $('#address1').val(addr[1]);
+			        $('#address2').val(addr[2]);
+			        
 			        $('#rating').val(data.SCORE);
 			        
 			        var sDate = data.T_START_DATE.split(', ');
@@ -302,6 +328,15 @@
         
         $('#saveData').hide();
         
+      	//모달 - 삭제하기 버튼
+        $('#deleteRoom').click(function(){
+        	if (confirm("정말 삭제하시겠습니까??") == true){//확인
+        		location.href="<%=request.getContextPath()%>/deleteRoom.mg?tripNo="+$('#tripNo').val();
+        	}else{//취소
+        	    return;
+        	}
+        });
+        
       	//모달 - 수정하기 버튼
         $('#modify').click(function(){
         	var $update = $('.udInput');
@@ -313,27 +348,63 @@
             $(this).hide();
         });
       
-
         //모달 - 취소 버튼
         $('#close').click(function(){
         	$('#myModal input').attr("disabled",true);
         	$('#saveData').hide();
-        	$('#modify').show()
+        	$('#modify').show();
         });
         
       	//모달 - 취소 버튼
         $('#close2').click(function(){
         	$('#myModal input').attr("disabled",true);
         	$('#saveData').hide();
-        	$('#modify').show()
+        	$('#modify').show();
         });
         
         //모달 - 저장하기 버튼
         $('#saveData').click(function(){
-        	var $cgDate = $('.cgDate');
-            $('#myModal input').attr("disabled",true);
-            $('#modify').show();
-            $(this).hide();
+        	if (confirm("변경한 숙소 정보를 저장하시겠습니까??") == true){//확인
+        		$.ajax({
+            		url : "upRoom.mg",
+            		type:"POST",
+            		data:{
+    	      			tripNo : $('#tripNo').val(),
+            			tripName : $('#tripName').val(),
+            			maximum : $('#maximum').val(),
+            			triptype : $('#triptype').val(),
+            			language : $('#language').val(),
+            			startTime : $('#startTime').val(),
+            			endTime : $('#endTime').val(),
+            			price : $('#price').val(),
+            			detail : $('#detail').val(),
+            			area : $('#area').val(),
+            			address : $('#zipCode').val()+"| "+$('#address1').val()+"| "+$('#address2').val(),
+            			startDate : $('#startDate').val(),
+            			endDate : $('#endDate').val()
+            			
+            		}, success : function(data){
+            			alert(data);
+            			
+            		}, error : function(request, status, error){
+        				// 연결에 실패했을 때
+        				console.log("에러 코드 : "+request.status
+        						+ "에러 내용 : "+ request.responseText 
+        						+ "에러 메시지 : " + error);
+        				
+        				alert("데이터 전달 실패");
+        				
+        			}
+            		
+            	});
+            	
+            	var $cgDate = $('.cgDate');
+                $('#myModal input').attr("disabled",true);
+                $('#modify').show();
+                $(this).hide();
+        	}else{//취소
+        	    return;
+        	}
         });
 	
         //dropdown menu
@@ -352,6 +423,50 @@
         $('#home_btn').click(function(){
         	location.href="admin_home.jsp";
         });
+        
+     	// 참조 API : http://postcode.map.daum.net/guide
+		function addrSearch() {
+	        new daum.Postcode({
+	            oncomplete: function(data) {
+	                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+	                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+	                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+	                var fullAddr = ''; // 최종 주소 변수
+	                var extraAddr = ''; // 조합형 주소 변수
+
+	                // 사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+	                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+	                    fullAddr = data.roadAddress;
+
+	                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+	                    fullAddr = data.jibunAddress;
+	                }
+
+	                // 사용자가 선택한 주소가 도로명 타입일때 조합한다.
+	                if(data.userSelectedType === 'R'){
+	                    //법정동명이 있을 경우 추가한다.
+	                    if(data.bname !== ''){
+	                        extraAddr += data.bname;
+	                    }
+	                    // 건물명이 있을 경우 추가한다.
+	                    if(data.buildingName !== ''){
+	                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+	                    }
+	                    // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
+	                    fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : '');
+	                }
+
+	                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+	                $('#zipCode').val(data.zonecode); //5자리 새우편번호 사용
+	                
+	                $('#address1').val(fullAddr);
+
+	                // 커서를 상세주소 필드로 이동한다.
+	                $('#address2').focus();
+	            }
+	        }).open();
+	    };
 
     </script>
     

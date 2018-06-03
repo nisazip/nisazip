@@ -139,22 +139,22 @@ li:hover{
 	function goTrip(){
 		location.href="<%=request.getContextPath()%>/tripList.mg";
 		$('li').removeClass("active");
-		$('li:nth-child(2)').addClass("active");
+		$('li:nth-child(3)').addClass("active");
 	}
 	function goBoard(){
 		location.href="";
 		$('li').removeClass("active");
-		$('li:nth-child(2)').addClass("active");
+		$('li:nth-child(4)').addClass("active");
 	}
 	function goReport(){
 		location.href="";
 		$('li').removeClass("active");
-		$('li:nth-child(2)').addClass("active");
+		$('li:nth-child(5)').addClass("active");
 	}
 	function goAdmin(){
 		location.href="";
 		$('li').removeClass("active");
-		$('li:nth-child(2)').addClass("active");
+		$('li:nth-child(6)').addClass("active");
 	}
 	
 	/* 

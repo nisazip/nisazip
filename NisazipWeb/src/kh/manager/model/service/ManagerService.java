@@ -94,4 +94,30 @@ public class ManagerService {
 		return t;
 	}
 
+	public int updateRoom(Trip t) {
+		Connection con = getConnection();
+		System.out.println("dao : "+t);
+		int result = new mDao().updateRoom(con, t);
+		
+		if(result >0) commit(con);
+		else rollback(con);
+		
+		close(con);
+
+		return result;
+	}
+
+	public int deleteRoom(String tno) {
+		Connection con = getConnection();
+		
+		int result = new mDao().deleteMember(con, tno);
+		
+		if(result >0) commit(con);
+		else rollback(con);
+		
+		close(con);
+
+		return result;
+	}
+
 }
