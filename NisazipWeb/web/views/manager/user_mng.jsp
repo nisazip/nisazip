@@ -381,6 +381,7 @@
         });
         //모달 - 저장하기 버튼
         $('#saveData').click(function(){
+        	if (confirm("변경한 숙소 정보를 저장하시겠습니까??") == true){//확인
         	$.ajax({
         		url : "upMemeber.mg",
         		type:"POST",
@@ -410,6 +411,11 @@
             $('#myModal input').attr("disabled",true);
             $('#modify').show();
             $(this).hide();
+            
+        }else{//취소
+        	    return;
+        }
+        	
         });
         
 		

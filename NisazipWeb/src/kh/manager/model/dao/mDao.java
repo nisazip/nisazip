@@ -264,7 +264,7 @@ public class mDao {
 		return result;
 	}
 
-	public HashMap<String, Object> selectRoom(Connection con, String tno) {
+	public HashMap<String, Object> selectTrip(Connection con, String tno) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		HashMap<String, Object> t = null;
@@ -300,7 +300,7 @@ public class mDao {
 				t.put("T_DATE",rset.getString("T_DATE"));
 				t.put("RCNT",rset.getInt("RCNT"));
 				
-				System.out.println("selectOneRoom : "+t);
+				System.out.println("selectOneTrip : "+t);
 			} 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -369,6 +369,57 @@ public class mDao {
 		}
 				
 		return result;
+	}
+
+	public HashMap<String, Object> selectRoom(Connection con, String rNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		HashMap<String, Object> r = null;
+		
+		String query = prop.getProperty("selectOneRoom");
+
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, rNo);
+			pstmt.setString(2, rNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				
+				r = new HashMap<String, Object>();
+				
+				r.put("R_ID", rset.getString("R_ID"));
+				r.put("R_NAME",rset.getString("R_NAME"));
+				r.put("HOST_ID",rset.getString("HOST_ID"));
+				r.put("R_MAX_NUM",rset.getString("R_MAX_NUM"));
+				r.put("R_TYPE",rset.getString("R_TYPE"));
+				r.put("R_TYPE2",rset.getString("R_TYPE2"));
+				r.put("R_OPTION",rset.getString("R_OPTION"));
+				r.put("ROOM_NUM",rset.getInt("ROOM_NUM"));
+				r.put("TOILET_NUM",rset.getInt("TOILET_NUM"));
+				r.put("BED_NUM",rset.getInt("BED_NUM"));
+				r.put("T_DETAIL", rset.getString("T_DETAIL"));
+				r.put("R_ROLE", rset.getString("R_ROLE"));
+				r.put("PRICE",rset.getInt("PRICE"));
+				r.put("R_AREA",rset.getString("R_AREA"));
+				r.put("R_ADDR",rset.getString("R_ADDR"));
+				r.put("R_START_DATE",rset.getString("R_START_DATE"));
+				r.put("R_END_DATE",rset.getString("R_END_DATE"));
+				r.put("SCORE",rset.getFloat("SCORE"));
+				r.put("R_DATE",rset.getString("R_DATE"));
+				r.put("RCNT",rset.getInt("RCNT"));
+				
+				System.out.println("selectOneRoom : "+r);
+			} 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+				
+		return r;
 	}
 
 }

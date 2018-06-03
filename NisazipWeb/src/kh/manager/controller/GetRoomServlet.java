@@ -13,21 +13,21 @@ import com.google.gson.Gson;
 
 import kh.manager.model.service.ManagerService;
 
-@WebServlet("/getTrip.mg")
-public class GetTripServlet extends HttpServlet {
+@WebServlet("/getRoom.mg")
+public class GetRoomServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    public GetTripServlet() {  }
+
+    public GetRoomServlet() { }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String tno = request.getParameter("tripNo");
-		System.out.println("tno : "+ tno);
+		String rNo = request.getParameter("roomNo");
+		
+		System.out.println("rNo : "+ rNo);
 
-		HashMap<String, Object> t = new ManagerService().selectOneTrip(tno);
+		HashMap<String, Object> t = new ManagerService().selectOneRoom(rNo);
 
 		response.setContentType("application/json; charset=UTF-8");
 	      new Gson().toJson(t, response.getWriter());
-		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

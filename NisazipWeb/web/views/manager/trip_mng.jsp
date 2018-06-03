@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- 다음 주소 검색 API -->
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=912ba5ded38a05dd53c37b8850dd2427&libraries=services"></script>
+
    <title>관리자 페이지_트립관리</title>
     
 </head>
@@ -340,10 +340,7 @@
       	//모달 - 수정하기 버튼
         $('#modify').click(function(){
         	var $update = $('.udInput');
-        	var $cgDate = $('.cgDate');
-            
-        	$update.attr("disabled",false);/* 
-            $cgDate.attr("type","date"); */
+        	$update.attr("disabled",false);
             $('#saveData').show();
             $(this).hide();
         });
@@ -424,7 +421,7 @@
         	location.href="admin_home.jsp";
         });
         
-     	// 참조 API : http://postcode.map.daum.net/guide
+     	// 주소 검색
 		function addrSearch() {
 	        new daum.Postcode({
 	            oncomplete: function(data) {

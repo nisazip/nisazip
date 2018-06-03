@@ -83,10 +83,10 @@ public class ManagerService {
 		return result;
 	}
 
-	public HashMap<String, Object> selectOneRoom(String tno) {
+	public HashMap<String, Object> selectOneTrip(String tno) {
 		Connection con = getConnection();
 		
-		HashMap<String, Object> t = new mDao().selectRoom(con, tno);
+		HashMap<String, Object> t = new mDao().selectTrip(con, tno);
 		
 		close(con);
 		
@@ -118,6 +118,15 @@ public class ManagerService {
 		close(con);
 
 		return result;
+	}
+
+	public HashMap<String, Object> selectOneRoom(String rNo) {
+		Connection con = getConnection();
+		
+		HashMap<String, Object> t = new mDao().selectRoom(con, rNo);
+		close(con);
+
+		return t;
 	}
 
 }
