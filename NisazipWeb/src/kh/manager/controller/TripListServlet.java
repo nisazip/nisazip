@@ -25,7 +25,7 @@ public class TripListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ArrayList<Trip> list = new ManagerService().tList();
 		String page="";
-		
+		System.out.println("서블릿 : "+list);
 		if(list != null){
 			page="views/manager/trip_mng.jsp";
 			request.setAttribute("tList", list);

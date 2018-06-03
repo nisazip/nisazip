@@ -237,7 +237,7 @@
                 <!-- 모달 footer -->
                 <div class="modal-footer">
                     <div class="pull-left">
-                        <button type="button" class="btn btn-danger" id="deleteMemeber">삭제하기</button>
+                        <button type="button" class="btn btn-danger" id="deleteMember">삭제하기</button>
                     </div>
                     <div>
                         <button type="button" class="btn btn-primary" id="modify">수정하기</button>
@@ -349,14 +349,27 @@
         $('#saveData').hide();
         
       	//모달  - 삭제하기 버튼
-        $('#deleteMemeber').click(function(){
+        $('#deleteMember').click(function(){
         	if (confirm("정말 삭제하시겠습니까??") == true){//확인
         		location.href="<%=request.getContextPath()%>/deleteMember.mg?userNo="+$('#userNo').val();
         	}else{//취소
         	    return;
         	}
         });
+
+        //모달 - 취소 버튼
+        $('#close').click(function(){
+        	$('#myModal input').attr("disabled",true);
+        	$('#saveData').hide();
+        	$('#modify').show()
+        });
         
+      	//모달 - 취소 버튼
+        $('#close2').click(function(){
+        	$('#myModal input').attr("disabled",true);
+        	$('#saveData').hide();
+        	$('#modify').show()
+        });
         
         //모달 - 수정하기 버튼
         $('#modify').click(function(){
@@ -397,20 +410,6 @@
             $('#myModal input').attr("disabled",true);
             $('#modify').show();
             $(this).hide();
-        });
-        
-        //모달 - 취소 버튼
-        $('#close').click(function(){
-        	$('#myModal input').attr("disabled",true);
-        	$('#saveData').hide();
-        	$('#modify').show()
-        });
-        
-      //모달 - 취소 버튼
-        $('#close2').click(function(){
-        	$('#myModal input').attr("disabled",true);
-        	$('#saveData').hide();
-        	$('#modify').show()
         });
         
 		

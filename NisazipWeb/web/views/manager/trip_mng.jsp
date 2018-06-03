@@ -46,7 +46,7 @@
 				
 				<!--테이블 영역 -->
 				<div class="table-responsive">
-                <table class="table table-striped table-bordered table-hover " id="userTable" data-toggle="modal" data-target="#myModal">
+                <table class="table table-striped table-bordered table-hover " id="tripTable" data-toggle="modal" data-target="#myModal">
                     <thead>
 	                    <tr onclick="event.cancelBubble=true">
 	                        <th>트립아이디</th>
@@ -92,7 +92,7 @@
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <button type="button" class="close" data-dismiss="modal" id="close2">&times;</button>
                     <h4 class="modal-title">트립정보</h4>
                 </div>
                 <!-- 모달 body -->
@@ -106,9 +106,15 @@
                                 <img data-src="holder.js/200x200" alt="트립 사진" class="img">
                             </div>
                             <div class="form-group form-group-sm form-group-xs">
-                                <label for="roomName" class="col-sm-3 col-xs-3">트립이름 : </label>
+                                <label for="tripNo" class="col-sm-3 col-xs-3">트립번호 : </label>
                                 <div class="col-sm-9 col-xs-9">
-                                    <input type="text" id="roomName" name="roomName" class="form-control" disabled>
+                                    <input type="text" id="tripNo" name="tripNo" class="form-control" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group form-group-sm form-group-xs">
+                                <label for="tripName" class="col-sm-3 col-xs-3">트립이름 : </label>
+                                <div class="col-sm-9 col-xs-9">
+                                    <input type="text" id="tripName" name="tripName" class="form-control udInput" disabled>
                                 </div>
                             </div>
                             <div class="form-group form-group-sm form-group-xs">
@@ -120,45 +126,55 @@
                             <div class="form-group form-group-sm form-group-xs">
                                 <label for="maximum" class="col-sm-3 col-xs-3">최대인원 : </label>
                                 <div class="col-sm-9 col-xs-9">
-                                    <input type="number" id="maximum" name="maximum" class="form-control" disabled>
-                                </div>
-                            </div>
-
-                            
-                            <div class="form-group form-group-sm form-group-xs">
-                                <label for="roomtype1" class="col-sm-3 col-xs-3">숙소 종류:</label>
-                                <div class="col-sm-9 col-xs-9">
-                                    <input type="text" id="roomtype1" name="roomtype1" class="form-control" disabled>
+                                    <input type="number" id="maximum" name="maximum" class="form-control udInput" disabled>
                                 </div>
                             </div>
                             <div class="form-group form-group-sm form-group-xs">
-                                <label for="roomtype2" class="col-sm-3 col-xs-3">숙소 유형:</label>
+                                <label for="triptype" class="col-sm-3 col-xs-3">트립 종류:</label>
                                 <div class="col-sm-9 col-xs-9">
-                                    <input type="text" id="roomtype2" name="roomtype2" class="form-control" disabled>
+                                    <input type="text" id="triptype" name="triptype" class="form-control udInput" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group form-group-sm form-group-xs">
+                                <label for="language" class="col-sm-3 col-xs-3">가능 언어:</label>
+                                <div class="col-sm-9 col-xs-9">
+                                    <input type="text" id="language" name="language" class="form-control udInput" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group form-group-sm form-group-xs">
+                                <label for="startTime" class="col-sm-3 col-xs-3">시작 시간:</label>
+                                <div class="col-sm-9 col-xs-9">
+                                    <input type="text" id="startTime" name="startTime" class="form-control udInput" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group form-group-sm form-group-xs">
+                                <label for="endTime" class="col-sm-3 col-xs-3">종료 시간:</label>
+                                <div class="col-sm-9 col-xs-9">
+                                    <input type="text" id="endTime" name="endTime" class="form-control udInput" disabled>
                                 </div>
                             </div>
                             <div class="form-group form-group-sm form-group-xs">
                                 <label for="detail" class="col-sm-3 col-xs-3">상세소개:</label>
                                 <div class="col-sm-9 col-xs-9">
-                                    <input type="text" id="detail" name="detail" class="form-control" disabled>
+                                    <input type="text" id="detail" name="detail" class="form-control udInput" disabled>
                                 </div>
                             </div>
                             <div class="form-group form-group-sm form-group-xs">
                                 <label for="price" class="col-sm-3 col-xs-3">가격 : </label>
                                 <div class="col-sm-9 col-xs-9">
-                                    <input type="number" id="price" name="price" class="form-control" disabled>
+                                    <input type="number" id="price" name="price" class="form-control udInput" disabled>
                                 </div>
                             </div>
                             <div class="form-group form-group-sm form-group-xs">
                                 <label for="area" class="col-sm-3 col-xs-3">지역:</label>
                                 <div class="col-sm-9 col-xs-9">
-                                    <input type="text" id="area" name="area" class="form-control" disabled>
+                                    <input type="text" id="area" name="area" class="form-control udInput" disabled>
                                 </div>
                             </div>
                             <div class="form-group form-group-sm form-group-xs">
                                 <label for="addr" class="col-sm-3 col-xs-3">주소:</label>
                                 <div class="col-sm-9 col-xs-9">
-                                    <input type="text" id="addr" name="addr" class="form-control" disabled>
+                                    <input type="text" id="addr" name="addr" class="form-control udInput" disabled>
                                 </div>
                             </div>
                             <div class="form-group form-group-sm form-group-xs">
@@ -175,25 +191,23 @@
                                 </div>
                             </div>
                             <div class="form-group form-group-sm form-group-xs">
-                                <label for="startDate" class="col-sm-3 col-xs-3">시작일:</label>
+                                <label for="startDate" class="col-sm-3 col-xs-3 ">시작일:</label>
                                 <div class="col-sm-9 col-xs-9">
-                                    <input type="date" id="startDate" name="startDate" class="form-control" disabled>
+                                    <input type="date" id="startDate" name="startDate" class="form-control udInput cgDate" disabled>
                                 </div>
                             </div>
                             <div class="form-group form-group-sm form-group-xs">
-                                <label for="endDate" class="col-sm-3 col-xs-3">마감일:</label>
+                                <label for="endDate" class="col-sm-3 col-xs-3 ">마감일:</label>
                                 <div class="col-sm-9 col-xs-9">
-                                    <input type="date" id="endDate" name="endDate" class="form-control" disabled>
+                                    <input type="date" id="endDate" name="endDate" class="form-control udInput cgDate" disabled>
                                 </div>
                             </div>
                             <div class="form-group form-group-sm form-group-xs">
                                 <label for="count" class="col-sm-3 col-xs-3">총 예약건수:</label>
                                 <div class="col-sm-9 col-xs-9">
-                                    <input type="number" id="count" name="count" class="form-control" disabled>
+                                    <input type="text" id="count" name="count" class="form-control" disabled>
                                 </div>
                             </div>
-                            
-                            
                         </form>
 
                     </div>
@@ -207,7 +221,7 @@
                     <div>
                         <button type="button" class="btn btn-primary" id="modify">수정하기</button>
                         <button type="button" class="btn btn-primary" id="saveData" >저장하기</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" id="close">Close</button>
                     </div>
                 </div>
             </div>
@@ -229,59 +243,94 @@
 
     
         //테이블을 클릭했을 때 실행할 이벤트
-        $("#userTable tr").click(function () {
+        $("#tripTable tr").click(function () {
             var str = "";
             var tdArr = new Array();
             var tr = $(this);
             var td = tr.children();
- 
-            /*
-             //데이터값을 받아 배열에 담음 
-             // ## 필요하지는 않음
-             td.each(function (i) {
-                 tdArr.push(td.eq(i).text());
-             });
-             console.log("데이터 값 : " + tdArr);
-            */
+ 			
+          	//테이블의 첫 행을 클릭했을 때는 모달창을 띄우지 않는다.
+            if(td.eq(0).text()!="트립 번호"){
+				console.log(td.eq(0).text());
+             $.ajax({
+         		url : "getTrip.mg",
+         		type: "GET",
+         		data : {
+         			tripNo : td.eq(0).text()
+         		},success : function(data){
+         			//성공했을 때 
 
-            //테이블의 첫 행을 클릭했을 때는 모달창을 띄우지 않는다.
-            if(td.eq(0).text()!="회원 번호"){
-                
-                //모달 안에 넣어줄 값 세팅
-                console.log("정상적으로 모달에 전달 : "+td.eq(1).text());
-                
-                $('#userId').val(td.eq(1).text());
-                $('#userName').val(td.eq(2).text());
-                $('#phone').val(td.eq(3).text());
+         			//모달 안에 넣어줄 값 세팅 
+         			$('#tripNo').val(data.T_ID);
+                    $('#tripName').val(data.T_NAME);
+                    $('#hostId').val(data.HOST_ID);
+			        $('#maximum').val(data.T_MAX_NUM);
+			        $('#triptype').val(data.T_TYPE);
+			        $('#language').val(data.LANGUAGE);
+			        $('#startTime').val(data.T_START_TIME);
+			        $('#endTime').val(data.T_END_TIME);
+			        $('#price').val(data.PRICE);
+			        $('#detail').val(data.T_DETAIL);
+			        $('#area').val(data.T_AREA);
+			        $('#addr').val(data.T_ADDR);
+			        $('#rating').val(data.SCORE);
+			        
+			        var sDate = data.T_START_DATE.split(', ');
+			        $('#startDate').attr("value",sDate[0]+'-'+sDate[1]+'-'+sDate[2]);
+			        
+			        var eDate = data.T_END_DATE.split(', ');
+			        $('#endDate').attr("value",eDate[0]+'-'+eDate[1]+'-'+eDate[2]);
+			        
+			        var rDate = data.T_END_DATE.split(', ');
+			        $('#regiDate').attr("value",rDate[0]+'-'+rDate[1]+'-'+rDate[2]);
+			        
+			        $('#count').val(data.RCNT);
+			      
+         		}, error : function(request, status, error){
+    				// 연결에 실패했을 때
+    				console.log("에러 코드 : "+request.status
+    						+ "에러 내용 : "+ request.responseText 
+    						+ "에러 메시지 : " + error);
+    				
+    				alert("데이터 전달 실패");
+    			}
+         	});
 
-                if (td.eq(4).text() == "남성") {
-                    $('input:radio[name=gender]:input[value=F]').attr("checked", false);
-                    $('input:radio[name=gender]:input[value=M]').attr("checked", true);
-                } else if (td.eq(4).text() == "여성") {
-                    $('input:radio[name=gender]:input[value=M]').attr("checked", false);
-                    $('input:radio[name=gender]:input[value=F]').attr("checked", true);
-                } else alert("성별 Error" + (td.eq(4).text()));
-
-                $('#age').val(td.eq(5).text());
-                $('#roomshosting').val(td.eq(6).text());
-                $('#tripHosting').val(td.eq(7).text());
-                $('#oAuth').val(td.eq(8).text());
-                $('#joinDate').val(td.eq(9).text());
-                $('#report').val(td.eq(10).text());
             }
-            
+
             });
         
         $('#saveData').hide();
         
-        //모달 - 수정하기 버튼
+      	//모달 - 수정하기 버튼
         $('#modify').click(function(){
-            $('#myModal input').attr("disabled",false);
+        	var $update = $('.udInput');
+        	var $cgDate = $('.cgDate');
+            
+        	$update.attr("disabled",false);/* 
+            $cgDate.attr("type","date"); */
             $('#saveData').show();
             $(this).hide();
         });
+      
+
+        //모달 - 취소 버튼
+        $('#close').click(function(){
+        	$('#myModal input').attr("disabled",true);
+        	$('#saveData').hide();
+        	$('#modify').show()
+        });
+        
+      	//모달 - 취소 버튼
+        $('#close2').click(function(){
+        	$('#myModal input').attr("disabled",true);
+        	$('#saveData').hide();
+        	$('#modify').show()
+        });
+        
         //모달 - 저장하기 버튼
         $('#saveData').click(function(){
+        	var $cgDate = $('.cgDate');
             $('#myModal input').attr("disabled",true);
             $('#modify').show();
             $(this).hide();

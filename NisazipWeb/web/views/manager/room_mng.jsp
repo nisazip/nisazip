@@ -92,7 +92,7 @@
             <!-- Modal content-->
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <button type="button" class="close" data-dismiss="modal" id="close2">&times;</button>
                     <h4 class="modal-title">숙소정보</h4>
                 </div>
                 <!-- 모달 body -->
@@ -207,7 +207,7 @@
                     <div>
                         <button type="button" class="btn btn-primary" id="modify">수정하기</button>
                         <button type="button" class="btn btn-primary" id="saveData" >저장하기</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" id="close">Close</button>
                     </div>
                 </div>
             </div>
@@ -280,6 +280,21 @@
             $('#saveData').show();
             $(this).hide();
         });
+
+        //모달 - 취소 버튼
+        $('#close').click(function(){
+        	$('#myModal input').attr("disabled",true);
+        	$('#saveData').hide();
+        	$('#modify').show()
+        });
+        
+      	//모달 - 취소 버튼
+        $('#close2').click(function(){
+        	$('#myModal input').attr("disabled",true);
+        	$('#saveData').hide();
+        	$('#modify').show()
+        });
+        
         //모달 - 저장하기 버튼
         $('#saveData').click(function(){
             $('#myModal input').attr("disabled",true);

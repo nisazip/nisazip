@@ -146,18 +146,10 @@ public class mDao {
 				t.setT_max_num(rset.getInt("T_MAX_NUM"));
 				t.setT_type(rset.getString("T_TYPE"));
 				t.setLanguage(rset.getString("LANGUAGE"));
-				t.setT_start_time(rset.getDate("T_START_TIME"));
-				t.setT_end_time(rset.getDate("T_END_TIME"));
 				t.setPrice(rset.getInt("PRICE"));
-				t.setT_detail(rset.getString("T_DETAIL"));
 				t.setT_area(rset.getString("T_AREA"));
-				t.setT_addr(rset.getString("T_ADDR"));
-				t.setT_loc(rset.getString("T_LOC"));
-				t.setT_start_date(rset.getDate("T_START_DATE"));
-				t.setT_end_date(rset.getDate("T_END_DATE"));
 				t.setScore(rset.getFloat("SCORE"));
-				t.setT_date(rset.getDate("T_DATE"));
-				System.out.println("dao"+t);
+				t.setT_date(rset.getString("T_DATE"));
 				result.add(t);
 			}
 		} catch (SQLException e) {
@@ -166,8 +158,6 @@ public class mDao {
 			close(rset);
 			close(stmt);
 		}
-		
-		
 		return result;
 	}
 
@@ -272,6 +262,54 @@ public class mDao {
 		}
 				
 		return result;
+	}
+
+	public HashMap<String, Object> selectRoom(Connection con, String tno) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		HashMap<String, Object> t = null;
+		
+		String query = prop.getProperty("selectOneTrip");
+
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, tno);
+			pstmt.setString(2, tno);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				t = new HashMap<String, Object>();
+				
+				t.put("T_ID", rset.getString("T_ID"));
+				t.put("T_NAME",rset.getString("T_NAME"));
+				t.put("HOST_ID",rset.getString("HOST_ID"));
+				t.put("T_MAX_NUM",rset.getString("T_MAX_NUM"));
+				t.put("T_TYPE",rset.getString("T_TYPE"));
+				t.put("LANGUAGE",rset.getString("LANGUAGE"));
+				t.put("T_START_TIME",rset.getString("T_START_TIME"));
+				t.put("T_END_TIME",rset.getString("T_END_TIME"));
+				t.put("PRICE",rset.getInt("PRICE"));
+				t.put("T_DETAIL", rset.getString("T_DETAIL"));
+				t.put("T_AREA",rset.getString("T_AREA"));
+				t.put("T_ADDR",rset.getString("T_ADDR"));
+				t.put("T_LOC",rset.getString("T_LOC"));
+				t.put("T_START_DATE",rset.getString("T_START_DATE"));
+				t.put("T_END_DATE",rset.getString("T_END_DATE"));
+				t.put("SCORE",rset.getFloat("SCORE"));
+				t.put("T_DATE",rset.getString("T_DATE"));
+				t.put("RCNT",rset.getInt("RCNT"));
+				
+				System.out.println("selectOneRoom : "+t);
+			} 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+				
+		return t;
 	}
 
 }

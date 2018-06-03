@@ -39,11 +39,11 @@ public class ManagerService {
 
 	public ArrayList<Trip> tList() {
 		Connection con = getConnection();
-		
+		System.out.println("servicetList");
 		ArrayList<Trip> list = new mDao().tList(con);
-		
+		System.out.println("service222tList");
 		close(con);
-		
+		System.out.println("service : "+list);
 		return list;
 	}
 
@@ -81,6 +81,17 @@ public class ManagerService {
 		close(con);
 
 		return result;
+	}
+
+	public HashMap<String, Object> selectOneRoom(String tno) {
+		Connection con = getConnection();
+		
+		HashMap<String, Object> t = new mDao().selectRoom(con, tno);
+		
+		close(con);
+		
+
+		return t;
 	}
 
 }
