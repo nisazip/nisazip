@@ -12,20 +12,19 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import kh.home.model.service.RoomService;
-import kh.home.model.vo.RecRoom;
+import kh.home.model.service.TripService;
 
 /**
- * Servlet implementation class RoomListServlet
+ * Servlet implementation class TripServlet
  */
-@WebServlet("/rList.ho")
-public class RoomListServlet extends HttpServlet {
+@WebServlet("/list.tr")
+public class TripServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public RoomListServlet() {
+    public TripServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,14 +33,12 @@ public class RoomListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<HashMap<String, Object>> rlist = new RoomService().selectrList();
+		ArrayList<HashMap<String, Object>> tlist = new TripService().select8tripList();
 		
 		response.setContentType("application/json; charset=UTF-8");
-		new Gson().toJson(rlist, response.getWriter());
+		new Gson().toJson(tlist,response.getWriter());
 		
-		System.out.println("I AM BACK");
 	
-		
 	}
 
 	/**

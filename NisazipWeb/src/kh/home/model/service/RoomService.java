@@ -13,10 +13,19 @@ import kh.home.model.vo.Room;
 
 public class RoomService {
 
-	public ArrayList<HashMap<String, Object>> selectrList() {
+	public ArrayList<HashMap<String, Object>> select4roomList() {
 		Connection con = getConnection();
 		
-		ArrayList<HashMap<String,Object>> rlist = new RoomDao().selectrList(con);
+		ArrayList<HashMap<String,Object>> rlist = new RoomDao().select4roomList(con);
+		
+		close(con);
+		return rlist;
+	}
+	
+	public ArrayList<HashMap<String, Object>> select8roomList() {
+		Connection con = getConnection();
+		
+		ArrayList<HashMap<String,Object>> rlist = new RoomDao().select8roomList(con);
 		
 		close(con);
 		return rlist;
@@ -32,17 +41,16 @@ public class RoomService {
 		return reclist;
 	}
 
-/*	public ArrayList<Room> searchRoom(String location, String checkin, String checkout, String adults,
-			String children) {
+	public ArrayList<HashMap<String, Object>> searchRoom(String location, String checkin, String checkout, String adults) {
 		Connection con = getConnection();
 		
-		ArrayList<Room> rlist = new RoomDao().searchrlist(con);
+		ArrayList<HashMap<String,Object>> rlist = new RoomDao().homeRoomSearch(con,location,checkin,checkout,adults);
 		
 		close(con);
 		
 		return rlist;
 	}
-*/
+
 	public ArrayList<HashMap<String, Object>> searchKeyword(String keyword) {
 		Connection con = getConnection();
 		

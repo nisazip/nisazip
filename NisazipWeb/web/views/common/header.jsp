@@ -60,6 +60,12 @@
 .navbar-nav{
    text-align:center;
 }
+
+#title{
+	font-size:30pt;
+	text-decoration: none;
+	color:black;
+}
 </style>
 </head>
 
@@ -82,7 +88,7 @@
       <div class="row">
          <div class="col-md-2"></div>
          <div class="col-md-3">
-            <h1>네가 사는 제주</h1>
+            <button id="title" class="btn-link" onclick="location.href='home.jsp'">네가 사는 제주</button>
          </div>
          <div class="col-md-7">
             <nav class="navbar navbar-inverse">
@@ -96,8 +102,8 @@
 
                   <div class="collapse navbar-collapse" id="myNavbar">
                      <ul class="nav navbar-nav">
-                        <li class="navbtn"><a href="#">숙소</a></li>
-                        <li class="navbtn"><a href="#">트립</a></li>
+                        <li class="navbtn"><a href='room.jsp'>숙소</a></li>
+                        <li class="navbtn"><a href="trip.jsp">트립</a></li>
                         <li class="dropdown navbtn"><a class="dropdown-toggle"
                            data-toggle="dropdown" href="#">호스트 <span class="caret"></span></a>
                            <ul class="dropdown-menu">

@@ -20,5 +20,5 @@ public class SearchDao {
 		}
 	}
 	
-	public ArrayList<Room> searchRoom(Connection con, String )
+//	public ArrayList<Room> searchRoom(Connection con, String )
 }

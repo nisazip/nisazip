@@ -14,33 +14,42 @@ import kh.home.model.vo.Trip;
 
 public class TripService {
 
-	public ArrayList<HashMap<String, Object>> selecttList() {
+	public ArrayList<HashMap<String, Object>> select4tripList() {
 		Connection con = getConnection();
 		
-		ArrayList<HashMap<String,Object>> tlist = new TripDao().selecttList(con);
+		ArrayList<HashMap<String,Object>> tlist = new TripDao().select4tripList(con);
 		
 		close(con);
 		
 		return tlist;
 	}
-/*
-	public ArrayList<Trip> searchTrip(String location, String checkin, String checkout, String adults,
-			String children) {
+	
+	public ArrayList<HashMap<String, Object>> select8tripList() {
 		Connection con = getConnection();
 		
-		ArrayList<Trip> tlist = new TripDao().searchtList(con);
+		ArrayList<HashMap<String,Object>> tlist = new TripDao().select8tripList(con);
 		
 		close(con);
 		
 		return tlist;
 	}
-*/
+
+	public ArrayList<HashMap<String, Object>> searchTrip(String location, String checkin, String checkout, String adults) {
+		Connection con = getConnection();
+		
+		ArrayList<HashMap<String, Object>> tlist = new TripDao().homeTripSearch(con,location,checkin,checkout,adults);
+		
+		close(con);
+		
+		return tlist;
+	}
+
 	public ArrayList<HashMap<String, Object>> searchKeyword(String keyword) {
 		Connection con = getConnection();
 		
-		RoomDao rDao = new RoomDao();
+		TripDao tDao = new TripDao();
 		
-		ArrayList<HashMap<String,Object>> tlist =  new RoomDao().searchKeyword(con,keyword);
+		ArrayList<HashMap<String,Object>> tlist =  new TripDao().searchKeyword(con,keyword);
 		
 		return tlist;
 	}

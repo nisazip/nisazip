@@ -1,8 +1,10 @@
 package kh.home.controller;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -38,35 +40,21 @@ public class HomeSearchServlet extends HttpServlet {
 		String checkin = request.getParameter("checkin");
 		String checkout = request.getParameter("checkout");
 		String adults = request.getParameter("adults");
-		String children = request.getParameter("children");
+		//String children = request.getParameter("children");
 		
-		java.sql.Date day = null;
+		java.sql.Date chkinDay = datePicker(checkin);
+		java.sql.Date chkoutDay = datePicker(checkout);
 		
-		if(checkin != ""){
-			String[] dateArr = checkin.split("-");
-			int[] drr = new int[dateArr.length];
-			
-			for(int i = 0; i<dateArr.length;i++){
-				drr[i] = Integer.parseInt(dateArr[i]);
-			}
-			day = new java.sql.Date(new GregorianCalendar(drr[0],drr[1]-1,drr[2]).getTimeInMillis());
-			
-		}else{
-			day = new java.sql.Date(new GregorianCalendar().getTimeInMillis());
-		}
+		System.out.println("서블릿 : "+location);
+		ArrayList<HashMap<String, Object>> rlist = new RoomService().searchRoom(location,checkin,checkout,adults);
+		ArrayList<HashMap<String, Object>> tlist = new TripService().searchTrip(location,checkin,checkout,adults);
 		
-		ArrayList<Room> rlist = new RoomService().searchRoom(location,checkin,checkout,adults,children);
-		ArrayList<Trip> tlist = new TripService().searchTrip(location,checkin,checkout,adults,children);
 		
-		String page="";
-		if( rlist != null || tlist != null){
-			page="views/notice/noticeList.jsp";
-			request.setAttribute("rlist", rlist);
-			request.setAttribute("tlist", tlist);
-		}else{
-			page="views/common/errorPage.jsp";
-			request.setAttribute("msg", "검색을 실패하였습니다.");
-		}
+		
+		String page="search.jsp";
+		request.setAttribute("rlist", rlist);
+		request.setAttribute("tlist", tlist);
+		
 		request.getRequestDispatcher(page).forward(request, response);
 	}
 
@@ -77,5 +65,23 @@ public class HomeSearchServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
+	
+	public Date datePicker(String date){
+		Date myDate;
+		
+		if(date != ""){
+			String[] dateArr = date.split("-");
+			int[] drr = new int[dateArr.length];
+			
+			for(int i = 0; i<dateArr.length;i++){
+				drr[i] = Integer.parseInt(dateArr[i]);
+			}
+			myDate = new java.sql.Date(new GregorianCalendar(drr[0],drr[1]-1,drr[2]).getTimeInMillis());
+			
+		}else{
+			myDate = new java.sql.Date(new GregorianCalendar().getTimeInMillis());
+		}
+		
+		return myDate;
+	}
 }

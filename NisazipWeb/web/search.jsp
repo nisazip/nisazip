@@ -1,7 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="kh.home.model.vo.*, java.util.*"%>
-
     
+<% 
+	ArrayList<HashMap<String,Object>> rlist= (ArrayList<HashMap<String,Object>>)request.getAttribute("rlist");
+	ArrayList<HashMap<String,Object>> tlist= (ArrayList<HashMap<String,Object>>)request.getAttribute("tlist");
+	String area = (String)request.getAttribute("area");
+%>
 <!DOCTYPE html>
 <html>
 
@@ -13,7 +17,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="../js/jquery-3.3.1.min.js"></script>
+    <script src="resources/js/jquery-3.3.1.min.js"></script>
     <style>
 #main {
 	position:absolute;
@@ -132,12 +136,14 @@ ul {
                 &nbsp;&nbsp;&nbsp;
                 
                 <div class="col-sm-5" style="top:15px;">
-	                <input type="search" id="keyword" placeholder="지역이나 숙소이름을 검색하세요" style="width: 300px; height: 40px;">
+	                <input type="search" id="keyword" placeholder="지역이나 숙소이름을 검색하세요" value="<%= area %>" style="width: 300px; height: 40px;">
 	                <a href="#" style="color: white">
 	                    <button type="button" id="search" onclick="search();">검색하기</button>
 	                </a>
                 </div>
+                
                 <script>
+                
                 function search(){
         			$.ajax({
     					url:'<%=request.getContextPath()%>/keywordSearch.ho',
@@ -151,36 +157,44 @@ ul {
     						console.log(data.rlist);
     						console.log(data.tlist);
     						// 전체 영역
+    						
     						var $div = $('#inn2_thumb');
     						$div.text("");
     						
-    						for(var i in data.rlist){
-    							var str = '<div class="col-md-6">' 
-    								+ '<div class="thumbnail">'
-    							+'<a href="상세 페이지.html" target="_blank"> '
-    							+'<img src="'+data.rlist[i].file_path+data.rlist[i].change_name+'.jpg" class="img" style="height:190px;">'
-    							+' <div class="caption">'
-    							+'<p>'+data.rlist[i].r_name+'</p>'
-    							+'<p id="price">'+data.rlist[i].price+'</p>'
-    							+'</div></a></div></div>';
-    							
-    							$div.append(str);
-    						}
-    						
+    						if(data.rlist.length > 0) {
+	    						for(var i in data.rlist){
+	    							var str = '<div class="col-md-6">' 
+	    								+ '<div class="thumbnail">'
+	    							+'<a href="상세 페이지.html" target="_blank"> '
+	    							+'<img src="'+data.rlist[i].file_path+data.rlist[i].change_name+'.jpg" class="img" style="height:190px;">'
+	    							+' <div class="caption">'
+	    							+'<p>'+data.rlist[i].r_name+'</p>'
+	    							+'<p id="price">'+data.rlist[i].price+'</p>'
+	    							+'</div></a></div></div>';
+	    							
+	    							$div.append(str);
+	    						}
+    						} else {
+	     						$div.append("<h3>검색하신 조건에 해당하는 결과가 없습니다.</h3><br><br><br>");
+	     					}
+	    						
     						$div = $('#trip2_thumb');
     						$div.text("");
-    						
-    						for(var i in data.tlist){
-    							var str = '<div class="col-md-6">' 
-    								+ '<div class="thumbnail">'
-    							+'<a href="상세 페이지.html" target="_blank"> '
-    							+'<img src="'+data.tlist[i].file_path+data.tlist[i].change_name+'.jpg" class="img" style="height:190px;">'
-    							+' <div class="caption">'
-    							+'<p>'+data.tlist[i].t_name+'</p>'
-    							+'<p id="price">'+data.tlist[i].price+'</p>'
-    							+'</div></a></div></div>';
-    							
-    							$div.append(str);
+    						if(data.tlist.length > 0){
+    							for(var i in data.tlist){
+        							var str = '<div class="col-md-6">' 
+        								+ '<div class="thumbnail">'
+        							+'<a href="상세 페이지.html" target="_blank"> '
+        							+'<img src="'+data.tlist[i].file_path+data.tlist[i].change_name+'.jpg" class="img" style="height:190px;">'
+        							+' <div class="caption">'
+        							+'<p>'+data.tlist[i].t_name+'</p>'
+        							+'<p id="price">'+data.tlist[i].price+'</p>'
+        							+'</div></a></div></div>';
+        							
+        							$div.append(str);
+        						}
+    						} else {
+    							$div.append("<h3>검색하신 조건에 해당하는 결과가 없습니다.</h3><br><br><br>");
     						}
     					}
     				});
@@ -240,16 +254,12 @@ ul {
 	          			<div class="col-sm-7">
 	          			<div class="container">          
 						  <div id="sortGroup" class="btn-group">
-						    <button type="button" class="btn btn-primary sortGroup">인기순</button>
-						    <button type="button" class="btn btn-primary sortGroup">거리순</button>
-						    <button type="button" class="btn btn-primary sortGroup">평점순</button>
-						    <button type="button" class="btn btn-primary sortGroup">가격순</button>
+						    <button type="button" id="scoresort" onclick="scoresort();" class="btn btn-primary sortGroup">평점순</button>
+						    <button type="button" id="pricesort" onclick="pricesort();" class="btn btn-primary sortGroup">가격순</button>
 						  </div>
 						</div>
 	          	       </div>
-	          	       
-	          	       
-	          	       
+	          	     
                 </div>
                 <br>
                 <br>
@@ -270,7 +280,7 @@ ul {
   
          
 				<div class="container room">
-			<h2>인기 숙소</h2>
+			<h2>숙소</h2>
 			<div class="row">
 				<div class="col-sm-6">
 					<div class="row" id="inn2_thumb">
@@ -279,36 +289,8 @@ ul {
 			</div>
 		
 		</div>
-		<script>
-			 $(function(){
-				$.ajax({
-					url:"<%=request.getContextPath()%>/rList.ho",
-					type:"get",
-					success:function(data){
-						// 전체 영역
-						var $div = $('#inn2_thumb');
-						
-						for(var i in data){
-							var str = '<div class="col-md-6">' 
-								+ '<div class="thumbnail">'
-							+'<a href="상세 페이지.html" target="_blank"> '
-							+'<img src="'+data[i].file_path+data[i].change_name+'.jpg" class="img" style="height:190px;">'
-							+' <div class="caption">'
-							+'<p>'+data[i].r_name+'</p>'
-							+'<p id="price">'+data[i].price+'</p>'
-							+'</div></a></div></div>';
-							
-							$div.append(str);
-						}
-					}
-				});
-				
-			}); 
-		</script>
-    
-             
-				<div class="container room">
-			<h2>인기 트립</h2>
+		<div class="container room">
+			<h2>트립</h2>
 			<div class="row">
 				<div class="col-sm-6">
 					<div class="row" id="trip2_thumb">
@@ -319,48 +301,129 @@ ul {
 		</div>
 		<script>
 			 $(function(){
-				$.ajax({
-					url:"<%=request.getContextPath()%>/tList.ho",
-					type:"get",
-					success:function(data){
-						// 전체 영역
-						var $div = $('#trip2_thumb');
-						
-						for(var i in data){
-							var str = '<div class="col-md-6">' 
-								+ '<div class="thumbnail">'
-							+'<a href="상세 페이지.html" target="_blank"> '
-							+'<img src="'+data[i].file_path+data[i].change_name+'.jpg" class="img" style="height:190px;">'
-							+' <div class="caption">'
-							+'<p>'+data[i].t_name+'</p>'
-							+'<p id="price">'+data[i].price+'</p>'
-							+'</div></a></div></div>';
-							
-							$div.append(str);
-						}
-					}
-				});
-				
+				 if($('#keyword').val() != "" && $('#keyword').val() != "null"){
+					 search();
+				 } else {
+					var $div = $('#inn2_thumb');
+					$div.append("<h3>검색 조건이 없습니다.</h3>");
+					
+					$div = $('#trip2_thumb');
+					$div.append("<h3>검색 조건이 없습니다.</h3>");
+				 }
 			}); 
 		</script>
         
-        <div class="col-xs-6 hidden-xs" style="position:fixed;top:320px;margin-left:50%;bottom:10px;">
+         <div class="col-xs-6 hidden-xs" style="position:fixed;top:320px;margin-left:50%;bottom:10px;">
                 <div id="map"></div>
                 <script>
-                    function initMap() {
-                        var uluru = {
-                            lat: 33.499466, lng: 126.530418
+                     function initMap() {
+                      var map = new google.maps.Map(document.getElementById('map'), {
+                        zoom: 12,
+                        center: new google.maps.LatLng(33.499970, 126.535388),
+                        mapTypeId: 'roadmap'
+                      });
 
-                        };
-                        var map = new google.maps.Map(document.getElementById('map'), {
-                            zoom: 12,
-                            center: uluru
-                        });
+
+                      var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
+                      var icons = {
+                        info: {
+                          icon: iconBase + 'info-i_maps.png'
+                        }
+                      };
+
+                      var features = [
+                        {
+                          position: new google.maps.LatLng(33.458061, 126.502540),
+                          type: 'info'
+                        }, {
+                          position: new google.maps.LatLng(33.438982, 126.476705),
+                          type: 'info'
+                        }, {
+                          position: new google.maps.LatLng(33.420325, 126.432910),
+                          type: 'info'
+                        }, {
+                          position: new google.maps.LatLng(33.486092, 126.571213),
+                          type: 'info'
+                        }                      ];
+
+                      // Create markers.
+                      features.forEach(function(feature) {
                         var marker = new google.maps.Marker({
-                            position: uluru,
-                            map: map
+                          position: feature.position,
+                          icon: icons[feature.type].icon,
+                          map: map,
+                          title: 'Hello World!'
                         });
+                      }); 
                     }
+/*                     var customLabel = {
+                            restaurant: {
+                              label: '가격'
+                            }
+                          };
+
+                            function initMap() {
+                            var map = new google.maps.Map(document.getElementById('map'), {
+                              center: new google.maps.LatLng(33.499970, 126.535388),
+                              zoom: 12
+                            });
+                            var infoWindow = new google.maps.InfoWindow;
+
+                              // Change this depending on the name of your PHP or XML file
+                              downloadUrl('https://storage.googleapis.com/mapsdevsite/json/mapmarkers2.xml', function(data) {
+                                var xml = data.responseXML;
+                                var markers = xml.documentElement.getElementsByTagName('marker');
+                                Array.prototype.forEach.call(markers, function(markerElem) {
+                                  var name = markerElem.getAttribute('name');
+                                  var address = markerElem.getAttribute('address');
+                                  var type = markerElem.getAttribute('type');
+                                  var point = new google.maps.LatLng(
+                                      parseFloat(markerElem.getAttribute('lat')),
+                                      parseFloat(markerElem.getAttribute('lng')));
+
+                                  var infowincontent = document.createElement('div');
+                                  var strong = document.createElement('strong');
+                                  strong.textContent = name
+                                  infowincontent.appendChild(strong);
+                                  infowincontent.appendChild(document.createElement('br'));
+
+                                  var text = document.createElement('text');
+                                  text.textContent = address
+                                  infowincontent.appendChild(text);
+                                  var icon = customLabel[type] || {};
+                                  var marker = new google.maps.Marker({
+                                    map: map,
+                                    position: point,
+                                    label: icon.label
+                                  });
+                                  marker.addListener('click', function() {
+                                    infoWindow.setContent(infowincontent);
+                                    infoWindow.open(map, marker);
+                                  });
+                                });
+                              });
+                            }
+
+
+
+                          function downloadUrl(url, callback) {
+                            var request = window.ActiveXObject ?
+                                new ActiveXObject('Microsoft.XMLHTTP') :
+                                new XMLHttpRequest;
+
+                            request.onreadystatechange = function() {
+                              if (request.readyState == 4) {
+                                request.onreadystatechange = doNothing;
+                                callback(request, request.status);
+                              }
+                            };
+
+                            request.open('GET', url, true);
+                            request.send(null);
+                          }
+
+                          function doNothing() {} */
+
                 </script>
                 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBUmuy9dG2U1qXJBPEFCf7rFpDdsyZY-4k&callback=initMap">
                 </script>

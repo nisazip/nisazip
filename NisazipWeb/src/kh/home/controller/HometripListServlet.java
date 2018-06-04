@@ -18,13 +18,13 @@ import kh.home.model.service.TripService;
  * Servlet implementation class TripListServlet
  */
 @WebServlet("/tList.ho")
-public class TripListServlet extends HttpServlet {
+public class HometripListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TripListServlet() {
+    public HometripListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,7 +33,7 @@ public class TripListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<HashMap<String, Object>> tlist = new TripService().selecttList();
+		ArrayList<HashMap<String, Object>> tlist = new TripService().select4tripList();
 		
 		response.setContentType("application/json; charset=UTF-8");
 		new Gson().toJson(tlist,response.getWriter());

@@ -13,21 +13,18 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import kh.home.model.service.RoomService;
-import kh.home.model.service.TripService;
-import kh.home.model.vo.Room;
-import kh.home.model.vo.Trip;
 
 /**
- * Servlet implementation class KeywordSearchServlet
+ * Servlet implementation class RoomServlet
  */
-@WebServlet("/keywordSearch.ho")
-public class KeywordSearchServlet extends HttpServlet {
+@WebServlet("/list.rm")
+public class RoomServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public KeywordSearchServlet() {
+    public RoomServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,22 +33,14 @@ public class KeywordSearchServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String keyword = request.getParameter("keyword");
-		System.out.println("ajax가 전달 받은 값 : "+keyword);
-		ArrayList<HashMap<String, Object>> rlist = new RoomService().searchKeyword(keyword);
-		ArrayList<HashMap<String, Object>> tlist = new TripService().searchKeyword(keyword);
-		
-		HashMap<String, ArrayList> data = new HashMap<String, ArrayList>();
-		System.out.println("검색 결과인 rlist : "+rlist);
-		System.out.println("검색 결과인 tlist : "+tlist);
-		data.put("rlist", rlist);
-		data.put("tlist", tlist);
+		ArrayList<HashMap<String, Object>> rlist = new RoomService().select8roomList();
 		
 		response.setContentType("application/json; charset=UTF-8");
+		new Gson().toJson(rlist, response.getWriter());
 		
-		//if(rlist.size() > 0|| tlist.size() > 0){
-			new Gson().toJson(data, response.getWriter());
-		//}
+		System.out.println("I AM BACK");
+	
+		
 	}
 
 	/**

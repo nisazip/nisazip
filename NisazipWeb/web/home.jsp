@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8" import="kh.home.model.vo.*, java.util.*"%>
 
 <%
-
 	RecRoom rec = new RecRoom();
 %>
 
@@ -70,14 +69,15 @@
 <body>
 	<%@ include file="views/common/header.jsp"%>
 
-	<div id="main">
+<div id="main">
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-sm-2"></div>
-				<div class="col-sm-4 form-group"
+				<form id="searchForm" method="post" class="form-horizontal" role="form">
+				<div class="col-sm-4"
 					style="background-color: rgb(214, 238, 214);">
 
-
+					
 					<div class="row">
 						<br>
 						<div class="col-xs-6">
@@ -87,14 +87,15 @@
 
 					<div class="row">
 						<div class="col-xs-12">
-							<input type="text" autocomplete="off" class="location"
-								name="location" style="width: 95%; height: 40px;"
-								placeholder="모든 위치" value="한국">
+								<input type="text" autocomplete="off" class="location"
+								name="location" value="제주" style="width: 95%; height: 40px;"
+								placeholder="모든 위치">
 						</div>
+					
 					</div>
 					<br>
 
-					<div class="form-group">
+					
 						<div class="row">
 							<div class="col-xs-6">
 								&nbsp;<label>체크인</label>
@@ -118,9 +119,9 @@
 									placeholder="년/월/일" value="">
 							</div>
 						</div>
-					</div>
+					
 
-					<div class="form-group">
+					<br>
 						<div class="row">
 							<div class="col-xs-6">
 								&nbsp;&nbsp;<label> 성 인</label>&nbsp;&nbsp;
@@ -174,22 +175,31 @@
 									<option value="14">어린이 14명</option>
 									<option value="15">어린이 15명</option>
 								</select>
+								
 							</div>
 						</div>
-					</div>
+						
+										
 
 					<br>
-					<button type="button" class="search"
-						onclick="location.href='search.jsp';"
+					<button type="button" class="search" 
+						onclick="search();"
 						style="width: 100%; height: 50px;">검색하기</button>
 					<br> <br>
 				</div>
+				</form>	
 			</div>
+			
 		</div>
+
 		<script>
-			$('.search').on('click',function(){
+		 function search(){
+			location.href="<%=request.getContextPath()%>/search.ho";
+		} 
+		
+			/* $('.search').on('click',function(){
 				$('.area').css('display','hidden');
-			});
+			}); */
 		</script>
 		<br> <br>
 
@@ -200,61 +210,75 @@
 			<div class="row">
 				<div class="col-sm-3">
 					<div class="container">
-						<a href="#" id="애월읍" data-toggle="tooltip" title="<%=rec.getCntRoom()%>개 숙소"></a>
+						<a href="#" id="애월읍" data-toggle="tooltip" title=""></a>
 					</div>
 
 					
 					<div class="thumbnail">
-						<a href="상세 페이지.html" target="_blank">
+						<button type="submit" id="애월읍" name="애월읍" onclick="area1search();" target="_blank">
 							<div class="areathumbnail">
 								<img src="resources/images/애월읍.jpg" class="areaimg"
 									style="height: 160px;"> 애월읍</span>
 							</div>
-						</a>
+						</button>
 					</div>
 				</div>
 				<div class="col-sm-3">
 				<div class="container">
-						<a href="#" id="제주시" data-toggle="tooltip" title="<%=rec.getCntRoom()%>개 숙소"></a>
+						<a href="#" id="제주시" data-toggle="tooltip" title=""></a>
 					</div>
 					<div class="thumbnail">
-						<a href="상세 페이지.html" target="_blank">
+						<button type="submit" name="제주시" onclick="area2search();" target="_blank">
 							<div class="areathumbnail">
 								<img src="resources/images/제주시.jpg" class="areaimg"
 									style="height: 160px;"> 제주시</span>
 							</div>
-						</a>
+						</button>
 					</div>
 				</div>
 				<div class="col-sm-3">
 				<div class="container">
-						<a href="#" id="서귀포시" data-toggle="tooltip" title="<%=rec.getCntRoom()%>개 숙소"></a>
+						<a href="#" id="서귀포시" name="서귀포시" data-toggle="tooltip" title=""></a>
 					</div>
 					<div class="thumbnail">
-						<a href="상세 페이지.html" target="_blank">
+						<button type="submit" onclick="area3search();" target="_blank">
 							<div class="areathumbnail">
 								<img src="resources/images/서귀포시.jpg" class="areaimg"
 									style="height: 160px;"> 서귀포시</span>
 							</div>
-						</a>
+						</button>
 					</div>
 				</div>
 				<div class="col-sm-3">
 				<div class="container">
-						<a href="#" id="우도" data-toggle="tooltip" title="<%=rec.getCntRoom()%>개 숙소"></a>
+						<a href="#" id="우도" data-toggle="tooltip" title=""></a>
 					</div>
 					<div class="thumbnail">
-						<a href="상세 페이지.html" target="_blank">
+						<button type="submit" onclick="area4search();" target="_blank">
 							<div class="areathumbnail">
 								<img src="resources/images/우도.jpg" class="areaimg"
 									style="height: 160px;"> 우도</span>
 							</div>
-						</a>
+						</button>
 					</div>
 				</div>
 			</div>
 		</div>
 			<script>
+				
+			    function area1search(){
+					location.href="<%=request.getContextPath()%>/arealist.ho?keyword=애월읍";
+				};
+				function area2search(){
+					location.href="<%=request.getContextPath()%>/arealist.ho?keyword=제주시";
+				};
+				function area3search(){
+					location.href="<%=request.getContextPath()%>/arealist.ho?keyword=서귀포시";
+				};
+				function area4search(){
+					location.href="<%=request.getContextPath()%>/arealist.ho?keyword=우도";
+				};
+				 
 				$(document).ready(function(){
 				    $('[data-toggle="tooltip"]').tooltip('show');  
 				});
@@ -272,21 +296,19 @@
 					 url: "<%=request.getContextPath()%>/areaCount.ho",
 					 type: "get",
 					 success : function(data){
+						 console.log(data);
 						 for(var i in data){
 							 console.log(data[i].area+" : "+data[i].cntRoom);
-							 $('#'+data[i].area).text(data[i].cntRoom+"개 숙소");
-							 /* var str = $('#'+data[i].area).text(data[i].cntRoom+"개 숙소");
-							
-							 $('.tooltip'){
-								 title: str;
-							 } */
-							 
-							 //var str = '<a href="#" data-toggle="tooltip" title="'+data[i].area+data[i].cntRoom+'개 숙소")"></a>';
-							
+							 $('#'+data[i].area).attr('data-original-title', data[i].cntRoom+"개 숙소");
+								
+							 $('[data-toggle="tooltip"]').tooltip('show');
 						 }
+					 }, error : function(data){
+						 console.log(data);
 					 }
 				 });
 				 
+				
 				$.ajax({
 					url:"<%=request.getContextPath()%>/rList.ho",
 					type:"get",
