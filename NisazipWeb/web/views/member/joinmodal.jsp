@@ -91,9 +91,9 @@
 
                   
                   <div style="width: 80%; text-align: left;" >
-                  <span class="pwd2Ref2" style="display: none; ">비밀번호가 일치하지 않습니다.<br></span>
+                  <center><span class="pwd2Ref2" style="display: none; ">비밀번호가 일치하지 않습니다.<br></span></center>
 
-                  <span class="pwd2Ref" style="display: none; color: #228b22;">비밀번호가 일치합니다.<br></span>
+                  <center><span class="pwd2Ref" style="display: none; color: #228b22;">비밀번호가 일치합니다.<br></span></center>
                   </div>
                   
 
@@ -329,6 +329,8 @@ $("#name").on("blur",function(){
     ch2= true
     if(ch1 ==true && ch2 ==true && ch3 ==true && ch4 ==true && ch5 ==true  && ch6 ==true  && ch7 ==true  && ch8 ==true ){
     	$("#joinsubmit").removeAttr("disabled")
+        $("#chkMsg2").text("");
+
     	}
     }else{
        $("#name").css("border","1px solid red");
