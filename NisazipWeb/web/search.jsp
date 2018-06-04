@@ -5,6 +5,7 @@
 	ArrayList<HashMap<String,Object>> rlist= (ArrayList<HashMap<String,Object>>)request.getAttribute("rlist");
 	ArrayList<HashMap<String,Object>> tlist= (ArrayList<HashMap<String,Object>>)request.getAttribute("tlist");
 	String area = (String)request.getAttribute("area");
+	
 %>
 <!DOCTYPE html>
 <html>

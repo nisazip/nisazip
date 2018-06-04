@@ -198,7 +198,7 @@ public class RoomDao {
 	}
 	
 	public ArrayList<HashMap<String, Object>> homeRoomSearch(Connection con,String location,String checkin,
-			String checkout,String adults) {
+			String checkout,int people) {
 		PreparedStatement pstmt = null;
 		ArrayList<HashMap<String,Object>> rlist = null;
 		HashMap<String, Object> hmap = null;
@@ -213,7 +213,7 @@ public class RoomDao {
 			pstmt.setString(1, location);
 			pstmt.setString(2, checkin);
 			pstmt.setString(3, checkout);
-			pstmt.setString(4, adults);
+			pstmt.setInt(4, people);
 			
 			rset = pstmt.executeQuery();
 				

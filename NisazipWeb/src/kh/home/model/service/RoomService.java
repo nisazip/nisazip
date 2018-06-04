@@ -41,10 +41,10 @@ public class RoomService {
 		return reclist;
 	}
 
-	public ArrayList<HashMap<String, Object>> searchRoom(String location, String checkin, String checkout, String adults) {
+	public ArrayList<HashMap<String, Object>> searchRoom(String location, String checkin, String checkout, int people) {
 		Connection con = getConnection();
 		
-		ArrayList<HashMap<String,Object>> rlist = new RoomDao().homeRoomSearch(con,location,checkin,checkout,adults);
+		ArrayList<HashMap<String,Object>> rlist = new RoomDao().homeRoomSearch(con,location,checkin,checkout,people);
 		
 		close(con);
 		

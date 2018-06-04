@@ -131,7 +131,7 @@ ul {
                 &nbsp;&nbsp;&nbsp;
                 
                 <div class="col-sm-5" style="top:15px;">
-	                <input type="search" id="keyword" placeholder="지역이나 숙소이름을 검색하세요" style="width: 300px; height: 40px;">
+	                <input type="search" id="keyword" placeholder="지역이나  트립 이름을 검색하세요" style="width: 300px; height: 40px;">
 	                <a href="#" style="color: white">
 	                    <button type="button" id="search" onclick="search();">검색하기</button>
 	                </a>

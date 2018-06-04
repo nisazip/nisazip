@@ -34,10 +34,10 @@ public class TripService {
 		return tlist;
 	}
 
-	public ArrayList<HashMap<String, Object>> searchTrip(String location, String checkin, String checkout, String adults) {
+	public ArrayList<HashMap<String, Object>> searchTrip(String location, String checkin, String checkout, int people) {
 		Connection con = getConnection();
 		
-		ArrayList<HashMap<String, Object>> tlist = new TripDao().homeTripSearch(con,location,checkin,checkout,adults);
+		ArrayList<HashMap<String, Object>> tlist = new TripDao().homeTripSearch(con,location,checkin,checkout,people);
 		
 		close(con);
 		

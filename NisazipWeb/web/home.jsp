@@ -73,7 +73,7 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-sm-2"></div>
-				<form id="searchForm" method="post" class="form-horizontal" role="form">
+				<form id="searchForm" action="<%=request.getContextPath()%>/search.ho" name="searchForm" method="post" class="form-horizontal" role="form">
 				<div class="col-sm-4"
 					style="background-color: rgb(214, 238, 214);">
 
@@ -124,83 +124,56 @@
 					<br>
 						<div class="row">
 							<div class="col-xs-6">
-								&nbsp;&nbsp;<label> 성 인</label>&nbsp;&nbsp;
-							</div>
-
-							<div class="col-xs-6">
-								&nbsp;&nbsp;<label>어린이</label>&nbsp;&nbsp;&nbsp;
+								&nbsp;&nbsp;<label> 인 원 수</label>&nbsp;&nbsp;
 							</div>
 						</div>
 
 						<div class="row">
 							<div class="col-xs-6">
-								<select id="adults" name="adults" class="adults"
+								<select id="people" name="people" class="people"  
 									style="width: 90%; height: 40px;">
-									<option value="1">성인 1명</option>
-									<option value="2">성인 2명</option>
-									<option value="3">성인 3명</option>
-									<option value="4">성인 4명</option>
-									<option value="5">성인 5명</option>
-									<option value="6">성인 6명</option>
-									<option value="7">성인 7명</option>
-									<option value="8">성인 8명</option>
-									<option value="9">성인 9명</option>
-									<option value="10">성인 10명</option>
-									<option value="11">성인 11명</option>
-									<option value="12">성인 12명</option>
-									<option value="13">성인 13명</option>
-									<option value="14">성인 14명</option>
-									<option value="15">성인 15명</option>
-									<option value="16">성인 16명</option>
+									<option value="1">1명</option>
+									<option value="2">2명</option>
+									<option value="3">3명</option>
+									<option value="4">4명</option>
+									<option value="5">5명</option>
+									<option value="6">6명</option>
+									<option value="7">7명</option>
+									<option value="8">8명</option>
+									<option value="9">9명</option>
+									<option value="10">10명</option>
+									<option value="11">11명</option>
+									<option value="12">12명</option>
+									<option value="13">13명</option>
+									<option value="14">14명</option>
+									<option value="15">15명</option>
+									<option value="16">16명</option>
 								</select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							</div>
 
 							<div class="col-xs-6">
-								<select id="children" name="children" class="children"
-									style="width: 90%; height: 40px;">
-									<option value="0">어린이 0명</option>
-									<option value="1">어린이 1명</option>
-									<option value="2">어린이 2명</option>
-									<option value="3">어린이 3명</option>
-									<option value="4">어린이 4명</option>
-									<option value="5">어린이 5명</option>
-									<option value="6">어린이 6명</option>
-									<option value="7">어린이 7명</option>
-									<option value="8">어린이 8명</option>
-									<option value="9">어린이 9명</option>
-									<option value="10">어린이 10명</option>
-									<option value="11">어린이 11명</option>
-									<option value="12">어린이 12명</option>
-									<option value="13">어린이 13명</option>
-									<option value="14">어린이 14명</option>
-									<option value="15">어린이 15명</option>
-								</select>
-								
-							</div>
+							<button type="submit" class="search"
+								style="width: 90%; height: 40px;">검색하기</button>
 						</div>
-						
-										
-
-					<br>
-					<button type="button" class="search" 
-						onclick="search();"
-						style="width: 100%; height: 50px;">검색하기</button>
-					<br> <br>
+							
+						</div>
+					<br> <br>		
 				</div>
 				</form>	
 			</div>
 			
 		</div>
-
+<%-- 
 		<script>
+		 
 		 function search(){
 			location.href="<%=request.getContextPath()%>/search.ho";
-		} 
-		
+		}
+		 
 			/* $('.search').on('click',function(){
 				$('.area').css('display','hidden');
 			}); */
-		</script>
+		</script> --%>
 		<br> <br>
 
 

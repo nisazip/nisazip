@@ -14,8 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import kh.home.model.service.RoomService;
 import kh.home.model.service.TripService;
-import kh.home.model.vo.Room;
-import kh.home.model.vo.Trip;
 
 /**
  * Servlet implementation class HomeSearchServlet
@@ -36,18 +34,25 @@ public class HomeSearchServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		String location = request.getParameter("location");
 		String checkin = request.getParameter("checkin");
 		String checkout = request.getParameter("checkout");
-		String adults = request.getParameter("adults");
-		//String children = request.getParameter("children");
+		int people = Integer.parseInt(request.getParameter("people"));
 		
+		
+		
+		System.out.println("서블릿 전달");
+		System.out.println("people : " + people);
 		java.sql.Date chkinDay = datePicker(checkin);
 		java.sql.Date chkoutDay = datePicker(checkout);
 		
+		System.out.println(chkinDay);
+		System.out.println(chkoutDay);
+		
 		System.out.println("서블릿 : "+location);
-		ArrayList<HashMap<String, Object>> rlist = new RoomService().searchRoom(location,checkin,checkout,adults);
-		ArrayList<HashMap<String, Object>> tlist = new TripService().searchTrip(location,checkin,checkout,adults);
+		ArrayList<HashMap<String, Object>> rlist = new RoomService().searchRoom(location,checkin,checkout,people);
+		ArrayList<HashMap<String, Object>> tlist = new TripService().searchTrip(location,checkin,checkout,people);
 		
 		
 		
@@ -84,4 +89,5 @@ public class HomeSearchServlet extends HttpServlet {
 		
 		return myDate;
 	}
+	
 }
