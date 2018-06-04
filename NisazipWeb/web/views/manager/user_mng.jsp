@@ -177,26 +177,9 @@
                             </div>
 
                             <div class="form-group form-group-sm form-group-xs">
-                                <label for="birth" class="col-sm-3 col-xs-3">생년월일 : </label>
+                                <label for="birth" class="col-sm-3 col-xs-3">생년월일:</label>
                                 <div class="col-sm-9 col-xs-9">
-                                    <div class="col-sm-3 col-xs-3">
-                                    	<input type="text" id="birth1" name="birth" class="form-control udInput" disabled>
-                                    </div>
-                                    <div class="col-sm-1 col-xs-1">
-                                    	<p>년</p>	
-                                	</div>
-                                	<div class="col-sm-3 col-xs-3">
-                                    	<input type="text" id="birth2" name="birth" class="form-control udInput" disabled>
-                                    </div>
-                                    <div class="col-sm-1 col-xs-1">
-                                    	<p>월</p>	
-                                	</div>
-                                	<div class="col-sm-3 col-xs-3">
-                                    	<input type="text" id="birth3" name="birth" class="form-control udInput" disabled>
-                                    </div>
-                                    <div class="col-sm-1 col-xs-1">
-                                    	<p>일</p>	
-                                	</div>
+                                    <input type="date" id="birth" name="birth" class="form-control udInput" disabled>
                                 </div>
                             </div>
                             <div class="form-group form-group-sm form-group-xs">
@@ -288,7 +271,7 @@
                     
 			        $('#email').val(data.EMAIL);
 			        
-			        if(data.BIRTH!=null){
+			        if(data.PHONE!=null){
 				        var phone = data.PHONE.split('-');
 				        var phone1 = phone[0];
 				        var phone2 = phone[1];
@@ -297,10 +280,11 @@
 				        $('#phone2').val(phone2);
 				        $('#phone3').val(phone3);
 			        }else{
-			        	 $('#phone1').val(" ");
-					     $('#phone2').val(" ");
-					     $('#phone3').val(" ");
-			        }  
+			        	$('#phone1').val(null);
+				        $('#phone2').val(null);
+				        $('#phone3').val(null);
+			        }
+			        
 			        if (data.GENDER == 'M') {
 	                    $('input:radio[name=gender]:input[value=F]').attr("checked", false);
 	                    $('input:radio[name=gender]:input[value=M]').attr("checked", true);
@@ -311,18 +295,12 @@
 	                	$('input:radio[name=gender]:input[value=M]').attr("checked", false);
 	                    $('input:radio[name=gender]:input[value=F]').attr("checked", false);
 	                }
+			        
 			        if(data.BIRTH!=null){
 				        var birth = data.BIRTH.split(', ');
-				        var birth1 = birth[0];
-				        var birth2 = birth[1];
-				        var birth3 = birth[2];
-				        $('#birth1').val(birth1);
-				        $('#birth2').val(birth2);
-				        $('#birth3').val(birth3);
+				        $('#birth').attr("value",birth[0]+'-'+birth[1]+'-'+birth[2]);
 			        }else{
-			        	 $('#birth1').val(" ");
-					     $('#birth2').val(" ");
-					     $('#birth3').val(" ");
+			        	$('#birth').attr("value",null);
 			        }
 			       
 			        
@@ -381,7 +359,7 @@
         });
         //모달 - 저장하기 버튼
         $('#saveData').click(function(){
-        	if (confirm("변경한 숙소 정보를 저장하시겠습니까??") == true){//확인
+        	if (confirm("변경한 회원 정보를 저장하시겠습니까??") == true){//확인
         	$.ajax({
         		url : "upMemeber.mg",
         		type:"POST",
@@ -391,7 +369,7 @@
         			userName : $('#userName').val(),
         			email : $('#email').val(),
         			phone : $('#phone1').val()+"-"+$('#phone2').val()+"-"+$('#phone3').val(),
-        			birth : $('#birth1').val()+", "+$('#birth2').val()+", "+$('#birth3').val(),
+        			birth : $('#birth').val(),
         			roomHosting : $('#roomHosting').val(),
         			tripHosting : $('#tripHosting').val()
         		}, success : function(data){

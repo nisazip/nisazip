@@ -236,7 +236,7 @@
                 <!-- 모달 footer -->
                 <div class="modal-footer">
                     <div class="pull-left">
-                        <button type="button" class="btn btn-danger" id="deleteRoom">삭제하기</button>
+                        <button type="button" class="btn btn-danger" id="deleteTrip">삭제하기</button>
                     </div>
                     <div>
                         <button type="button" class="btn btn-primary" id="modify">수정하기</button>
@@ -329,9 +329,9 @@
         $('#saveData').hide();
         
       	//모달 - 삭제하기 버튼
-        $('#deleteRoom').click(function(){
+        $('#deleteTrip').click(function(){
         	if (confirm("정말 삭제하시겠습니까??") == true){//확인
-        		location.href="<%=request.getContextPath()%>/deleteRoom.mg?tripNo="+$('#tripNo').val();
+        		location.href="<%=request.getContextPath()%>/deleteTrip.mg?tripNo="+$('#tripNo').val();
         	}else{//취소
         	    return;
         	}
@@ -361,9 +361,9 @@
         
         //모달 - 저장하기 버튼
         $('#saveData').click(function(){
-        	if (confirm("변경한 숙소 정보를 저장하시겠습니까??") == true){//확인
+        	if (confirm("변경한 트립 정보를 저장하시겠습니까??") == true){//확인
         		$.ajax({
-            		url : "upRoom.mg",
+            		url : "upTrip.mg",
             		type:"POST",
             		data:{
     	      			tripNo : $('#tripNo').val(),

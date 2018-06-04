@@ -105,10 +105,10 @@ public class mDao {
 				r.setR_area(rset.getString("R_AREA"));
 				r.setR_addr(rset.getString("R_ADDR"));
 				r.setR_loc(rset.getString("R_LOC"));
-				r.setR_start_date(rset.getDate("R_START_DATE"));
-				r.setR_end_date(rset.getDate("R_END_DATE"));
+				r.setR_start_date(rset.getString("R_START_DATE"));
+				r.setR_end_date(rset.getString("R_END_DATE"));
 				r.setScore(rset.getFloat("SCORE"));
-				r.setR_date(rset.getDate("R_DATE"));
+				r.setR_date(rset.getString("R_DATE"));
 				System.out.println("dao"+r);
 				result.add(r);
 			}
@@ -207,10 +207,11 @@ public class mDao {
 		int result = 0;
 		String query = "";
 		
-		String[] a = m.getBirthdate().split(", ");
+/*		String[] a = m.getBirthdate().split(", ");
 		String[] b = m.getBirthdate().split(",");
+		*/
 		
-		if(b[1].equals(" ")||a[0].equals(" ")){
+		if(m.getBirthdate().equals("")){
 			//birth가 null일때
 			query = prop.getProperty("updateBirthNull");
 		}else{
@@ -226,7 +227,7 @@ public class mDao {
 			pstmt.setInt(5, m.getR_hosting());
 			pstmt.setInt(6, m.getT_hosting());
 			
-			if(b[1].equals(" ")|| a[0].equals(" ")){
+			if(m.getBirthdate().equals("")){
 				pstmt.setInt(7, m.getUser_no());
 			}else{
 				pstmt.setString(7, m.getBirthdate());
@@ -312,16 +313,12 @@ public class mDao {
 		return t;
 	}
 
-	public int updateRoom(Connection con, Trip t) {
+	public int updateTrip(Connection con, Trip t) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		String query = "";
 		
-			query = prop.getProperty("updateRoom");
-/*			 T_NAME =?, T_MAX_NUM =?, T_TYPE =?, LANGUAGE = ?, 
-		     T_START_TIME=?, T_END_TIME=?, 
-		    		 PRICE=?, T_DETAIL=?, T_AREA=?, T_ADDR=?, T_LOC=?, T_START_DATE=?, T_END_DATE=? 
-		    				 WHERE T_ID = ?*/
+			query = prop.getProperty("updateTrip");
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, t.getT_name());
@@ -350,11 +347,11 @@ public class mDao {
 		return result;
 	}
 
-	public int deleteMember(Connection con, String tno) {
+	public int deleteTrip(Connection con, String tno) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
-		String query = prop.getProperty("deleteRoom");
+		String query = prop.getProperty("deleteTrip");
 
 		try {
 			pstmt = con.prepareStatement(query);
@@ -399,7 +396,7 @@ public class mDao {
 				r.put("ROOM_NUM",rset.getInt("ROOM_NUM"));
 				r.put("TOILET_NUM",rset.getInt("TOILET_NUM"));
 				r.put("BED_NUM",rset.getInt("BED_NUM"));
-				r.put("T_DETAIL", rset.getString("T_DETAIL"));
+				r.put("R_DETAIL", rset.getString("R_DETAIL"));
 				r.put("R_ROLE", rset.getString("R_ROLE"));
 				r.put("PRICE",rset.getInt("PRICE"));
 				r.put("R_AREA",rset.getString("R_AREA"));
@@ -420,6 +417,68 @@ public class mDao {
 		}
 				
 		return r;
+	}
+
+	public int updateRoom(Connection con, Room r) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "";
+		
+			query = prop.getProperty("updateRoom");
+		try {
+			
+			/* R_AREA=?, R_ADDR=?, R_START_DATE=TO_DATE(?,'YYYY-MM-DD'), R_END_DATE=TO_DATE(?,'YYYY-MM-DD') WHERE R_ID = ?*/
+			
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, r.getR_name());
+			pstmt.setInt(2, r.getR_max_num());
+			pstmt.setString(3, r.getR_type());
+			pstmt.setString(4, r.getR_type2());
+			pstmt.setString(5, r.getR_option());
+			
+			pstmt.setInt(6, r.getRoom_num());
+			pstmt.setInt(7, r.getToilet_num());
+			pstmt.setInt(8, r.getBed_num());
+			
+			pstmt.setString(9, r.getR_detail());
+			pstmt.setString(10, r.getR_role());
+			pstmt.setInt(11, r.getPrice());
+			pstmt.setString(12, r.getR_area());
+			pstmt.setString(13, r.getR_addr());
+			pstmt.setString(14, r.getR_start_date());
+			pstmt.setString(15, r.getR_end_date());
+			pstmt.setString(16, r.getR_id());
+
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+				
+		return result;
+	}
+
+	public int deleteRoom(Connection con, String rno) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("deleteRoom");
+
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, rno);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+				
+		return result;
 	}
 
 }

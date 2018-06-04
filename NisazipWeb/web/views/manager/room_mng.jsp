@@ -260,7 +260,7 @@
                 <!-- 모달 footer -->
                 <div class="modal-footer">
                     <div class="pull-left">
-                        <button type="button" class="btn btn-danger">삭제하기</button>
+                        <button type="button" class="btn btn-danger" id="deleteRoom">삭제하기</button>
                     </div>
                     <div>
                         <button type="button" class="btn btn-primary" id="modify">수정하기</button>
@@ -316,48 +316,39 @@
             			//성공했을 때 
 
             		//모달 안에 넣어줄 값 세팅 
-            		$('#tripNo').val(data.R_ID);
-                    $('#tripName').val(data.R_NAME);
+            		$('#roomNo').val(data.R_ID);
+                    $('#roomName').val(data.R_NAME);
                     $('#hostId').val(data.HOST_ID);
    			        $('#maximum').val(data.R_MAX_NUM);
-   			        $('#triptype').val(data.R_TYPE);
-   			        $('#language').val(data.R_TYPE2);
-   			        $('#startTime').val(data.R_OPTION);
-   			        $('#endTime').val(data.ROOM_NUM);
-   			        $('#price').val(data.TOILET_NUM);
-   			        $('#detail').val(data.BED_NUM);
-   			        $('#area').val(data.T_DETAIL);
-   			 	    $('#area').val(data.R_ROLE);
-   			  		$('#area').val(data.PRICE);
+   			        $('#roomtype1').val(data.R_TYPE);
+   			        $('#roomtype2').val(data.R_TYPE2);
+   			        $('#rOption').val(data.R_OPTION);
+   			        $('#rRoomNum').val(data.ROOM_NUM);
+   			        $('#rBathNum').val(data.TOILET_NUM);
+   			        $('#rBedNum').val(data.BED_NUM);
+   			        $('#detail').val(data.R_DETAIL);
+   			 	    $('#rRole').val(data.R_ROLE);
+   			  		$('#price').val(data.PRICE);
 		   			$('#area').val(data.R_AREA);
-		   			$('#area').val(data.R_ADDR);
-		   			$('#area').val(data.R_START_DATE);
-		   			$('#area').val(data.R_END_DATE);
-		   			$('#area').val(data.SCORE);
-		   			$('#area').val(data.R_DATE);
-		   			$('#area').val(data.RCNT);
 		   			
-   			
-
-   			         
-   			        var addr = data.T_ADDR.split('| ');
-   			        $('#zipCode').val(addr[0]);
-   			        $('#address1').val(addr[1]);
-   			        $('#address2').val(addr[2]);
-   			        
-   			        $('#rating').val(data.SCORE);
-   			        
-   			        var sDate = data.T_START_DATE.split(', ');
-   			        $('#startDate').attr("value",sDate[0]+'-'+sDate[1]+'-'+sDate[2]);
-   			        
-   			        var eDate = data.T_END_DATE.split(', ');
-   			        $('#endDate').attr("value",eDate[0]+'-'+eDate[1]+'-'+eDate[2]);
-   			        
-   			        var rDate = data.T_END_DATE.split(', ');
-   			        $('#regiDate').attr("value",rDate[0]+'-'+rDate[1]+'-'+rDate[2]);
-   			        
-   			        $('#count').val(data.RCNT);
-   			      
+		   		 	var addr = data.R_ADDR.split('| ');
+			        $('#zipCode').val(addr[0]);
+			        $('#address1').val(addr[1]);
+			        $('#address2').val(addr[2]);
+		   			$('#rating').val(data.SCORE);
+		   			
+		   			
+		   		 	var sDate = data.R_START_DATE.split(', ');
+			        $('#startDate').attr("value",sDate[0]+'-'+sDate[1]+'-'+sDate[2]);
+			        
+			        var eDate = data.R_END_DATE.split(', ');
+			        $('#endDate').attr("value",eDate[0]+'-'+eDate[1]+'-'+eDate[2]);
+			        
+			        var rDate = data.R_DATE.split(', ');
+			        $('#regiDate').attr("value",rDate[0]+'-'+rDate[1]+'-'+rDate[2]);
+		   			
+		   			$('#count').val(data.RCNT);
+		   			
             		}, error : function(request, status, error){
        				// 연결에 실패했을 때
        				console.log("에러 코드 : "+request.status
@@ -372,6 +363,15 @@
             });
         
         $('#saveData').hide();
+        
+      	//모달 - 삭제하기 버튼
+        $('#deleteRoom').click(function(){
+        	if (confirm("정말 삭제하시겠습니까??") == true){//확인
+        		location.href="<%=request.getContextPath()%>/deleteRoom.mg?roomNo="+$('#roomNo').val();
+        	}else{//취소
+        	    return;
+        	}
+        });
         
         //모달 - 수정하기 버튼
         $('#modify').click(function(){
@@ -397,9 +397,51 @@
         
         //모달 - 저장하기 버튼
         $('#saveData').click(function(){
+        	if (confirm("변경한 숙소 정보를 저장하시겠습니까??") == true){//확인
+        		$.ajax({
+            		url : "upRoom.mg",
+            		type:"POST",
+            		data:{
+            			roomNo : $('#roomNo').val(),
+            			roomName : $('#roomName').val(),
+            			maximum : $('#maximum').val(),
+            			roomtype1 : $('#roomtype1').val(),
+            			roomtype2 : $('#roomtype2').val(),
+            			rOption : $('#rOption').val(),
+            			rRoomNum : $('#rRoomNum').val(),
+            			rBathNum : $('#rBathNum').val(),
+            			rBedNum : $('#rBedNum').val(),
+            			detail : $('#detail').val(),
+            			rRole : $('#rRole').val(),
+            			price : $('#price').val(),
+            			area : $('#area').val(),
+
+            			address : $('#zipCode').val()+"| "+$('#address1').val()+"| "+$('#address2').val(),
+            			startDate : $('#startDate').val(),
+            			endDate : $('#endDate').val()
+            			
+            		}, success : function(data){
+            			alert(data);
+            			
+            		}, error : function(request, status, error){
+        				// 연결에 실패했을 때
+        				console.log("에러 코드 : "+request.status
+        						+ "에러 내용 : "+ request.responseText 
+        						+ "에러 메시지 : " + error);
+        				
+        				alert("데이터 전달 실패");
+        				
+        			}
+            		
+            	});
+            	
             $('#myModal input').attr("disabled",true);
             $('#modify').show();
             $(this).hide();
+            
+        	} else {//취소
+        	    return;
+        	}
         });
 	
         //dropdown menu

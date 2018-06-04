@@ -94,10 +94,10 @@ public class ManagerService {
 		return t;
 	}
 
-	public int updateRoom(Trip t) {
+	public int updateTrip(Trip t) {
 		Connection con = getConnection();
 		System.out.println("dao : "+t);
-		int result = new mDao().updateRoom(con, t);
+		int result = new mDao().updateTrip(con, t);
 		
 		if(result >0) commit(con);
 		else rollback(con);
@@ -107,10 +107,10 @@ public class ManagerService {
 		return result;
 	}
 
-	public int deleteRoom(String tno) {
+	public int deleteTrip(String tno) {
 		Connection con = getConnection();
 		
-		int result = new mDao().deleteMember(con, tno);
+		int result = new mDao().deleteTrip(con, tno);
 		
 		if(result >0) commit(con);
 		else rollback(con);
@@ -127,6 +127,31 @@ public class ManagerService {
 		close(con);
 
 		return t;
+	}
+
+	public int updateRoom(Room r) {
+		Connection con = getConnection();
+		int result = new mDao().updateRoom(con, r);
+		
+		if(result >0) commit(con);
+		else rollback(con);
+		
+		close(con);
+
+		return result;
+	}
+
+	public int deleteRoom(String rno) {
+		Connection con = getConnection();
+		
+		int result = new mDao().deleteRoom(con, rno);
+		
+		if(result >0) commit(con);
+		else rollback(con);
+		
+		close(con);
+
+		return result;
 	}
 
 }
