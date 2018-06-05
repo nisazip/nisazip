@@ -147,7 +147,7 @@ li:hover{
 		$('li:nth-child(4)').addClass("active");
 	}
 	function goReport(){
-		location.href="";
+		location.href="<%=request.getContextPath()%>/reportList.mg";
 		$('li').removeClass("active");
 		$('li:nth-child(5)').addClass("active");
 	}

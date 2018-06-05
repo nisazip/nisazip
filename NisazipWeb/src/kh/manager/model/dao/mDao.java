@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.Properties;
 
 import kh.manager.model.vo.MemberList;
+import kh.report.model.vo.Report;
 import kh.room.model.vo.Room;
 import kh.trip.model.vo.Trip;
 
@@ -1233,6 +1234,223 @@ public class mDao {
 			close(rset);
 		}
 			
+		return list;
+	}
+
+	public int getReportListCount(Connection con) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		
+		String query = prop.getProperty("getReportListCount");
+		
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(rset);
+		}
+			
+		return result;
+	}
+
+	public int searchReWriterCount(Connection con, String keyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		
+		String query = prop.getProperty("searchReWriterCount");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, keyword);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(rset);
+		}
+			
+		return result;
+	}
+
+	public int searchReReciverCount(Connection con, String keyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		
+		String query = prop.getProperty("searchReReciverCount");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, keyword);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(rset);
+		}
+			
+		return result;
+	}
+
+	public ArrayList<Report> reList(Connection con, int currentPage, int limit) {
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		ArrayList<Report> list = new ArrayList<Report>();
+		Report re = null;
+		
+		String query = prop.getProperty("getReportList");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			//조회할 숫자 startRow와 endRow 계산
+			int startRow = (currentPage - 1) * limit+1;
+			int endRow = startRow + (limit-1);
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			list = new ArrayList<Report>();
+			
+			while(rset.next()) {
+				re = new Report();
+				re.setRp_no(rset.getInt("RP_NO"));
+				re.setRp_writer(rset.getString("RP_WRITER"));
+				re.setRp_receiver(rset.getString("RP_RECEIVER"));
+				re.setRp_type(rset.getString("RP_TYPE"));
+				re.setRp_date(rset.getString("RP_DATE"));
+				System.out.println(re);				
+				list.add(re);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+
+		return list;
+		
+	}
+
+	public ArrayList<Report> searchReWriter(Connection con, int currentPage, int limit, String keyword) {
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		ArrayList<Report> list = new ArrayList<Report>();
+		Report re = null;
+		
+		String query = prop.getProperty("searchReWriter");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			//조회할 숫자 startRow와 endRow 계산
+			int startRow = (currentPage - 1) * limit+1;
+			int endRow = startRow + (limit-1);
+			
+			pstmt.setString(1, keyword);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			list = new ArrayList<Report>();
+			
+			while(rset.next()) {
+				re = new Report();
+				re.setRp_no(rset.getInt("RP_NO"));
+				re.setRp_writer(rset.getString("RP_WRITER"));
+				re.setRp_receiver(rset.getString("RP_RECEIVER"));
+				re.setRp_type(rset.getString("RP_TYPE"));
+				re.setRp_date(rset.getString("RP_DATE"));
+				System.out.println(re);				
+				list.add(re);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+
+		return list;
+	}
+
+	public ArrayList<Report> searchReReciver(Connection con, int currentPage, int limit, String keyword) {
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		ArrayList<Report> list = new ArrayList<Report>();
+		Report re = null;
+		
+		String query = prop.getProperty("searchReReciver");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			//조회할 숫자 startRow와 endRow 계산
+			int startRow = (currentPage - 1) * limit+1;
+			int endRow = startRow + (limit-1);
+			
+			pstmt.setString(1, keyword);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			list = new ArrayList<Report>();
+			
+			while(rset.next()) {
+				re = new Report();
+				re.setRp_no(rset.getInt("RP_NO"));
+				re.setRp_writer(rset.getString("RP_WRITER"));
+				re.setRp_receiver(rset.getString("RP_RECEIVER"));
+				re.setRp_type(rset.getString("RP_TYPE"));
+				re.setRp_date(rset.getString("RP_DATE"));
+				System.out.println(re);				
+				list.add(re);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+
 		return list;
 	}
 

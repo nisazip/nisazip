@@ -11,6 +11,7 @@ import java.util.HashMap;
 
 import kh.manager.model.dao.mDao;
 import kh.manager.model.vo.MemberList;
+import kh.report.model.vo.Report;
 import kh.room.model.vo.Room;
 import kh.trip.model.vo.Trip;
 
@@ -331,6 +332,60 @@ public class ManagerService {
 		mDao mDao = new mDao();
 		
 		ArrayList<Trip> list =mDao.searchTArea(con, currentPage, limit, keyword);
+		
+		return list;
+	}
+
+	public int getReportListCount() {
+		Connection con = getConnection();
+		int result =new mDao().getReportListCount(con);
+		
+		close(con);
+		
+		return result;
+	}
+
+	public int searchReWriterCount(String keyword) {
+		Connection con = getConnection();
+		int result =new mDao().searchReWriterCount(con, keyword);
+		
+		close(con);
+		
+		return result;
+	}
+
+	public int searchReReciverCount(String keyword) {
+		Connection con = getConnection();
+		int result =new mDao().searchReReciverCount(con, keyword);
+		
+		close(con);
+		
+		return result;
+	}
+
+	public ArrayList<Report> reList(int currentPage, int limit) {
+		Connection con = getConnection();
+		mDao mDao = new mDao();
+		
+		ArrayList<Report> list =mDao.reList(con, currentPage, limit);
+		
+		return list;
+	}
+
+	public ArrayList<Report> searchReWriter(int currentPage, int limit, String keyword) {
+		Connection con = getConnection();
+		mDao mDao = new mDao();
+		
+		ArrayList<Report> list =mDao.searchReWriter(con, currentPage, limit, keyword);
+		
+		return list;
+	}
+
+	public ArrayList<Report> searchReReciver(int currentPage, int limit, String keyword) {
+		Connection con = getConnection();
+		mDao mDao = new mDao();
+		
+		ArrayList<Report> list =mDao.searchReReciver(con, currentPage, limit, keyword);
 		
 		return list;
 	}

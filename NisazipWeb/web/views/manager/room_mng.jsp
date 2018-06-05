@@ -124,7 +124,7 @@
 					
 					<!-- 가장 첫 페이지로 이동 -->
 					<li class="page-item">
-						<a class="page-item" onclick="location.href='<%=request.getContextPath()%>/roomList.mg?currentPage=1'">처음</a>
+						<a class="page-item" onclick="location.href='<%=request.getContextPath()%>/roomList.mg?con='+$('#searchCondition').val()+'&keyword='+$('#keyword').val()+'&currentPage=1'">처음</a>
 					</li>
 					<!-- 한페이지 씩 앞으로 이동 -->
 					<% if(currentPage <= 1){ %>
@@ -133,7 +133,7 @@
 					</li>					
 					<% }else{ %>
 					<li class="page-item ">
-						<a class="page-item" onclick="location.href='<%=request.getContextPath()%>/roomList.mg?currentPage=<%=currentPage -1%>'">&lt;</a>
+						<a class="page-item" onclick="location.href='<%=request.getContextPath()%>/roomList.mg?con='+$('#searchCondition').val()+'&keyword='+$('#keyword').val()+'&currentPage=<%=currentPage -1%>'">&lt;</a>
 					</li>
 					<% }%>
 					
@@ -145,7 +145,7 @@
 						</li>	
 						<% } else{ %>
 						<li class="page-item">
-							<a class="page-item" onclick="location.href='<%=request.getContextPath()%>/roomList.mg?currentPage=<%=i %>'"><%=i %></a>
+							<a class="page-item" onclick="location.href='<%=request.getContextPath()%>/roomList.mg?con='+$('#searchCondition').val()+'&keyword='+$('#keyword').val()+'&currentPage=<%=i %>'"><%=i %></a>
 						</li>	
 						<% } %>
 					<% } %>
@@ -157,13 +157,13 @@
 					</li>	
 					<% }else{ %>
 					<li class="page-item">
-						<a class="page-item" onclick="location.href='<%=request.getContextPath()%>/roomList.mg?currentPage=<%=currentPage +1%>'">&gt;</a>
+						<a class="page-item" onclick="location.href='<%=request.getContextPath()%>/roomList.mg?con='+$('#searchCondition').val()+'&keyword='+$('#keyword').val()+'&currentPage=<%=currentPage +1%>'">&gt;</a>
 					</li>
 					<% }%>
 					
 					<!-- 가장 마지막 페이지로 이동 -->
 					<li class="page-item">
-						<a class="page-item" onclick="location.href='<%=request.getContextPath()%>/roomList.mg?currentPage=<%=maxPage%>'">마지막</a>
+						<a class="page-item" onclick="location.href='<%=request.getContextPath()%>/roomList.mg?con='+$('#searchCondition').val()+'&keyword='+$('#keyword').val()+'&currentPage=<%=maxPage%>'">마지막</a>
 					</li>	
 	
 					</ul>
