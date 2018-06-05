@@ -285,7 +285,6 @@
 
             //테이블의 첫 행을 클릭했을 때는 모달창을 띄우지 않는다.
             if(td.eq(0).text()!="신고 번호"){
-            	console.log(td.eq(0).text());
             	
             	//모달 안에 넣어줄 값 세팅
             	$.ajax({
@@ -294,7 +293,7 @@
             		data : {
             			roomNo : td.eq(0).text()
             		},success : function(data){
-            			//성공했을 때 
+            		//성공했을 때 
 
             		//모달 안에 넣어줄 값 세팅 
             		$('#reNo').val(data.RP_NO);
@@ -303,11 +302,7 @@
    			        $('#reType').val(data.RP_TYPE);
    			        $('#reContent').val(data.RP_CONTENT);
    			        $('#reDate').val(data.RP_DATE);
-/*    			        
-		   		 	var sDate = data.R_START_DATE.split(', ');
-			        $('#startDate').attr("value",sDate[0]+'-'+sDate[1]+'-'+sDate[2]);
-			        
- */
+
             		}, error : function(request, status, error){
        				// 연결에 실패했을 때
        				console.log("에러 코드 : "+request.status
@@ -324,7 +319,7 @@
       	//모달 - 삭제하기 버튼
         $('#deleteRoom').click(function(){
         	if (confirm("해당 신고를 정말 삭제하시겠습니까??") == true){//확인
-        		location.href="<%=request.getContextPath()%>/deleteRoom.mg?roomNo="+$('#roomNo').val();
+        		location.href="<%=request.getContextPath()%>/deleteReport.mg?reNo="+$('#reNo').val();
         	}else{//취소
         	    return;
         	}

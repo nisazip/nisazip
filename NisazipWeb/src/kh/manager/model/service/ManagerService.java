@@ -368,7 +368,7 @@ public class ManagerService {
 		mDao mDao = new mDao();
 		
 		ArrayList<Report> list =mDao.reList(con, currentPage, limit);
-		
+		close(con);
 		return list;
 	}
 
@@ -377,7 +377,7 @@ public class ManagerService {
 		mDao mDao = new mDao();
 		
 		ArrayList<Report> list =mDao.searchReWriter(con, currentPage, limit, keyword);
-		
+		close(con);
 		return list;
 	}
 
@@ -386,8 +386,31 @@ public class ManagerService {
 		mDao mDao = new mDao();
 		
 		ArrayList<Report> list =mDao.searchReReciver(con, currentPage, limit, keyword);
-		
+		close(con);
 		return list;
+	}
+
+	public HashMap<String, Object> selectOneReport(int reNo) {
+		Connection con = getConnection();
+		
+		HashMap<String, Object> result = new mDao().selectOneReport(con, reNo);
+		
+		close(con);
+		
+		return result;
+	}
+
+	public int deleteReport(int reNo) {
+		Connection con = getConnection();
+		
+		int result = new mDao().deleteReport(con, reNo);
+		
+		if(result >0) commit(con);
+		else rollback(con);
+		
+		close(con);
+
+		return result;
 	}
 
 }

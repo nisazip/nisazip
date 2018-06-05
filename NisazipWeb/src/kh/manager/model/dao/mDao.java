@@ -1454,6 +1454,62 @@ public class mDao {
 		return list;
 	}
 
+	public HashMap<String, Object> selectOneReport(Connection con, int reNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		HashMap<String, Object> re = null;
+		
+		String query = prop.getProperty("selectOneReport");
+
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, reNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				re = new HashMap<String, Object>();
+				
+				re.put("RP_NO", rset.getInt("RP_NO"));
+				re.put("RP_WRITER",rset.getString("RP_WRITER"));
+				re.put("RP_RECEIVER",rset.getString("RP_RECEIVER"));
+				re.put("RP_TYPE",rset.getString("RP_TYPE"));
+				re.put("RP_CONTENT",rset.getString("RP_CONTENT"));
+				re.put("RP_DATE",rset.getString("RP_DATE"));
+				
+				System.out.println("selectOneTrip : "+re);
+			} 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+				
+		return re;
+	}
+
+	public int deleteReport(Connection con, int reNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("deleteReport");
+
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, reNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+				
+		return result;
+	}
+
 
 
 
