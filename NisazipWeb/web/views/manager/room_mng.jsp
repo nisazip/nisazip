@@ -57,7 +57,7 @@
 				</div>
 				<!--테이블 영역 -->
 				<div class="table-responsive">
-                <table class="table table-striped table-bordered table-hover " id="userTable" data-toggle="modal" data-target="#myModal">
+                <table class="table table-striped table-bordered table-hover " id="roomTable" data-toggle="modal" data-target="#myModal">
                     <thead>
 	                    <tr onclick="event.cancelBubble=true">
 	                        <th>숙소아이디</th>
@@ -338,7 +338,7 @@
     <script>
     
     //테이블 hover 효과 지정
-    $('#userTable td').mouseenter(function(){
+    $('#roomTable td').mouseenter(function(){
 		$(this).parent().css({
 			"background":"darkgray",
 			"cursor" : "pointer"	
@@ -349,7 +349,7 @@
 
     
         //테이블을 클릭했을 때 실행할 이벤트
-        $("#userTable tr").click(function () {
+        $("#roomTable tr").click(function () {
             var str = "";
             var tdArr = new Array();
             var tr = $(this);

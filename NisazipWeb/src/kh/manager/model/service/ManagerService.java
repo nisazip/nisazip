@@ -11,7 +11,6 @@ import java.util.HashMap;
 
 import kh.manager.model.dao.mDao;
 import kh.manager.model.vo.MemberList;
-import kh.member.model.vo.Member;
 import kh.room.model.vo.Room;
 import kh.trip.model.vo.Trip;
 
@@ -190,6 +189,42 @@ public class ManagerService {
 		close(con);
 		
 		return result;
+	}
+
+	public int searchIdCount(String keyword) {
+		Connection con = getConnection();
+		int result =new mDao().searchIdMemeberListCount(con, keyword);
+		
+		close(con);
+		
+		return result;
+	}
+
+	public int searchNameCount(String keyword) {
+		Connection con = getConnection();
+		int result =new mDao().searchNameMemeberListCount(con, keyword);
+		
+		close(con);
+		
+		return result;
+	}
+
+	public ArrayList<MemberList> searchId(int currentPage, int limit, String keyword) {
+		Connection con = getConnection();
+		mDao mDao = new mDao();
+		
+		ArrayList<MemberList> list =mDao.searchId(con, currentPage, limit, keyword);
+		
+		return list;
+	}
+
+	public ArrayList<MemberList> searchName(int currentPage, int limit, String keyword) {
+		Connection con = getConnection();
+		mDao mDao = new mDao();
+		
+		ArrayList<MemberList> list =mDao.searchName(con, currentPage, limit, keyword);
+		
+		return list;
 	}
 
 }

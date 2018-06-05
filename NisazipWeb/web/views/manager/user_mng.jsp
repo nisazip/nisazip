@@ -10,7 +10,9 @@
 	int maxPage = pi.getMaxPage();
 	int startPage = pi.getStartPage();
 	int endPage = pi.getEndPage();
-
+	
+	String keyword = (String)request.getAttribute("keyword");
+	String condi = (String)request.getAttribute("condi");
 %>
 <!DOCTYPE html>
 <html>
@@ -47,8 +49,9 @@
 	                </div>
 	                <div class="col-xs-8 col-sm-6">
 	                    <div class="input-group">
-	                        <input type="search" class="form-control" placeholder=" 검색 하기 " id="keyword" >
+	                        <input type="search" class="form-control" placeholder=" 검색 하기 " id="keyword" onkeyup="enterKey();">
 	                        <span class="input-group-btn">
+	                        	
 	                            <button class="btn btn-secondary" type="button" onclick="search();">검색</button>
 	                        </span>
 	                    </div>
@@ -61,6 +64,7 @@
 				</div>
 				<!--테이블 영역 -->
 				<div class="table-responsive">
+                <% if( list!=null) {%>
                 <table class="table table-striped table-bordered table-hover " id="userTable" data-toggle="modal" data-target="#myModal">
                     <thead>
 	                    <tr onclick="event.cancelBubble=true">
@@ -78,25 +82,28 @@
 	                    </tr>
                     </thead>
                     <tbody>
-                    
-                    <% for(MemberList m : list){ %>
-					<tr>
-						<td><%=m.getUser_no()%></td>
-						<td><%=m.getUser_id()%></td>
-						<td><%=m.getUser_name() %></td>
-						<td><%=m.getPhone() %></td>
-						<td><%=m.getGender() %></td>
-						<td><%=m.getBirthdate() %></td>
-						<td><%=m.getR_hosting() %></td>
-						<td><%=m.getT_hosting() %></td>
-						<td><%=m.getOauth() %></td>
-						<td><%=m.getJoin_date() %></td>
-						<td><%=m.getrCnt() %></td>
-					</tr>
-					<% } %>
-                        
-                    </tbody>
+	                    <% for(MemberList m : list){ %>
+						<tr>
+							<td><%=m.getUser_no()%></td>
+							<td><%=m.getUser_id()%></td>
+							<td><%=m.getUser_name() %></td>
+							<td><%=m.getPhone() %></td>
+							<td><%=m.getGender() %></td>
+							<td><%=m.getBirthdate() %></td>
+							<td><%=m.getR_hosting() %></td>
+							<td><%=m.getT_hosting() %></td>
+							<td><%=m.getOauth() %></td>
+							<td><%=m.getJoin_date() %></td>
+							<td><%=m.getrCnt() %></td>
+						</tr>
+						<% } %>
+					</tbody>
                 </table>
+                
+                 <%}else{ %>
+                      <div>회원이 없습니다. <br/>
+                      	새로운 회원을 등록하거나 검색조건을 확인해 주세요</div>
+                   <% } %>
                 </div>
              
 	            <!-- 페이징처리할 부분 -->
@@ -105,7 +112,7 @@
 					
 					<!-- 가장 첫 페이지로 이동 -->
 					<li class="page-item">
-						<a class="page-item" onclick="location.href='<%=request.getContextPath()%>/memberList.mg?currentPage=1'">처음</a>
+						<a class="page-item" onclick="location.href='<%=request.getContextPath()%>/searchMember.mg?con='+$('#searchCondition').val()+'&keyword='+$('#keyword').val()+'&currentPage=1'">처음</a>
 					</li>
 					<!-- 한페이지 씩 앞으로 이동 -->
 					<% if(currentPage <= 1){ %>
@@ -114,7 +121,7 @@
 					</li>					
 					<% }else{ %>
 					<li class="page-item ">
-						<a class="page-item" onclick="location.href='<%=request.getContextPath()%>/memberList.mg?currentPage=<%=currentPage -1%>'">&lt;</a>
+						<a class="page-item" onclick="location.href='<%=request.getContextPath()%>/searchMember.mg?con='+$('#searchCondition').val()+'&keyword='+$('#keyword').val()+'&currentPage=<%=currentPage -1%>'">&lt;</a>
 					</li>
 					<% }%>
 					
@@ -126,7 +133,7 @@
 						</li>	
 						<% } else{ %>
 						<li class="page-item">
-							<a class="page-item" onclick="location.href='<%=request.getContextPath()%>/memberList.mg?currentPage=<%=i %>'"><%=i %></a>
+							<a class="page-item" onclick="location.href='<%=request.getContextPath()%>/searchMember.mg?con='+$('#searchCondition').val()+'&keyword='+$('#keyword').val()+'&currentPage=<%=i %>'"><%=i %></a>
 						</li>	
 						<% } %>
 					<% } %>
@@ -138,13 +145,13 @@
 					</li>	
 					<% }else{ %>
 					<li class="page-item">
-						<a class="page-item" onclick="location.href='<%=request.getContextPath()%>/memberList.mg?currentPage=<%=currentPage +1%>'">&gt;</a>
+						<a class="page-item" onclick="location.href='<%=request.getContextPath()%>/searchMember.mg?con='+$('#searchCondition').val()+'&keyword='+$('#keyword').val()+'&currentPage=<%=currentPage +1%>'">&gt;</a>
 					</li>
 					<% }%>
 					
 					<!-- 가장 마지막 페이지로 이동 -->
 					<li class="page-item">
-						<a class="page-item" onclick="location.href='<%=request.getContextPath()%>/memberList.mg?currentPage=<%=maxPage%>'">마지막</a>
+						<a class="page-item" onclick="location.href='<%=request.getContextPath()%>/searchMember.mg?con='+$('#searchCondition').val()+'&keyword='+$('#keyword').val()+'&currentPage=<%=maxPage%>'">마지막</a>
 					</li>	
 	
 					</ul>
@@ -291,9 +298,32 @@
     <!-- 모달 끝 -->
     
     <script>
+    
+    $(function(){
+    	//검색 시 keyword 올려 놓기
+    	<%if(keyword != null){%>
+    		$('#keyword').val('<%=keyword%>');
+    	<%}%>
+    	
+    	<%if(condi != null){%>
+		$('#searchCondition').val('<%=condi%>');
+		<%}%>
+    	
+    	
+    });
     //검색
     function search(){
-		location.href='<%=request.getContextPath()%>/searchMember.mg?con='+$('#searchCondition').val()+'&keyword='+$('#keyword').val();
+    	if($('#keyword')!=null && $('#keyword')!=" "){
+    		location.href='<%=request.getContextPath()%>/searchMember.mg?con='+$('#searchCondition').val()+'&keyword='+$('#keyword').val();
+    	}else{
+    		alert("검색어를 입력하세요");
+    	}
+	}
+    //엔터키 검색
+    function enterKey(){
+		if(window.event.keyCode == 13){
+			search();
+		}
 	}
     
 

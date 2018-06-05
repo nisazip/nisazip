@@ -625,6 +625,161 @@ public class mDao {
 		return result;
 	}
 
+	public int searchIdMemeberListCount(Connection con, String keyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		
+		String query = prop.getProperty("searchIdMemeberListCount");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, keyword);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(rset);
+		}
+			
+		return result;
+	}
+
+	public int searchNameMemeberListCount(Connection con, String keyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		
+		String query = prop.getProperty("searchNameMemeberListCount");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, keyword);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(rset);
+		}
+			
+		return result;
+	}
+
+	public ArrayList<MemberList> searchId(Connection con, int currentPage, int limit, String keyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<MemberList> list = null;
+		MemberList m =null;
+		
+		String query = prop.getProperty("searchIdMemeberList");
+
+		//조회할 숫자 startRow와 endRow 계산
+		int startRow = (currentPage - 1) * limit+1;
+		int endRow = startRow + (limit-1);
+		
+		list = new ArrayList<MemberList>();
+
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setString(1, keyword);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				m = new MemberList();
+				m.setUser_no(rset.getInt("USER_NO"));
+				m.setUser_id(rset.getString("USER_ID"));
+				m.setUser_name(rset.getString("USER_NAME"));
+				m.setPhone(rset.getString("PHONE"));
+				m.setGender(rset.getString("GENDER").charAt(0));
+				m.setBirthdate(rset.getString("BIRTH"));
+				m.setR_hosting(rset.getInt("R_HOSTING"));
+				m.setT_hosting(rset.getInt("T_HOSTING"));
+				m.setJoin_date(rset.getDate("JOIN_DATE"));
+				m.setrCnt(rset.getInt("RCNT"));
+				m.setOauth((rset.getString("OAUTH").charAt(0)));
+				list.add(m);
+				System.out.println("DAO : "+m);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(rset);
+		}
+			
+		return list;
+	}
+
+	public ArrayList<MemberList> searchName(Connection con, int currentPage, int limit, String keyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<MemberList> list = null;
+		MemberList m =null;
+		
+		String query = prop.getProperty("searchNameMemeberList");
+
+		//조회할 숫자 startRow와 endRow 계산
+		int startRow = (currentPage - 1) * limit+1;
+		int endRow = startRow + (limit-1);
+		
+		list = new ArrayList<MemberList>();
+
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setString(1, keyword);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				m = new MemberList();
+				m.setUser_no(rset.getInt("USER_NO"));
+				m.setUser_id(rset.getString("USER_ID"));
+				m.setUser_name(rset.getString("USER_NAME"));
+				m.setPhone(rset.getString("PHONE"));
+				m.setGender(rset.getString("GENDER").charAt(0));
+				m.setBirthdate(rset.getString("BIRTH"));
+				m.setR_hosting(rset.getInt("R_HOSTING"));
+				m.setT_hosting(rset.getInt("T_HOSTING"));
+				m.setJoin_date(rset.getDate("JOIN_DATE"));
+				m.setrCnt(rset.getInt("RCNT"));
+				m.setOauth((rset.getString("OAUTH").charAt(0)));
+				list.add(m);
+				System.out.println("DAO : "+m);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(rset);
+		}
+			
+		return list;
+	}
+
+
 
 
 
