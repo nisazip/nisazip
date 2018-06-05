@@ -225,11 +225,13 @@ public class RoomDao {
 				hmap.put("r_id", rset.getString("r_id"));
 				hmap.put("r_name", rset.getString("r_name"));
 				hmap.put("price", rset.getInt("price"));
+				hmap.put("r_start_date", rset.getDate("r_start_date"));
+				hmap.put("r_end_date", rset.getDate("r_end_date"));
+				hmap.put("r_max_num", rset.getInt("r_max_num"));
 				hmap.put("r_loc", rset.getString("r_loc"));
 				hmap.put("score", rset.getFloat("score"));
 				hmap.put("file_path", rset.getString("file_path"));
 				hmap.put("change_name", rset.getString("change_name"));
-				
 				
 				rlist.add(hmap);
 				

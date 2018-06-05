@@ -190,6 +190,9 @@ public class TripDao {
 				hmap.put("t_name", rset.getString("t_name"));
 				hmap.put("host_id", rset.getString("host_id"));
 				hmap.put("price", rset.getString("price"));
+				hmap.put("t_start_date", rset.getDate("t_start_date"));
+				hmap.put("t_end_date", rset.getDate("t_end_date"));
+				hmap.put("t_max_num", rset.getInt("t_max_num"));
 				hmap.put("t_loc", rset.getString("t_loc"));
 				hmap.put("score", rset.getString("score"));
 				hmap.put("file_path", rset.getString("file_path"));

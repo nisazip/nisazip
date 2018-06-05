@@ -36,29 +36,55 @@ public class HomeSearchServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String location = request.getParameter("location");
-		String checkin = request.getParameter("checkin");
-		String checkout = request.getParameter("checkout");
-		int people = Integer.parseInt(request.getParameter("people"));
-		
-		
+		if(request.getParameter("checkin") != null 
+				&& request.getParameter("checkout") != null 
+				&& request.getParameter("people") != null){
+			String checkin = request.getParameter("checkin");
+			String checkout = request.getParameter("checkout");
+			int people = Integer.parseInt(request.getParameter("people"));
+			
+			System.out.println("people : " + people);
+			java.sql.Date chkinDay = datePicker(checkin);
+			java.sql.Date chkoutDay = datePicker(checkout);
+			
+			System.out.println(chkinDay);
+			System.out.println(chkoutDay);
+			
+			System.out.println("서블릿 : "+location);
+			ArrayList<HashMap<String, Object>> rlist = new RoomService().searchRoom(location,checkin,checkout,people);
+			ArrayList<HashMap<String, Object>> tlist = new TripService().searchTrip(location,checkin,checkout,people);
+			
+			System.out.println("검색 결과인 rlist : "+rlist);
+			System.out.println("검색 결과인 tlist : "+tlist);
+			
+			request.setAttribute("rlist", rlist);
+			request.setAttribute("tlist", tlist);
+			request.setAttribute("location", location);
+			request.setAttribute("checkin", checkin);
+			request.setAttribute("checkout", checkout);
+			request.setAttribute("people", people);
+			
+		} else {
+			
+			ArrayList<HashMap<String, Object>> rlist = new RoomService().searchKeyword(location);
+			ArrayList<HashMap<String, Object>> tlist = new TripService().searchKeyword(location);
+			
+			HashMap<String, ArrayList> data = new HashMap<String, ArrayList>();
+			
+			System.out.println("검색 결과인 rlist : "+rlist);
+			System.out.println("검색 결과인 tlist : "+tlist);
+			
+			request.setAttribute("rlist", rlist);
+			request.setAttribute("tlist", tlist);
+			request.setAttribute("location", location);
+			request.setAttribute("checkin", "");
+			request.setAttribute("checkout", "");
+			request.setAttribute("people", 0);
+		}
 		
 		System.out.println("서블릿 전달");
-		System.out.println("people : " + people);
-		java.sql.Date chkinDay = datePicker(checkin);
-		java.sql.Date chkoutDay = datePicker(checkout);
-		
-		System.out.println(chkinDay);
-		System.out.println(chkoutDay);
-		
-		System.out.println("서블릿 : "+location);
-		ArrayList<HashMap<String, Object>> rlist = new RoomService().searchRoom(location,checkin,checkout,people);
-		ArrayList<HashMap<String, Object>> tlist = new TripService().searchTrip(location,checkin,checkout,people);
-		
-		
 		
 		String page="search.jsp";
-		request.setAttribute("rlist", rlist);
-		request.setAttribute("tlist", tlist);
 		
 		request.getRequestDispatcher(page).forward(request, response);
 	}

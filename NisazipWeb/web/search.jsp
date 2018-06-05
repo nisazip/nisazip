@@ -5,7 +5,10 @@
 	ArrayList<HashMap<String,Object>> rlist= (ArrayList<HashMap<String,Object>>)request.getAttribute("rlist");
 	ArrayList<HashMap<String,Object>> tlist= (ArrayList<HashMap<String,Object>>)request.getAttribute("tlist");
 	String area = (String)request.getAttribute("area");
-	
+	String location = (String)request.getAttribute("location");
+	String checkin = (String)request.getAttribute("checkin");
+	String checkout = (String)request.getAttribute("checkout");
+	int people = (int)request.getAttribute("people");
 %>
 <!DOCTYPE html>
 <html>
@@ -130,6 +133,39 @@ ul {
     <%@ include file="views/common/header.jsp" %>
     
     	<div id="main">
+    	<div class="container-fluid">
+			<div class="row">
+				<div class="col-sm-2"></div>
+				<form id="searchForm"
+					action="<%=request.getContextPath()%>/search.ho" name="searchForm"
+					method="post" class="form-horizontal" role="form">
+					<div class="col-sm-6">
+
+						
+							<br>
+							<div class="col-xs-3">
+								<label> 위 치: <%= location %></label>&nbsp;
+							</div>
+							<div class="col-xs-3">
+								&nbsp;&nbsp;<label> 인 원 수: <%= people %> </label>&nbsp;&nbsp;
+							</div>
+					
+							<div class="col-xs-3">
+								&nbsp;<label>체크인 : <%= checkin %> </label>&nbsp;&nbsp;
+							</div>
+
+							<div class="col-xs-3">
+								<label>체크아웃 : <%= checkout %> </label>&nbsp;
+							</div>
+				
+
+						<br>
+	
+					</div>
+				</form>
+			</div>
+
+		</div>
     	  <div class="container-fluid">
             <div class="row searchbar">
                 <div class="col-sm-2"></div>
@@ -147,7 +183,7 @@ ul {
                 
                 function search(){
         			$.ajax({
-    					url:'<%=request.getContextPath()%>/keywordSearch.ho',
+        				url:'<%=request.getContextPath()%>/keywordSearch.ho',
     					type:"get",
     					data : {
     						keyword : $('#keyword').val()
@@ -285,6 +321,20 @@ ul {
 			<div class="row">
 				<div class="col-sm-6">
 					<div class="row" id="inn2_thumb">
+					<% for(HashMap<String,Object> map : rlist) { %>
+					
+					<div class="col-md-6"> 
+	    				<div class="thumbnail">
+	    					<a href="상세 페이지.html" target="_blank">
+	    						<img src="<%= %>data.rlist[i].file_path+data.rlist[i].change_name" class="img" style="height:190px;">
+	    							<div class="caption">
+	    								<p>data.rlist[i].r_name</p>
+	    								<p id="price">data.rlist[i].price</p>
+	    							</div>
+	    					</a>
+	    				</div>
+	    			</div>
+	    			<% } %>
 					</div>
 				</div>
 			</div>
@@ -302,6 +352,9 @@ ul {
 		</div>
 		<script>
 			 $(function(){
+				 
+				 $('#keyword').val('<%= location %>'); 
+				<% if (people < 1) { %> 
 				 if($('#keyword').val() != "" && $('#keyword').val() != "null"){
 					 search();
 				 } else {
@@ -311,6 +364,7 @@ ul {
 					$div = $('#trip2_thumb');
 					$div.append("<h3>검색 조건이 없습니다.</h3>");
 				 }
+				 <% } %>
 			}); 
 		</script>
         
