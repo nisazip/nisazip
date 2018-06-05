@@ -1,10 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<% 
-	String messageType = (String)session.getAttribute("messageType");
-	String messageContent = (String)session.getAttribute("messageContent");
 
-%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
@@ -16,7 +12,7 @@
 	}
 	String messageType = null;
 	if(session.getAttribute("messageType")!= null){
-		messageContent = (String)session.getAttribute("messageType");
+		messageType = (String)session.getAttribute("messageType");
 		
 	}
 	if(messageContent!=null){
@@ -24,13 +20,13 @@
 	<div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-hidden="true">
 		<div class="vertical-alignment-helper">
 			<div class="modal-dialog vertical-align-center">
-				<div class="modal-content" <%if(messageType.equals("오류메시지")) out.println("panel-warnig"); else out.println("panel-success"); %>>
-					<div class="modal-header panel-heading">
+				<div class="modal-content panel-warning">
+					<div class="modal-header" style="background: red;">
 						<button type="button" class="close" data-dismiss="modal"> 
 							<span aria-hidden="true">&times;</span>
 							<span class="sr-only">Close</span>
 						</button>
-						<h4 class="modal-title">
+						<h4 class="modal-title"  style="background: red;">
 							<%= messageType %>
 						</h4>
 					
@@ -46,6 +42,7 @@
 		</div>
 	</div>
 </div>
+<%} %>
 <script type="text/javascript">
 	$("#messageModal").modal("show");
 	

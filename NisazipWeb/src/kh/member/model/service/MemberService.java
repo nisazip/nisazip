@@ -122,6 +122,32 @@ public class MemberService {
 		
 		
 	}
+
+
+	public int deleteCertification(String id) {
+		int result =0;	
+		Connection con = getConnection();
+		result = mDao.deleteCertification(con, id);
+		close(con);
+		return result ;
+	}
+
+
+	public int insertCertication(UserPic pic) {
+		int result =0;	
+		Connection con = getConnection();
+		result = mDao.insertCertication(con, pic);
+		close(con);
+		return result ;
+	}
+
+
+	public UserPic findUserCer(UserPic pic) {
+		Connection con = getConnection();
+		UserPic profile = mDao.findUserCer(con, pic);
+		
+		return profile;
+	}
 	
 
 }

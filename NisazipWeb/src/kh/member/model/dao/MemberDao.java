@@ -48,9 +48,11 @@ public class MemberDao {
 				member.setPassword(m.getPassword());
 				member.setUser_no(rset.getInt("USER_NO"));
 				member.setUser_name(rset.getString("USER_NAME"));
-				member.setGender(rset.getString("GENDER").charAt(0));	
-				member.setBirthdate(rset.getString("BIRTHDATE"));
 				member.setEmail(rset.getString("EMAIL"));
+				if(rset.getString("GENDER")==null){
+					member.setGender("무".charAt(0));
+				}else member.setGender(rset.getString("GENDER").charAt(0));	
+				member.setBirthdate(rset.getString("BIRTHDATE"));		
 				member.setPhone(rset.getString("PHONE"));
 				member.setJoin_date(new Date(rset.getDate("JOIN_DATE").getTime()));
 				//System.out.println("date:"+new Date(rset.getDate("JOIN_DATE").getTime()));
@@ -95,7 +97,9 @@ public class MemberDao {
 				member.setPassword(m.getPassword());
 				member.setEmail(m.getEmail());
 				member.setUser_name(rset.getString("USER_NAME"));
-				member.setGender(rset.getString("GENDER").charAt(0));	
+				if(rset.getString("GENDER")==null){
+					member.setGender("무".charAt(0));
+				}else member.setGender(rset.getString("GENDER").charAt(0));	
 				member.setBirthdate(rset.getString("BIRTHDATE"));
 				member.setJoin_date(new Date(rset.getDate("JOIN_DATE").getTime()));
 				//System.out.println("date:"+new Date(rset.getDate("JOIN_DATE").getTime()));
@@ -323,6 +327,93 @@ public class MemberDao {
 				profile.setOrigin_name(rset.getString("ORIGIN_NAME"));
 				profile.setChange_name(rset.getString("CHANGE_NAME"));
 				profile.setUpload_date(rset.getDate("UPLOAD_DATE"));
+				System.out.println("sel: "+pic);
+				
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return profile;
+	}
+
+	public int deleteCertification(Connection con, String id) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		try {
+			String query = prop.getProperty("deleteCertification");
+			
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setString(1, id);
+		
+
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int insertCertication(Connection con, UserPic pic) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		try {
+			String query = prop.getProperty("insertCertification");
+			
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setString(1, pic.getUser_id());
+			pstmt.setString(2, pic.getOrigin_name());
+			pstmt.setString(3, pic.getChange_name());
+			pstmt.setString(4, pic.getFile_path());
+		
+			result = pstmt.executeUpdate();
+			System.out.println("dao:"+pic);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public UserPic findUserCer(Connection con, UserPic pic) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		UserPic profile = null;
+		
+		try { 
+			
+			String query = prop.getProperty("findUserCer");
+					
+			pstmt = con.prepareStatement(query);
+			System.out.println("dao"+pic);
+			pstmt.setString(1, pic.getUser_id());		
+			System.out.println("dao:"+pic.getUser_id());
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()){
+				profile = new UserPic();
+				profile.setUser_id(pic.getUser_id());
+				profile.setFile_level(rset.getInt("FILE_LEVEL"));
+				profile.setFile_path(rset.getString("FILE_PATH"));
+				profile.setOrigin_name(rset.getString("ORIGIN_NAME"));
+				profile.setChange_name(rset.getString("CHANGE_NAME"));
+				profile.setUpload_date(rset.getDate("UPLOAD_DATE"));
+				
 				System.out.println("sel: "+pic);
 				
 				

@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import kh.member.model.service.BinService;
 
@@ -45,9 +46,11 @@ public class MyBinServlet extends HttpServlet {
 			page = "views/member/myBin.jsp";
 			request.setAttribute("tCompleteList", tCompleteList);
 		} else {
-			page = "views/common/errorPage.jsp";
-			request.setAttribute(
-			"msg", "");
+			HttpSession session = request.getSession(false);
+
+			session.setAttribute("messageContent", "저장된 회원정보가 아닙니다.");
+			session.setAttribute("messageType", "오류메세지");
+			response.sendRedirect(request.getHeader("referer")); 
 		}
 		
 		request.getRequestDispatcher(page)

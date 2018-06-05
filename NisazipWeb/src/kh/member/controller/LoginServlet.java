@@ -52,7 +52,7 @@ public class LoginServlet extends HttpServlet {
 			m = ms.selectMemberI(m);
 			}
 		
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(false);
 		if(m != null) {
 			System.out.println("login 결과로 받은 값 : "+m);
 			

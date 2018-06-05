@@ -26,13 +26,13 @@ import kh.member.model.vo.UserPic;
  * Servlet implementation class SInsertServlet
  */
 @WebServlet("/presentUser.pic")
-public class ProfileUploadServlet2 extends HttpServlet {
+public class ProfileCheckServlet extends HttpServlet {
    private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ProfileUploadServlet2() {
+    public ProfileCheckServlet() {
         super();
         // TODO Auto-generated constructor stub
     }

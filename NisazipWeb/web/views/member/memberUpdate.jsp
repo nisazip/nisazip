@@ -81,11 +81,11 @@ function profileModal(){
     			
     			<div class="row">
 	    			<div class="col-lg-4 xs-hidden"></div>
-	    			<div class="col-lg-5 col-xs-12">	
+	    			<div class="col-lg-8 col-xs-12">	
 		    		    			
-						<img alt="" id="presentProfileImg"  class="align-center" style="width:200px; height: 200px;">
+						<center><img alt="" id="presentProfileImg"  class="align-center" style="width:200px; height: 200px; box-shadow: 4px 4px 3px gray; border-radius: 50em;"></center>
 			    			<br><br>
-    					<button class="btn btn-success" type="submit" style="width: 90%;" onclick="profileModal();">사진 입력/수정</button>
+    					<center><button class="btn btn-success" type="submit" style="width: 100%;" onclick="profileModal();">사진 입력/수정</button></center>
     				</div>
     			</div>
     			</fieldset>   

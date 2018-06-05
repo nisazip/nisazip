@@ -87,9 +87,18 @@ public class ProfileUploadServlet extends HttpServlet {
          int result = new MemberService().insertProfile(pic);
          System.out.println("base:"+base);
          System.out.println(result);
-
+         
+         
+         
+         HttpSession session = request.getSession(false);
+         if( saveFiles == null){
+        	 	session.setAttribute("messageContent", "입력갑이 없어 기본 이미지로 대체 합니다.");
+    			session.setAttribute("messageType", "오류메세지");
+    			response.sendRedirect(request.getHeader("referer")); 
+         }
+         
          if (result > 0) {
-        	 HttpSession session = request.getSession(false);
+        	 
         	 session.setAttribute("UserPic", pic);
         	 response.sendRedirect(request.getHeader("referer"));
             
@@ -104,9 +113,9 @@ public class ProfileUploadServlet extends HttpServlet {
                System.out.println(failedFile.delete());
             
             // 에러페이지로 메세지 전달
-            request.setAttribute("msg", "사진게시판 등록 실패!");
-            request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+       		
 
+          
          }
       }
 

@@ -31,6 +31,12 @@ overflow: hidden;
 }
 
 </style>
+<script type="text/javascript">
+	function certificationModal(){
+		$("#myModal5").modal();
+	}
+
+</script>
 </head>
 
 
@@ -43,8 +49,7 @@ overflow: hidden;
 
 <div id="main">
 <div class="container-fluid">
-
-  <div class="row content">
+  <div class="row">
     <div class="col-sm-3 sidenav">
   
       <ul class="nav nav-pills nav-stacked">
@@ -57,69 +62,93 @@ overflow: hidden;
     </div>
 
 
-    <div class="col-sm-5"> 
+  <div class="col-sm-5"> 
     
-    	
-    		<form action="" enctype="multipart/form-data" method="post">
-    			<h2>사진 업로드</h2>
-    			<span class="btn btn-default btn-file">이미지를 업로드 하세요
-    			<input type="file" name="userProfile">
-    			</span>
+    		<div class="col-sm-12 col-xs-12" style="">
+    			<fieldset>		
+    			<legend>신분증 사진 올리기</legend>	
     			
-    		</form>
-    
-        	
-<script>
-				$(function(){
-					if('<%=m.getGender()%>' != null){
-					$('input:radio').each(function(){
-						if( $(this).val() == '<%=m.getGender()%>'){
-						  $(this).prop('checked', true);
-						  $(this).parent().addClass('active');
-						//console.log( $(this).parent().children().eq(0));
-						//console.log( $(this).parent());
-						}else 
-						  $(this).prop('checked', false);
-						//$(this).prop('disabled', true);
-					});
-					}
-					var phoneArr = '<%=m.getPhone()%>'.split('-');
-				
-					$('input[class*="phone"]').each(function(index){
-						$(this).val(phoneArr[index+1]);
-					});
-					
-					var addressArr = '<%=m.getBirthdate()%>'.split('-');
-					
-					$('#zipCode').val(addressArr[0]);
-					$('#address1').val(addressArr[1]);
-					$('#address2').val(addressArr[2]);
-					
-					
-				});
-				
-				function updateMember() {
-					$("#updateForm").submit();
-				}
-				
-				/* $("#updateForm").submit(function(event){
-					if($("#userPwd").val() == "" || $("#userId").val() == "") alert("아이디나 비밀번호는 필수 값입니다.");
-					else if($('#userPwd').val() != $('#userPwd2').val()) alert("비밀번호 확인 값과 다릅니다.");
-					else return;
-					event.preventDefault();
-				}); */
-				
-				function deleteMember() {
-					location.href = "/myWeb/mDelete.me?mid=<%=m.getUser_id()%>";
-				}
-				
-				
-				
-				function goMain(){
-					location.href='<%=request.getContextPath()%>/index.jsp';
-				};
-				
-			</script>
+    			<div class="row">
+	    			<div class="col-lg-4 xs-hidden"></div>
+	    			<div class="col-lg-8 col-xs-12">	
+		    		    			
+						<center><img alt="" id="presentProfileImg"  class="align-center" style="width:300px; height: 200px; box-shadow: 4px 4px 3px gray;;"></center>
+			    			<br><br>
+    					<center><button class="btn btn-success" type="submit" style="width: 80%;" onclick="certificationModal();">신분증 입력/수정</button></center>
+    				</div>
+    			</div>
+    			</fieldset>   
+    		</div>
+</div>
+
+
+<div id="myModal5" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">프로필 사진 설정<span class=""></span></h4>
+      </div>
+      <div class="modal-body">
+       	<div class="row">
+       		<div class="col-sm-3 xs-hiiden"></div>       
+       		<div class="col-sm-6 col-xs-10">
+        	 <form  id="" role="form" action="<%= request.getContextPath()%>/certification.pic"  method="post" enctype="multipart/form-data">            
+	             <div class="form-group">
+	              
+	              <img alt="" id="titleImg">
+	              <input type="file"  id="profilePicture" name="profilePicture" onchange="LoadImg(this);">
+	              <input type="hidden" value="<%= m.getUser_id()%>" name="uploadId">
+	              
+	            </div>
+	            
+	             <button type="submit" class="btn btn-success btn-block" style="width: 100%;"><span class="glyphicon glyphicon-off"></span>입력</button>
+            </form>
+            </div>
+            <div class="col-sm-3 xs-hiiden""></div>
+     	 </div>
+      </div>
+      <div class="modal-footer">
+     	 
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript">
+$(function(){
+	var id = "<%=m.getUser_id()%>";
+		console.log(id);
+		$.ajax({
+			url:'/semi//presentCer.pic',
+			type:'get',
+			data:{id:id},
+			success:function(result){
+			$("#presentProfileImg").attr("src", "<%=request.getContextPath()%>\\resources\\thumbnail_uploadFiles\\"+result);		
+			},
+			error:function(){
+			    alert("에러입니다");
+			}
+		});
+								
+	});
+	
+function LoadImg(value, num) {
+    if (value.files && value.files[0]) {
+       var reader = new FileReader();
+       reader.onload = function(e) {
+         
+             $("#titleImg").attr("src", e.target.result).css({"width":"300px","height":"200px"});	          
+       }
+       reader.readAsDataURL(value.files[0]);
+    }
+ }
+</script>
+
 
 </body>
 </html>

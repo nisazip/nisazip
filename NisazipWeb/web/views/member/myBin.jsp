@@ -18,8 +18,7 @@
 <div class="container-fluid">
   <div class="row content">
     <div class="col-sm-2 sidenav hidden-xs">
-      <h3>네가 사는 그집</h3>
-      <br> <br> <br>
+    
       <ul class="nav nav-pills nav-stacked">
         <br>
      <li><a href="/semi/views/member/memberUpdate.jsp">사용자 정보 수정/추가</a></li>

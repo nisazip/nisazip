@@ -33,7 +33,7 @@ public class LogoutServlet extends HttpServlet {
 			System.out.println("request.getHeader('referer'):"+request.getHeader("referer"));
 			System.out.println("타입:"+request.getHeader("referer") instanceof String);
 
-			if( request.getHeader("referer").equals("http://localhost:8088/semi/views/member/memberUpdate.jsp") ||request.getHeader("referer").equals("http://localhost:8088/semi/views/member/myBin.jsp")){
+			if( request.getHeader("referer").equals("http://localhost:8088/semi/views/member/memberUpdate.jsp") ||request.getHeader("referer").equals("http://localhost:8088/semi/views/member/myBin.jsp")||request.getHeader("referer").equals("http://localhost:8088/semi/views/member/certification.jsp")){
 				session.invalidate();
 				response.sendRedirect("index.jsp"); 
 				
