@@ -227,4 +227,112 @@ public class ManagerService {
 		return list;
 	}
 
+	public int searchRNameCount(String keyword) {
+		Connection con = getConnection();
+		int result =new mDao().searchRNameCount(con, keyword);
+		
+		close(con);
+		
+		return result;
+	}
+
+	public int searchRHostIdCount(String keyword) {
+		Connection con = getConnection();
+		int result =new mDao().searchRHostIdCount(con, keyword);
+		
+		close(con);
+		
+		return result;
+	}
+
+	public int searchRAreaCount(String keyword) {
+		Connection con = getConnection();
+		int result =new mDao().searchRAreaCount(con, keyword);
+		
+		close(con);
+		
+		return result;
+	}
+
+	public ArrayList<Room> searchRName(int currentPage, int limit, String keyword) {
+		Connection con = getConnection();
+		mDao mDao = new mDao();
+		
+		ArrayList<Room> list =mDao.searchRName(con, currentPage, limit, keyword);
+		
+		return list;
+	}
+
+	public ArrayList<Room> searchRHostId(int currentPage, int limit, String keyword) {
+		Connection con = getConnection();
+		mDao mDao = new mDao();
+		
+		ArrayList<Room> list =mDao.searchRHostId(con, currentPage, limit, keyword);
+		
+		return list;
+	}
+
+	public ArrayList<Room> searchRArea(int currentPage, int limit, String keyword) {
+		Connection con = getConnection();
+		mDao mDao = new mDao();
+		
+		ArrayList<Room> list =mDao.searchRArea(con, currentPage, limit, keyword);
+		
+		return list;
+	}
+
+	public int searchTNameCount(String keyword) {
+		Connection con = getConnection();
+		int result =new mDao().searchTNameCount(con, keyword);
+		
+		close(con);
+		
+		return result;
+	}
+
+	public int searchTHostIdCount(String keyword) {
+		Connection con = getConnection();
+		int result =new mDao().searchTHostIdCount(con, keyword);
+		
+		close(con);
+		
+		return result;
+	}
+
+	public int searchTAreaCount(String keyword) {
+		Connection con = getConnection();
+		int result =new mDao().searchTAreaCount(con, keyword);
+		
+		close(con);
+		
+		return result;
+	}
+
+	public ArrayList<Trip> searchTName(int currentPage, int limit, String keyword) {
+		Connection con = getConnection();
+		mDao mDao = new mDao();
+		
+		ArrayList<Trip> list =mDao.searchTName(con, currentPage, limit, keyword);
+		
+		return list;
+	}
+
+	public ArrayList<Trip> searchTHostId(int currentPage, int limit, String keyword) {
+		Connection con = getConnection();
+		mDao mDao = new mDao();
+		
+		ArrayList<Trip> list =mDao.searchTHostId(con, currentPage, limit, keyword);
+		
+		return list;
+	}
+
+	public ArrayList<Trip> searchTArea(int currentPage, int limit, String keyword) {
+		Connection con = getConnection();
+		mDao mDao = new mDao();
+		
+		ArrayList<Trip> list =mDao.searchTArea(con, currentPage, limit, keyword);
+		
+		return list;
+	}
+
 }

@@ -1,13 +1,31 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="kh.room.model.vo.*, kh.manager.model.vo.*, java.util.*"%>
+    
     <%
-    ArrayList<Room> list = (ArrayList<Room>)(request.getAttribute("rList"));
-    PageInfo pi = (PageInfo)request.getAttribute("pi");
-	int listCont = pi.getListCount();
-	int currentPage = pi.getCurrentPage();
-	int maxPage = pi.getMaxPage();
-	int startPage = pi.getStartPage();
-	int endPage = pi.getEndPage();
+    ArrayList<Room> list =null;
+    PageInfo pi = null;
+    int listCount =0;
+    int currentPage = 0;
+    int maxPage = 0;
+    int startPage = 0;
+    int endPage =0;
+
+    String keyword = "";
+    String condi = "";
+
+    if(request.getAttribute("rList")!=null){
+    	
+    	list = (ArrayList<Room>)request.getAttribute("rList");
+    	pi = (PageInfo)request.getAttribute("pi");
+    	listCount = pi.getListCount();
+    	currentPage = pi.getCurrentPage();
+    	maxPage = pi.getMaxPage();
+    	startPage = pi.getStartPage();
+    	endPage = pi.getEndPage();
+    	
+    	keyword = (String)request.getAttribute("keyword");
+    	condi = (String)request.getAttribute("condi");
+    }
     %>
 <!DOCTYPE html>
 <html>
@@ -31,32 +49,36 @@
             <!-- 본문  -->
             <div class="col-sm-10">
 
-				<!-- 검색 영역 -->
-                <div class="col-xs-4 col-sm-2">
-                    <div class="dropdown">
-                        <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-							-- 선택  -- <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a href="" id="sId">지역으로 찾기</a></li>
-                            <li><a href="" id="sName">이름으로 찾기</a></li>
-                        </ul>
-                    
-                    </div>
-                </div>
-                <div class="col-xs-8 col-sm-6">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="지역으로 검색...">
-                        <span class="input-group-btn">
-                            <button class="btn btn-secondary" type="button">검색</button>
-                        </span>
-                    </div>
-                </div><br><br><br>
-				<div>
-					<p>총 숙소 수(<%=listCont%>)</p>
+                <!-- 검색 영역 -->
+	                <div class="col-xs-4 col-sm-2">
+	                 <div class="form-row align-items-center">
+	                  <div class="col-auto my-1">
+  						<select class="mr-sm-2 form-control" id="searchCondition">
+	     					<option selected>선택하기</option>
+					        <option value="rName">숙소명 검색</option>
+	     					<option value="rHostId">호스트 아이디로 검색</option>
+	     					<option value="rArea">지역으로 검색</option>
+	      				</select>
+		      		  </div>
+		      		 </div>
+	                </div>
+	                <div class="col-xs-8 col-sm-6">
+	                    <div class="input-group">
+	                        <input type="search" class="form-control" placeholder=" 검색 하기 " id="keyword" onkeyup="enterKey();">
+	                        <span class="input-group-btn">
+	                        	
+	                            <button class="btn btn-secondary" type="button" onclick="search();">검색</button>
+	                        </span>
+	                    </div>
+	                </div><br><br><br>
+				</div>
+				 <!-- 검색 끝 --> 
+				 <div>
+					<p>총 숙소 수(<%=listCount%>)</p>
 				</div>
 				<!--테이블 영역 -->
 				<div class="table-responsive">
+				<% if( list!=null) {%>
                 <table class="table table-striped table-bordered table-hover " id="roomTable" data-toggle="modal" data-target="#myModal">
                     <thead>
 	                    <tr onclick="event.cancelBubble=true">
@@ -89,6 +111,12 @@
                     <% } %>	
                     </tbody>
                 </table>
+                
+                 <%}else{ %>
+                      <div><p class="text-center">트립이 없습니다. <br/>
+                      		새로운 트립을 등록하거나 검색조건을 확인해 주세요</p>
+                      </div>
+                   <% } %>
                 </div>
                 <!-- 페이징처리할 부분 -->
 	            <nav aria-label="Page navigation example" style="text-align: center">
@@ -147,7 +175,6 @@
             </div>
         </div>
 
-    </div>
     <!-- 컨테이너 끝 --> 
        
     <!-- Modal -->
@@ -336,6 +363,33 @@
     <!-- 모달 끝 -->
     
     <script>
+
+    $(function(){
+    	//검색 시 keyword 올려 놓기
+    	<%if(keyword != null){%>
+    		$('#keyword').val('<%=keyword%>');
+    	<%}%>
+    	
+    	<%if(condi != null){%>
+		$('#searchCondition').val('<%=condi%>');
+		<%}%>
+    	
+    	
+    });
+    //검색
+    function search(){
+    	if($('#keyword').val()!=null && $('#keyword').val()!=" "){
+    		location.href='<%=request.getContextPath()%>/roomList.mg?con='+$('#searchCondition').val()+'&keyword='+$('#keyword').val();
+    	}else{
+    		alert("검색어를 입력하세요");
+    	}
+	}
+    //엔터키 검색
+    function enterKey(){
+		if(window.event.keyCode == 13){
+			search();
+		}
+	}
     
     //테이블 hover 효과 지정
     $('#roomTable td').mouseenter(function(){
@@ -506,19 +560,6 @@
         	}
         });
 	
-        //dropdown menu
-        $('#sId').click(function(){
-                        console.log($(this).parent());
-                        $('#sName').parent().removeClass('active');
-                        $(this).parent().addClass('active');
-        });
-        $('#sName').click(function(){
-            console.log($(this).parent());
-            $('#sId').parent().removeClass('active');
-            $(this).parent().addClass('active');
-        });
-        
-        
         $('#home_btn').click(function(){
         	location.href="admin_home.jsp";
         });

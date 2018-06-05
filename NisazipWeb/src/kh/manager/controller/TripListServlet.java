@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import kh.manager.model.service.ManagerService;
 import kh.manager.model.vo.PageInfo;
+import kh.room.model.vo.Room;
 import kh.trip.model.vo.Trip;
 
 @WebServlet(name = "TListServlet", urlPatterns = { "/tripList.mg" })
@@ -24,12 +25,13 @@ public class TripListServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String condition = request.getParameter("con");
+		String keyword = request.getParameter("keyword");
+		
 		ArrayList<Trip> list = null;
 		ManagerService mService = new ManagerService();
 		String page="";
 		
-		System.out.println("서블릿 : "+list);
-
 		/*페이징 처리 코드 부분*/
 		
 		int startPage;		//한번에 표시될 리스트 시작 페이지
@@ -51,11 +53,26 @@ public class TripListServlet extends HttpServlet {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
 		
+		if(condition==null || keyword==null){
+			condition="선택하기";
+			keyword="";
+		}
+		
 		// 전체 게시글의 수
-		int listCount = mService.getTripListCount();
+		int listCount = 0;
+		
+		if(condition.equals("tName")) {
+			listCount = mService.searchTNameCount(keyword);
+		}else if(condition.equals("tHostId")) {
+			listCount = mService.searchTHostIdCount(keyword);
+		}else if(condition.equals("tArea")) {
+			listCount = mService.searchTAreaCount(keyword);
+		}else {
+			listCount = mService.getTripListCount();
+		}
 		
 		System.out.println("총 회원 수 : "+listCount);
-		
+		if(listCount!=0){
 		// 총 게시글 수에 대한 페이지 계산
 		// EX> 목록의 수가 123 개라면 페이지 수는 13페이지가 된다.
 		//     짜투리 게시글도 하나의 페이지로 취급해야 한다.
@@ -83,23 +100,40 @@ public class TripListServlet extends HttpServlet {
 		
 		//페이지 처리를 안할 경우
 		//list = bService.selectList(); 
+		list = new ArrayList<Trip>();
 		
 		//페이지 처리를 수행할 경우
-		list = mService.tList(currentPage, limit);
+		
+		
+		if(condition.equals("tName")) {
+			list = mService.searchTName(currentPage, limit, keyword);
+		}else if(condition.equals("tHostId")) {
+			list = mService.searchTHostId(currentPage, limit, keyword);
+		}else if(condition.equals("tArea")) {
+			list = mService.searchTArea(currentPage, limit, keyword);
+		}else {
+			list = mService.tList(currentPage, limit);
+		}
 		
 
 		if(list!=null){
 			page="views/manager/trip_mng.jsp";
 			request.setAttribute("pi", pi);
 			request.setAttribute("tList",list);
-			
+			request.setAttribute("keyword",keyword);
+			request.setAttribute("condi", condition);
 		}else{
 			System.out.println("에러발생");
 			page=request.getContextPath()+"/common/errorPage.jsp";
 			
 		}
-		
 		request.getRequestDispatcher(page).forward(request, response);
+		
+		}else{
+			page="views/manager/trip_mng.jsp";
+			request.setAttribute("tList",null);
+			request.getRequestDispatcher(page).forward(request, response);
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

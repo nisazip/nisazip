@@ -779,6 +779,463 @@ public class mDao {
 		return list;
 	}
 
+	public int searchRNameCount(Connection con, String keyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		
+		String query = prop.getProperty("searchRNameCount");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, keyword);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(rset);
+		}
+			
+		return result;
+	}
+
+	public int searchRHostIdCount(Connection con, String keyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		
+		String query = prop.getProperty("searchRHostIdCount");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, keyword);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(rset);
+		}
+			
+		return result;
+	}
+
+	public int searchRAreaCount(Connection con, String keyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		
+		String query = prop.getProperty("searchRAreaCount");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, keyword);
+			pstmt.setString(2, keyword);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(rset);
+		}
+			
+		return result;
+	}
+
+	public ArrayList<Room> searchRName(Connection con, int currentPage, int limit, String keyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Room> list = null;
+		Room r =null;
+		
+		String query = prop.getProperty("searchRName");
+
+		//조회할 숫자 startRow와 endRow 계산
+		int startRow = (currentPage - 1) * limit+1;
+		int endRow = startRow + (limit-1);
+		
+		list = new ArrayList<Room>();
+
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setString(1, keyword);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				r = new Room();
+				r.setR_id(rset.getString("R_ID"));
+				r.setR_name(rset.getString("R_NAME"));
+				r.setHost_id(rset.getString("HOST_ID"));
+				r.setR_max_num(rset.getInt("R_MAX_NUM"));
+				r.setR_type(rset.getString("R_TYPE"));
+				r.setR_type2(rset.getString("R_TYPE2"));
+				r.setPrice(rset.getInt("PRICE"));
+				r.setR_area(rset.getString("R_AREA"));
+				r.setScore(rset.getFloat("SCORE"));
+				r.setR_date(rset.getString("R_DATE"));
+				System.out.println("dao"+r);
+				list.add(r);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(rset);
+		}
+			
+		return list;
+	}
+
+	public ArrayList<Room> searchRHostId(Connection con, int currentPage, int limit, String keyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Room> list = null;
+		Room r =null;
+		
+		String query = prop.getProperty("searchRHostId");
+
+		//조회할 숫자 startRow와 endRow 계산
+		int startRow = (currentPage - 1) * limit+1;
+		int endRow = startRow + (limit-1);
+		
+		list = new ArrayList<Room>();
+
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setString(1, keyword);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				r = new Room();
+				r.setR_id(rset.getString("R_ID"));
+				r.setR_name(rset.getString("R_NAME"));
+				r.setHost_id(rset.getString("HOST_ID"));
+				r.setR_max_num(rset.getInt("R_MAX_NUM"));
+				r.setR_type(rset.getString("R_TYPE"));
+				r.setR_type2(rset.getString("R_TYPE2"));
+				r.setPrice(rset.getInt("PRICE"));
+				r.setR_area(rset.getString("R_AREA"));
+				r.setScore(rset.getFloat("SCORE"));
+				r.setR_date(rset.getString("R_DATE"));
+				System.out.println("dao"+r);
+				list.add(r);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(rset);
+		}
+			
+		return list;
+	}
+
+	public ArrayList<Room> searchRArea(Connection con, int currentPage, int limit, String keyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Room> list = null;
+		Room r =null;
+		
+		String query = prop.getProperty("searchRArea");
+
+		//조회할 숫자 startRow와 endRow 계산
+		int startRow = (currentPage - 1) * limit+1;
+		int endRow = startRow + (limit-1);
+		
+		list = new ArrayList<Room>();
+
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setString(1, keyword);
+			pstmt.setString(2, keyword);
+			pstmt.setInt(3, startRow);
+			pstmt.setInt(4, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				r = new Room();
+				r.setR_id(rset.getString("R_ID"));
+				r.setR_name(rset.getString("R_NAME"));
+				r.setHost_id(rset.getString("HOST_ID"));
+				r.setR_max_num(rset.getInt("R_MAX_NUM"));
+				r.setR_type(rset.getString("R_TYPE"));
+				r.setR_type2(rset.getString("R_TYPE2"));
+				r.setPrice(rset.getInt("PRICE"));
+				r.setR_area(rset.getString("R_AREA"));
+				r.setScore(rset.getFloat("SCORE"));
+				r.setR_date(rset.getString("R_DATE"));
+				System.out.println("dao"+r);
+				list.add(r);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(rset);
+		}
+			
+		return list;
+	}
+
+	public int searchTNameCount(Connection con, String keyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		
+		String query = prop.getProperty("searchTNameCount");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, keyword);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(rset);
+		}
+			
+		return result;
+	}
+
+	public int searchTHostIdCount(Connection con, String keyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		
+		String query = prop.getProperty("searchTHostIdCount");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, keyword);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(rset);
+		}
+			
+		return result;
+	}
+
+	public int searchTAreaCount(Connection con, String keyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		
+		String query = prop.getProperty("searchTAreaCount");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, keyword);
+			pstmt.setString(2, keyword);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(rset);
+		}
+			
+		return result;
+	}
+
+	public ArrayList<Trip> searchTName(Connection con, int currentPage, int limit, String keyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Trip> list = null;
+		Trip t =null;
+		
+		String query = prop.getProperty("searchTName");
+
+		//조회할 숫자 startRow와 endRow 계산
+		int startRow = (currentPage - 1) * limit+1;
+		int endRow = startRow + (limit-1);
+		
+		list = new ArrayList<Trip>();
+
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setString(1, keyword);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				t = new Trip();
+				t.setT_id(rset.getString("T_ID"));
+				t.setT_name(rset.getString("T_NAME"));
+				t.setHost_id(rset.getString("HOST_ID"));
+				t.setT_max_num(rset.getInt("T_MAX_NUM"));
+				t.setT_type(rset.getString("T_TYPE"));
+				t.setLanguage(rset.getString("LANGUAGE"));
+				t.setPrice(rset.getInt("PRICE"));
+				t.setT_area(rset.getString("T_AREA"));
+				t.setScore(rset.getFloat("SCORE"));
+				t.setT_date(rset.getString("T_DATE"));
+				list.add(t);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(rset);
+		}
+			
+		return list;
+	}
+
+	public ArrayList<Trip> searchTHostId(Connection con, int currentPage, int limit, String keyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Trip> list = null;
+		Trip t =null;
+		
+		String query = prop.getProperty("searchTHostId");
+
+		//조회할 숫자 startRow와 endRow 계산
+		int startRow = (currentPage - 1) * limit+1;
+		int endRow = startRow + (limit-1);
+		
+		list = new ArrayList<Trip>();
+
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setString(1, keyword);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				t = new Trip();
+				t.setT_id(rset.getString("T_ID"));
+				t.setT_name(rset.getString("T_NAME"));
+				t.setHost_id(rset.getString("HOST_ID"));
+				t.setT_max_num(rset.getInt("T_MAX_NUM"));
+				t.setT_type(rset.getString("T_TYPE"));
+				t.setLanguage(rset.getString("LANGUAGE"));
+				t.setPrice(rset.getInt("PRICE"));
+				t.setT_area(rset.getString("T_AREA"));
+				t.setScore(rset.getFloat("SCORE"));
+				t.setT_date(rset.getString("T_DATE"));
+				list.add(t);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(rset);
+		}
+			
+		return list;
+	}
+
+	public ArrayList<Trip> searchTArea(Connection con, int currentPage, int limit, String keyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Trip> list = null;
+		Trip t =null;
+		
+		String query = prop.getProperty("searchTArea");
+
+		//조회할 숫자 startRow와 endRow 계산
+		int startRow = (currentPage - 1) * limit+1;
+		int endRow = startRow + (limit-1);
+		
+		list = new ArrayList<Trip>();
+
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setString(1, keyword);
+			pstmt.setString(2, keyword);
+			pstmt.setInt(3, startRow);
+			pstmt.setInt(4, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				t = new Trip();
+				t.setT_id(rset.getString("T_ID"));
+				t.setT_name(rset.getString("T_NAME"));
+				t.setHost_id(rset.getString("HOST_ID"));
+				t.setT_max_num(rset.getInt("T_MAX_NUM"));
+				t.setT_type(rset.getString("T_TYPE"));
+				t.setLanguage(rset.getString("LANGUAGE"));
+				t.setPrice(rset.getInt("PRICE"));
+				t.setT_area(rset.getString("T_AREA"));
+				t.setScore(rset.getFloat("SCORE"));
+				t.setT_date(rset.getString("T_DATE"));
+				list.add(t);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(rset);
+		}
+			
+		return list;
+	}
+
 
 
 

@@ -117,8 +117,9 @@ if(request.getAttribute("mList")!=null){
                 </table>
                 
                  <%}else{ %>
-                      <div>회원이 없습니다. <br/>
-                      	새로운 회원을 등록하거나 검색조건을 확인해 주세요</div>
+                      <div><p class="text-center">트립이 없습니다. <br/>
+                      		새로운 트립을 등록하거나 검색조건을 확인해 주세요</p>
+                      </div>
                    <% } %>
                 </div>
              
@@ -329,7 +330,7 @@ if(request.getAttribute("mList")!=null){
     });
     //검색
     function search(){
-    	if($('#keyword')!=null && $('#keyword')!=" "){
+    	if($('#keyword').val()!=null && $('#keyword').val()!=" "){
     		location.href='<%=request.getContextPath()%>/searchMember.mg?con='+$('#searchCondition').val()+'&keyword='+$('#keyword').val();
     	}else{
     		alert("검색어를 입력하세요");
@@ -502,20 +503,6 @@ if(request.getAttribute("mList")!=null){
         	    return;
         }
         	
-        });
-        
-		
-        //dropdown menu
-        $('#sId').click(function(){
-                        console.log($(this).parent());
-                        $('#sName').parent().removeClass('active');
-                        $(this).parent().addClass('active');
-        });
-        
-        $('#sName').click(function(){
-            console.log($(this).parent());
-            $('#sId').parent().removeClass('active');
-            $(this).parent().addClass('active');
         });
         
         //관리자 홈 화면 클릭시 이동

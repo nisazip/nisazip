@@ -24,6 +24,9 @@ public class SearchMemberServlet extends HttpServlet {
 		String condition = request.getParameter("con");
 		String keyword = request.getParameter("keyword");
 		
+		System.out.println(condition);
+		System.out.println(keyword);
+		
 		ArrayList<MemberList> list = null;
 		ManagerService mService = null; 
 		
@@ -106,7 +109,6 @@ public class SearchMemberServlet extends HttpServlet {
 				request.setAttribute("mList",list);
 				request.setAttribute("keyword",keyword);
 				request.setAttribute("condi", condition);
-				System.out.println("keyword:"+keyword);
 				
 			}else{
 				System.out.println("에러발생");

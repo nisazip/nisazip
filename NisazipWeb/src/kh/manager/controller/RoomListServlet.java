@@ -23,9 +23,14 @@ public class RoomListServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String condition = request.getParameter("con");
+		String keyword = request.getParameter("keyword");
+		
+		System.out.println(condition);
+		System.out.println(keyword);
 		
 		ArrayList<Room> list =null;
-		ManagerService mService = new ManagerService();
+		ManagerService mService = null;
 		String page="";
 		
 		/*페이징 처리 코드 부분*/
@@ -50,10 +55,31 @@ public class RoomListServlet extends HttpServlet {
 		}
 		
 		// 전체 게시글의 수 /*.rList();*/
-		int listCount = mService.getRoomListCount();
+		int listCount = 0;
 		
+		mService = new ManagerService();
+
+		if(condition==null || keyword==null){
+			condition="선택하기";
+			keyword="";
+		}
+		
+		if(condition.equals("rName")) {
+			System.out.println("condition :" +condition);
+			listCount = mService.searchRNameCount(keyword);
+		}else if(condition.equals("rHostId")) {
+			System.out.println("condition :" +condition);
+			listCount = mService.searchRHostIdCount(keyword);
+		}else if(condition.equals("rArea")) {
+			System.out.println("condition :" +condition);
+			listCount = mService.searchRAreaCount(keyword);
+		}else {
+			System.out.println("condition :" +condition);
+			listCount = mService.getRoomListCount();
+		}
+
 		System.out.println("총 숙소 수 : "+listCount);
-		
+		if(listCount!=0){
 		// 총 게시글 수에 대한 페이지 계산
 		// EX> 목록의 수가 123 개라면 페이지 수는 13페이지가 된다.
 		//     짜투리 게시글도 하나의 페이지로 취급해야 한다.
@@ -78,23 +104,36 @@ public class RoomListServlet extends HttpServlet {
 		PageInfo pi = new PageInfo(currentPage, listCount, limit, startPage, endPage, maxPage);
 		
 		/*페이징 처리 코드 부분*/
-
+		list = new ArrayList<Room>();
 		//페이지 처리를 수행할 경우
-		list = mService.rList(currentPage, limit);
-		
+		if(condition.equals("rName")) {
+			list = mService.searchRName(currentPage, limit, keyword);
+		}else if(condition.equals("rHostId")) {
+			list = mService.searchRHostId(currentPage, limit, keyword);
+		}else if(condition.equals("rArea")) {
+			list = mService.searchRArea(currentPage, limit, keyword);
+		}else {
+			list = mService.rList(currentPage, limit);
+		}
 
 		if(list!=null){
 			page="views/manager/room_mng.jsp";
 			request.setAttribute("pi", pi);
 			request.setAttribute("rList",list);
-			
+			request.setAttribute("keyword",keyword);
+			request.setAttribute("condi", condition);
 		}else{
 			System.out.println("에러발생");
 			page=request.getContextPath()+"/common/errorPage.jsp";
 			
 		}
-		
 		request.getRequestDispatcher(page).forward(request, response);
+		
+		}else{
+			page="views/manager/room_mng.jsp";
+			request.setAttribute("rList",null);
+			request.getRequestDispatcher(page).forward(request, response);
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
