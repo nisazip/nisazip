@@ -3,14 +3,14 @@
     
 <%
 	ArrayList<MemberList> list = (ArrayList<MemberList>)request.getAttribute("mList");
-	/* 
+	
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	int listCont = pi.getListCount();
 	int currentPage = pi.getCurrentPage();
 	int maxPage = pi.getMaxPage();
 	int startPage = pi.getStartPage();
 	int endPage = pi.getEndPage();
-	 */
+
 %>
 <!DOCTYPE html>
 <html>
@@ -33,27 +33,32 @@
             <div class="col-sm-10">
 
 				<!-- 검색 영역 -->
-                <div class="col-xs-4 col-sm-2">
-                    <div class="dropdown">
-                        <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-							-- 선택  -- <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a href="" id="sId">아이디로 찾기</a></li>
-                            <li><a href="" id="sName">이름으로 찾기</a></li>
-                        </ul>
-                    
-                    </div>
-                </div>
-                <div class="col-xs-8 col-sm-6">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="아이디로 검색...">
-                        <span class="input-group-btn">
-                            <button class="btn btn-secondary" type="button">검색</button>
-                        </span>
-                    </div>
-                </div><br><br><br>
 				
+	                <div class="col-xs-4 col-sm-2">
+	                 <div class="form-row align-items-center">
+	                  <div class="col-auto my-1">
+  						<select class="mr-sm-2 form-control" id="searchCondition">
+	     					<option selected>선택하기</option>
+	     					<option value="sId">아이디로 검색</option>
+					        <option value="sName">이름으로 검색</option>
+	      				</select>
+		      		  </div>
+		      		 </div>
+	                </div>
+	                <div class="col-xs-8 col-sm-6">
+	                    <div class="input-group">
+	                        <input type="search" class="form-control" placeholder=" 검색 하기 " id="keyword" >
+	                        <span class="input-group-btn">
+	                            <button class="btn btn-secondary" type="button" onclick="search();">검색</button>
+	                        </span>
+	                    </div>
+	                </div><br><br><br>
+				</div>
+                <!-- 검색 끝 --> 
+                
+				<div>
+					<p>총 회원 수(<%=listCont%>)</p>
+				</div>
 				<!--테이블 영역 -->
 				<div class="table-responsive">
                 <table class="table table-striped table-bordered table-hover " id="userTable" data-toggle="modal" data-target="#myModal">
@@ -93,10 +98,62 @@
                     </tbody>
                 </table>
                 </div>
+             
+	            <!-- 페이징처리할 부분 -->
+	            <nav aria-label="Page navigation example" style="text-align: center">
+	             	<ul class="pagination justify-content-center">
+					
+					<!-- 가장 첫 페이지로 이동 -->
+					<li class="page-item">
+						<a class="page-item" onclick="location.href='<%=request.getContextPath()%>/memberList.mg?currentPage=1'">처음</a>
+					</li>
+					<!-- 한페이지 씩 앞으로 이동 -->
+					<% if(currentPage <= 1){ %>
+					<li class="page-item disabled">
+						<a>&lt;</a>
+					</li>					
+					<% }else{ %>
+					<li class="page-item ">
+						<a class="page-item" onclick="location.href='<%=request.getContextPath()%>/memberList.mg?currentPage=<%=currentPage -1%>'">&lt;</a>
+					</li>
+					<% }%>
+					
+					<!-- 각 페이지 별 리스트 작성 -->
+					<% for(int i = startPage;i<=endPage;i++){ %>
+						<% if(i == currentPage) { %>
+						<li class="page-item active">
+							<a><%=i %></a>
+						</li>	
+						<% } else{ %>
+						<li class="page-item">
+							<a class="page-item" onclick="location.href='<%=request.getContextPath()%>/memberList.mg?currentPage=<%=i %>'"><%=i %></a>
+						</li>	
+						<% } %>
+					<% } %>
+					
+					<!-- 한페이지 씩 뒤로 이동 -->
+					<% if(currentPage >= maxPage){ %>
+					<li class="page-item disabled">
+						<a>&gt;</a>
+					</li>	
+					<% }else{ %>
+					<li class="page-item">
+						<a class="page-item" onclick="location.href='<%=request.getContextPath()%>/memberList.mg?currentPage=<%=currentPage +1%>'">&gt;</a>
+					</li>
+					<% }%>
+					
+					<!-- 가장 마지막 페이지로 이동 -->
+					<li class="page-item">
+						<a class="page-item" onclick="location.href='<%=request.getContextPath()%>/memberList.mg?currentPage=<%=maxPage%>'">마지막</a>
+					</li>	
+	
+					</ul>
+				</nav>
+				
+				<!-- 페이징 끝 --> 
+			
             </div>
         </div>
-
-    </div>
     <!-- 컨테이너 끝 --> 
        
     <!-- Modal -->
@@ -234,6 +291,11 @@
     <!-- 모달 끝 -->
     
     <script>
+    //검색
+    function search(){
+		location.href='<%=request.getContextPath()%>/searchMember.mg?con='+$('#searchCondition').val()+'&keyword='+$('#keyword').val();
+	}
+    
 
     //테이블 hover 효과 지정
     $('#userTable td').mouseenter(function(){

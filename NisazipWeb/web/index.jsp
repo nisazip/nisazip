@@ -24,9 +24,6 @@
 
 
 
-
-
-rfsdfdsfasdf
 <a href="views/manager/admin_home.jsp">관리자 페이지로 이동</a>
 </pre>
 <!-- 지도 영역 -->

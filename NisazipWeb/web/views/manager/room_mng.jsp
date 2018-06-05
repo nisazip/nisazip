@@ -1,7 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="kh.room.model.vo.*, java.util.*"%>
+    pageEncoding="UTF-8" import="kh.room.model.vo.*, kh.manager.model.vo.*, java.util.*"%>
     <%
     ArrayList<Room> list = (ArrayList<Room>)(request.getAttribute("rList"));
+    PageInfo pi = (PageInfo)request.getAttribute("pi");
+	int listCont = pi.getListCount();
+	int currentPage = pi.getCurrentPage();
+	int maxPage = pi.getMaxPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage();
     %>
 <!DOCTYPE html>
 <html>
@@ -46,7 +52,9 @@
                         </span>
                     </div>
                 </div><br><br><br>
-				
+				<div>
+					<p>총 숙소 수(<%=listCont%>)</p>
+				</div>
 				<!--테이블 영역 -->
 				<div class="table-responsive">
                 <table class="table table-striped table-bordered table-hover " id="userTable" data-toggle="modal" data-target="#myModal">
@@ -82,6 +90,60 @@
                     </tbody>
                 </table>
                 </div>
+                <!-- 페이징처리할 부분 -->
+	            <nav aria-label="Page navigation example" style="text-align: center">
+	             	<ul class="pagination justify-content-center">
+					
+					<!-- 가장 첫 페이지로 이동 -->
+					<li class="page-item">
+						<a class="page-item" onclick="location.href='<%=request.getContextPath()%>/roomList.mg?currentPage=1'">처음</a>
+					</li>
+					<!-- 한페이지 씩 앞으로 이동 -->
+					<% if(currentPage <= 1){ %>
+					<li class="page-item disabled">
+						<a>&lt;</a>
+					</li>					
+					<% }else{ %>
+					<li class="page-item ">
+						<a class="page-item" onclick="location.href='<%=request.getContextPath()%>/roomList.mg?currentPage=<%=currentPage -1%>'">&lt;</a>
+					</li>
+					<% }%>
+					
+					<!-- 각 페이지 별 리스트 작성 -->
+					<% for(int i = startPage;i<=endPage;i++){ %>
+						<% if(i == currentPage) { %>
+						<li class="page-item active">
+							<a><%=i %></a>
+						</li>	
+						<% } else{ %>
+						<li class="page-item">
+							<a class="page-item" onclick="location.href='<%=request.getContextPath()%>/roomList.mg?currentPage=<%=i %>'"><%=i %></a>
+						</li>	
+						<% } %>
+					<% } %>
+					
+					<!-- 한페이지 씩 뒤로 이동 -->
+					<% if(currentPage >= maxPage){ %>
+					<li class="page-item disabled">
+						<a>&gt;</a>
+					</li>	
+					<% }else{ %>
+					<li class="page-item">
+						<a class="page-item" onclick="location.href='<%=request.getContextPath()%>/roomList.mg?currentPage=<%=currentPage +1%>'">&gt;</a>
+					</li>
+					<% }%>
+					
+					<!-- 가장 마지막 페이지로 이동 -->
+					<li class="page-item">
+						<a class="page-item" onclick="location.href='<%=request.getContextPath()%>/roomList.mg?currentPage=<%=maxPage%>'">마지막</a>
+					</li>	
+	
+					</ul>
+				</nav>
+				
+				<!-- 페이징 끝 --> 
+                
+                
             </div>
         </div>
 

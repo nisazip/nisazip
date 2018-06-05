@@ -72,74 +72,92 @@ public class mDao {
 		return result;
 	}
 
-	public ArrayList<Room> rList(Connection con) {
+	public ArrayList<Room> rList(Connection con,int currentPage, int limit) {
 		
-		Statement stmt = null;
+		ArrayList<Room> list = null;
+		
+		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		
-		ArrayList<Room> result = new ArrayList<Room>();
 		Room r = null;
 		
 		String query = prop.getProperty("selectAllRoom");
-		
 		try {
-			stmt = con.createStatement();
-			rset = stmt.executeQuery(query);
+			pstmt = con.prepareStatement(query);
 			
-			while(rset.next()){
+			//조회할 숫자 startRow와 endRow 계산
+			int startRow = (currentPage - 1) * limit+1;
+			int endRow = startRow + (limit-1);
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			list = new ArrayList<Room>();
+			
+			while(rset.next()) {
 				r = new Room();
-				
 				r.setR_id(rset.getString("R_ID"));
 				r.setR_name(rset.getString("R_NAME"));
 				r.setHost_id(rset.getString("HOST_ID"));
 				r.setR_max_num(rset.getInt("R_MAX_NUM"));
 				r.setR_type(rset.getString("R_TYPE"));
 				r.setR_type2(rset.getString("R_TYPE2"));
-				r.setR_option(rset.getString("R_OPTION"));
+				r.setPrice(rset.getInt("PRICE"));
+				r.setR_area(rset.getString("R_AREA"));
+				/*r.setR_addr(rset.getString("R_ADDR"));
+				r.setR_loc(rset.getString("R_LOC"));
+				r.setR_start_date(rset.getString("R_START_DATE"));
+				r.setR_end_date(rset.getString("R_END_DATE"));*/
+				/*r.setR_option(rset.getString("R_OPTION"));
 				r.setRoom_num(rset.getInt("ROOM_NUM"));
 				r.setToilet_num(rset.getInt("TOILET_NUM"));
 				r.setBed_num(rset.getInt("BED_NUM"));
 				r.setR_detail(rset.getString("R_DETAIL"));
-				r.setR_role(rset.getString("R_ROLE"));
-				r.setPrice(rset.getInt("PRICE"));
-				r.setR_area(rset.getString("R_AREA"));
-				r.setR_addr(rset.getString("R_ADDR"));
-				r.setR_loc(rset.getString("R_LOC"));
-				r.setR_start_date(rset.getString("R_START_DATE"));
-				r.setR_end_date(rset.getString("R_END_DATE"));
+				r.setR_role(rset.getString("R_ROLE"));*/
 				r.setScore(rset.getFloat("SCORE"));
 				r.setR_date(rset.getString("R_DATE"));
 				System.out.println("dao"+r);
-				result.add(r);
+				list.add(r);
 			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
 			close(rset);
-			close(stmt);
+			close(pstmt);
 		}
-		
-		
-		return result;
+
+		return list;
+
 	}
 
-	public ArrayList<Trip> tList(Connection con) {
+	public ArrayList<Trip> tList(Connection con, int currentPage, int limit) {
 
-		Statement stmt = null;
+		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		
-		ArrayList<Trip> result = new ArrayList<Trip>();
+		ArrayList<Trip> list = new ArrayList<Trip>();
 		Trip t = null;
 		
 		String query = prop.getProperty("selectAllTrip");
 		
 		try {
-			stmt = con.createStatement();
-			rset = stmt.executeQuery(query);
+			pstmt = con.prepareStatement(query);
 			
-			while(rset.next()){
+			//조회할 숫자 startRow와 endRow 계산
+			int startRow = (currentPage - 1) * limit+1;
+			int endRow = startRow + (limit-1);
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			list = new ArrayList<Trip>();
+			
+			while(rset.next()) {
 				t = new Trip();
-				
 				t.setT_id(rset.getString("T_ID"));
 				t.setT_name(rset.getString("T_NAME"));
 				t.setHost_id(rset.getString("HOST_ID"));
@@ -150,15 +168,18 @@ public class mDao {
 				t.setT_area(rset.getString("T_AREA"));
 				t.setScore(rset.getFloat("SCORE"));
 				t.setT_date(rset.getString("T_DATE"));
-				result.add(t);
+				list.add(t);
 			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
 			close(rset);
-			close(stmt);
+			close(pstmt);
 		}
-		return result;
+
+		return list;
+		
 	}
 
 	public HashMap<String, Object> selectMember(Connection con, int userNo) {
@@ -480,5 +501,131 @@ public class mDao {
 				
 		return result;
 	}
+
+	public int getMemeberListCount(Connection con) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		
+		String query = prop.getProperty("listMemberCount");
+		
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(rset);
+		}
+			
+		return result;
+	}
+
+	public ArrayList<MemberList> selectMemberList(Connection con, int currentPage, int limit) {
+		ArrayList<MemberList> list = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		MemberList m = null;
+		
+		String query = prop.getProperty("selectMemberList");
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			//조회할 숫자 startRow와 endRow 계산
+			int startRow = (currentPage - 1) * limit+1;
+			int endRow = startRow + (limit-1);
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			list = new ArrayList<MemberList>();
+			
+			while(rset.next()) {
+				m = new MemberList();
+				m.setUser_no(rset.getInt("USER_NO"));
+				m.setUser_id(rset.getString("USER_ID"));
+				m.setUser_name(rset.getString("USER_NAME"));
+				m.setPhone(rset.getString("PHONE"));
+				m.setGender(rset.getString("GENDER").charAt(0));
+				m.setBirthdate(rset.getString("BIRTH"));
+				m.setR_hosting(rset.getInt("R_HOSTING"));
+				m.setT_hosting(rset.getInt("T_HOSTING"));
+				m.setJoin_date(rset.getDate("JOIN_DATE"));
+				m.setrCnt(rset.getInt("RCNT"));
+				m.setOauth((rset.getString("OAUTH").charAt(0)));
+				list.add(m);
+				System.out.println("DAO : "+m);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+
+		return list;
+	}
+
+	public int getRoomListCount(Connection con) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		
+		String query = prop.getProperty("listRoomCount");
+		
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(rset);
+		}
+			
+		return result;
+	}
+
+	public int getTripListCount(Connection con) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		
+		String query = prop.getProperty("listTripCount");
+		
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(rset);
+		}
+			
+		return result;
+	}
+
+
+
 
 }

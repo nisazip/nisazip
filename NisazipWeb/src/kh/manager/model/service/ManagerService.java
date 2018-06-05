@@ -11,6 +11,7 @@ import java.util.HashMap;
 
 import kh.manager.model.dao.mDao;
 import kh.manager.model.vo.MemberList;
+import kh.member.model.vo.Member;
 import kh.room.model.vo.Room;
 import kh.trip.model.vo.Trip;
 
@@ -27,23 +28,23 @@ public class ManagerService {
 		return list;
 	}
 
-	public ArrayList<Room> rList() {
+	public ArrayList<Room> rList(int currentPage, int limit) {
 		Connection con = getConnection();
+		mDao mDao = new mDao();
 		
-		ArrayList<Room> list = new mDao().rList(con);
-		
+		ArrayList<Room> list =mDao.rList(con, currentPage, limit);
 		close(con);
 		
 		return list;
 	}
 
-	public ArrayList<Trip> tList() {
+	public ArrayList<Trip> tList(int currentPage, int limit) {
 		Connection con = getConnection();
-		System.out.println("servicetList");
-		ArrayList<Trip> list = new mDao().tList(con);
-		System.out.println("service222tList");
+		mDao mDao = new mDao();
+		
+		ArrayList<Trip> list =mDao.tList(con, currentPage, limit);
 		close(con);
-		System.out.println("service : "+list);
+		
 		return list;
 	}
 
@@ -151,6 +152,43 @@ public class ManagerService {
 		
 		close(con);
 
+		return result;
+	}
+
+	public int getMemeberListCount() {
+		Connection con = getConnection();
+		int result =new mDao().getMemeberListCount(con);
+		
+		close(con);
+		
+		return result;
+		
+	}
+
+	public ArrayList<MemberList> selectMemberList(int currentPage, int limit) {
+		Connection con = getConnection();
+		mDao mDao = new mDao();
+		
+		ArrayList<MemberList> list =mDao.selectMemberList(con, currentPage, limit);
+		
+		return list;
+	}
+
+	public int getRoomListCount() {
+		Connection con = getConnection();
+		int result =new mDao().getRoomListCount(con);
+		
+		close(con);
+		
+		return result;
+	}
+
+	public int getTripListCount() {
+		Connection con = getConnection();
+		int result =new mDao().getTripListCount(con);
+		
+		close(con);
+		
 		return result;
 	}
 
