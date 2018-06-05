@@ -2,17 +2,33 @@
     pageEncoding="UTF-8" import="kh.manager.model.vo.*, java.util.*"%>
     
 <%
-	ArrayList<MemberList> list = (ArrayList<MemberList>)request.getAttribute("mList");
+ArrayList<MemberList> list =null;
+PageInfo pi = null;
+int listCount =0;
+int currentPage = 0;
+int maxPage = 0;
+int startPage = 0;
+int endPage =0;
+
+String keyword = "";
+String condi = "";
+
+if(request.getAttribute("mList")!=null){
 	
-	PageInfo pi = (PageInfo)request.getAttribute("pi");
-	int listCont = pi.getListCount();
-	int currentPage = pi.getCurrentPage();
-	int maxPage = pi.getMaxPage();
-	int startPage = pi.getStartPage();
-	int endPage = pi.getEndPage();
+	list = (ArrayList<MemberList>)request.getAttribute("mList");
+	pi = (PageInfo)request.getAttribute("pi");
+	listCount = pi.getListCount();
+	currentPage = pi.getCurrentPage();
+	maxPage = pi.getMaxPage();
+	startPage = pi.getStartPage();
+	endPage = pi.getEndPage();
 	
-	String keyword = (String)request.getAttribute("keyword");
-	String condi = (String)request.getAttribute("condi");
+	keyword = (String)request.getAttribute("keyword");
+	condi = (String)request.getAttribute("condi");
+}
+	
+	
+
 %>
 <!DOCTYPE html>
 <html>
@@ -60,7 +76,7 @@
                 <!-- 검색 끝 --> 
                 
 				<div>
-					<p>총 회원 수(<%=listCont%>)</p>
+					<p>총 회원 수(<%=listCount%>)</p>
 				</div>
 				<!--테이블 영역 -->
 				<div class="table-responsive">

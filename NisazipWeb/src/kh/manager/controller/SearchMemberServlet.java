@@ -116,10 +116,7 @@ public class SearchMemberServlet extends HttpServlet {
 			request.getRequestDispatcher(page).forward(request, response);
 		}else{
 			page="views/manager/user_mng.jsp";
-			request.setAttribute("pi", null);
 			request.setAttribute("mList",null);
-			request.setAttribute("keyword",null);
-			request.setAttribute("condi",null);
 			request.getRequestDispatcher(page).forward(request, response);
 		}
 		
