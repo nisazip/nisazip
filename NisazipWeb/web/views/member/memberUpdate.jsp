@@ -73,19 +73,25 @@ function profileModal(){
     </div>
 
 
-    <div class="col-sm-5"> 
+    <div class="col-sm-6"> 
     
     		<div class="col-sm-12 col-xs-12" style="">
     			<fieldset>		
-    			<legend>프로필 사진 올리기</legend>	
-    			
+    			<legend>프로필 사진 올리기</legend>
+    			<div class="row">
+	    			<div class="col-lg-3 xs-hidden"></div>	
+    			 	<div class="col-lg-9 panel panel-info">
+      					<div class="panel-heading">사진을 올리시기 전에</div>
+     				   <div class="panel-body">호스트와 게스트가 서로를 알 수 있도록 선명하게 나온 얼굴 정면 사진을 사용하는 것이 중요합니다. 풍경 사진을 올리면 호스트가 알아보기 힘들겠죠? 회원님의 얼굴이 선명하게 보이며 호스트나 게스트에게 공개하고 싶지 않은 개인 정보나 민감한 정보가 나타나지 않은 사진을 사용하세요.</div>
+    				</div>   
+    			</div>	
     			<div class="row">
 	    			<div class="col-lg-4 xs-hidden"></div>
-	    			<div class="col-lg-8 col-xs-12">	
-		    		    			
+	    			<div class="col-lg-7 col-xs-12">	
+		    		 			
 						<center><img alt="" id="presentProfileImg"  class="align-center" style="width:200px; height: 200px; box-shadow: 4px 4px 3px gray; border-radius: 50em;"></center>
 			    			<br><br>
-    					<center><button class="btn btn-success" type="submit" style="width: 100%;" onclick="profileModal();">사진 입력/수정</button></center>
+    					<center><button class="btn btn-success" type="submit" style="width: 60%;" onclick="profileModal();">사진 입력/수정</button></center>
     				</div>
     			</div>
     			</fieldset>   
@@ -260,36 +266,36 @@ function profileModal(){
 			        <select id="upBirthday_day" name="upBirthday_day" class="_10ukhb4t">
 			            <option disabled="" value="" selected>일</option>
 			            <option value="01">1일</option>
-			            <option value="02">2</option>
-			            <option value="03">3</option>
-			            <option value="04">4</option>
-			            <option value="05">5</option>
-			            <option value="06">6</option>
-			            <option value="07">7</option>
-			            <option value="08">8</option>
-			            <option value="09">9</option>
-			            <option value="10">10</option>
-			            <option value="11">11</option>
-			            <option value="12">12</option>
-			            <option value="13">13</option>
-			            <option value="14">14</option>
-			            <option value="15">15</option>
-			            <option value="16">16</option>
-			            <option value="17">17</option>
-			            <option value="18">18</option>
-			            <option value="19">19</option>
-			            <option value="20">20</option>
-			            <option value="21">21</option>
-			            <option value="22">22</option>
-			            <option value="23">23</option>
-			            <option value="24">24</option>
-			            <option value="25">25</option>
-			            <option value="26">26</option>
-			            <option value="27">27</option>
-			            <option value="28">28</option>
-			            <option value="29">29</option>
-			            <option value="30">30</option>
-			            <option value="31">31</option></select>
+			            <option value="02">2일</option>
+			            <option value="03">3일</option>
+			            <option value="04">4일</option>
+			            <option value="05">5일</option>
+			            <option value="06">6일</option>
+			            <option value="07">7일</option>
+			            <option value="08">8일</option>
+			            <option value="09">9일</option>
+			            <option value="10">10일</option>
+			            <option value="11">11일</option>
+			            <option value="12">12일</option>
+			            <option value="13">13일</option>
+			            <option value="14">14일</option>
+			            <option value="15">15일</option>
+			            <option value="16">16일</option>
+			            <option value="17">17일</option>
+			            <option value="18">18일</option>
+			            <option value="19">19일</option>
+			            <option value="20">20일</option>
+			            <option value="21">21일</option>
+			            <option value="22">22일</option>
+			            <option value="23">23일</option>
+			            <option value="24">24일</option>
+			            <option value="25">25일</option>
+			            <option value="26">26일</option>
+			            <option value="27">27일</option>
+			            <option value="28">28일</option>
+			            <option value="29">29일</option>
+			            <option value="30">30일</option>
+			            <option value="31">31일</option></select>
 			            <br>
 						<p>이 정보는 통계적 목적으로만 사용됩니다.</p>
 			            </div>
@@ -302,7 +308,7 @@ function profileModal(){
       <div class="form-group row">   
             <div class="col-sm-4 xs-hidden"></div>   
             <div class="col-sm-8 ">
-            <center><button type="submit" class="btn btn-success" style="width:90%;">회원정보 수정하기</button></center>
+            <center><button type="submit" class="btn btn-success" style="width:60%;">회원정보 수정하기</button></center>
              </div>  
    		 </div>
 

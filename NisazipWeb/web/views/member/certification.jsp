@@ -62,21 +62,41 @@ overflow: hidden;
     </div>
 
 
-  <div class="col-sm-8"> 
+  <div class="col-sm-6"> 
     
     		<div class="col-sm-12 col-xs-12" style="">
     			<fieldset>		
     			<legend>신분증 사진 올리기</legend>	
-    			 	
+    			<div class="row">
+	    			<div class="col-lg-3 xs-hidden"></div>	
+    			 	<div class="col-lg-9 panel panel-danger">
+      					<div class="panel-heading">일부 숙소를 예약하려면 신분증을 제출해야 합니다. 지금 신분증을 인증하여 여행에 미리 준비하세요. 신분증은 호스트에게 공개되지 않습니다. </div>
+    				</div>   
+    				<br>
+    				<div class="col-lg-3 xs-hidden"></div>	
+    				<div class="col-lg-9 panel panel-info">
+      					<div class="panel-heading">인증 완료 방법 </div>
+     				   <div class="panel-body">1. 프로필 사진을 아직 올리지 않았다면, 프로필 사진을 올리세요.   <br>
+											2. 정부에서 발급한 신분증의 사진을 올리세요(예: 여권, 운전면허증, 비자 등). <br><
+											업로드 시, 셀카 사진과 신분증의 사진은 동일한 인물이어야 하고, 유효한 신분증이어야 합니다.  개인정보 보호를 위해 사진을 올리기 전에 주민등록번호가 보이지 않도록 편집해주세요. 주민등록번호를 제외한 다른 정보는 모두 잘 보여야 합니다.</div>
+    				</div>   
+    				<div class="col-lg-3 xs-hidden"></div>	
+    				<div class="col-lg-9 panel panel-info">
+      				
+     				  <div class="panel-body">업로드 시, 셀카 사진과 신분증의 사진은 동일한 인물이어야 하고, 유효한 신분증이어야 합니다.  개인정보 보호를 위해 사진을 올리기 전에 주민등록번호가 보이지 않도록 편집해주세요. 주민등록번호를 제외한 다른 정보는 모두 잘 보여야 합니다.</div>
+
+    				</div>   
+    			</div>		
     			<div class="row">
 	    			<div class="col-lg-4 xs-hidden"></div>
-	    			<div class="col-lg-8 col-xs-12">	
+	    			<div class="col-lg-7 col-xs-12">	
 		    		   
 						<center><img alt="" id="presentProfileImg"  class="align-center" style="width:300px; height: 200px; box-shadow: 4px 4px 3px gray;;"></center>
 			    			<br><br>
     					<center><button class="btn btn-success" type="submit" style="width: 80%;" onclick="certificationModal();">신분증 입력/수정</button></center>
     				</div>
     			</div>
+    			<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
     			</fieldset>   
     		</div>
 </div>
@@ -89,7 +109,7 @@ overflow: hidden;
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">프로필 사진 설정<span class=""></span></h4>
+        <h4 class="modal-title">신분증 인증<span class=""></span></h4>
       </div>
       <div class="modal-body">
        	<div class="row">
