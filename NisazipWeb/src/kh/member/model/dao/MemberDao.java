@@ -8,6 +8,7 @@ import java.util.Properties;
 import static kh.common.JDBCTemplate.*;
 
 import kh.member.model.vo.Member;
+import kh.member.model.vo.UserPic;
 
 public class MemberDao {
 	private Properties prop;
@@ -248,4 +249,91 @@ public class MemberDao {
 		return 0;
 	}
 
+	public int insertProfile(Connection con, UserPic pic) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		try {
+			String query = prop.getProperty("insertProfile");
+			
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setString(1, pic.getUser_id());
+			pstmt.setString(2, pic.getOrigin_name());
+			pstmt.setString(3, pic.getChange_name());
+			pstmt.setString(4, pic.getFile_path());
+
+			result = pstmt.executeUpdate();
+			System.out.println("dao:"+pic);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int deleteProfile(Connection con, String id) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		try {
+			String query = prop.getProperty("deleteProfile");
+			
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setString(1, id);
+		
+
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	
+
+	public UserPic findUserPic(Connection con, UserPic pic) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		UserPic profile = null;
+		
+		try { 
+			
+			String query = prop.getProperty("findUserPic");
+					
+			pstmt = con.prepareStatement(query);
+			System.out.println("dao"+pic);
+			pstmt.setString(1, pic.getUser_id());		
+			System.out.println("dao:"+pic.getUser_id());
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()){
+				profile = new UserPic();
+				profile.setUser_id(pic.getUser_id());
+				profile.setFile_level(rset.getInt("FILE_LEVEL"));
+				profile.setFile_path(rset.getString("FILE_PATH"));
+				profile.setOrigin_name(rset.getString("ORIGIN_NAME"));
+				profile.setChange_name(rset.getString("CHANGE_NAME"));
+				profile.setUpload_date(rset.getDate("UPLOAD_DATE"));
+				System.out.println("sel: "+pic);
+				
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return profile;
+	}
 }

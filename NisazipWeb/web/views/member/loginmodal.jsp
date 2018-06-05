@@ -68,23 +68,35 @@
 
  
 <script>
-$(document).ready(function(){
-	$("#loginSubmit").removeAttr("disabled");
-});
+
+if($("#loginId").val() == ""){
+	$("#loginSubmit").attr('disabled','disabled');
+}
+
 
 $("#loginId").on("keyup",function(){
-	if($("#loginId").val() == null || $("#loginId").val()== ""|| $("#logPwd").val()== null ||$("#loginPwd").val()== "" ){
-		$("#loginSubmit").attr('disabled','disabled');
-		//$("#loginSubmit").removeAttr("disabled")
-	}else{$("#loginSubmit").removeAttr("disabled")}
+	console.log($("#loginId").val());
+	if( $("#loginId").val() != null && $("#loginId").val() != "" && $("#logindPwd").val() != null && $("#loginPwd").val() != "" ){
+		$("#loginSubmit").removeAttr("disabled")
+		
+	}
 });
 
 $("#loginPwd").on("keyup",function(){
-	if($("#loginId").val()== null ||$("#loginId").val()== ""|| $("#logPwd").val()== null ||$("#loginPwd").val()== "" ){
-		$("#loginSubmit").attr('disabled','disabled');
-		//$("#loginSubmit").removeAttr("disabled")
-	}else{$("#loginSubmit").removeAttr("disabled")}
+	if( $("#loginId").val() != null && $("#loginId").val() != "" && $("#loginPwd").val() != null && $("#loginPwd").val() != "" ){
+		$("#loginSubmit").removeAttr("disabled")
+		
+	}
 });
+
+
+
+//$("#loginPwd").on("keyup",function(){
+//	if($("#loginId").val()== null ||$("#loginId").val()== ""|| $("#logPwd").val()== null ||$("#loginPwd").val()== "" ){
+//		$("#loginSubmit").attr('disabled','disabled');
+//		//$("#loginSubmit").removeAttr("disabled")
+//	}else{$("#loginSubmit").removeAttr("disabled")}
+//});
 
 </script>
 

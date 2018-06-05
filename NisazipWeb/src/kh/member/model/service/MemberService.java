@@ -2,6 +2,8 @@ package kh.member.model.service;
 
 import kh.member.model.dao.MemberDao;
 import kh.member.model.vo.Member;
+import kh.member.model.vo.UserPic;
+
 import java.sql.*;
 import static kh.common.JDBCTemplate.*;
 
@@ -93,7 +95,33 @@ public class MemberService {
 		return result ;
 	}
 
+	public int insertProfile(UserPic pic) {
+		int result =0;	
+		Connection con = getConnection();
+		result = mDao.insertProfile(con, pic);
+		close(con);
+		return result ;
+	}
 
+
+	public int deleteProfile(String id) {
+		int result =0;	
+		Connection con = getConnection();
+		result = mDao.deleteProfile(con, id);
+		close(con);
+		return result ;
+	}
+
+
+	public UserPic findUserPic(UserPic pic) {
+		Connection con = getConnection();
+		UserPic profile = mDao.findUserPic(con, pic);
+		
+		return profile;
+
+		
+		
+	}
 	
 
 }

@@ -3,7 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <body>
-!-- Modal -->
+<!-- Modal -->
 <div id="myModal3" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
@@ -18,7 +18,7 @@
         <p>	가입 시 입력한 이메일주소로 비밀번호 재설정 링크를 보내드립니다.</p>
         <p> 확인하고 재설정하시기 바랍니다. </p>
         
-         <form  id="loginForm" role="form" action="<%= request.getContextPath()%>/resetPwd.mail"  method="post">            
+         <form  id="resetPwdForm" role="form" action="<%= request.getContextPath()%>/resetPwd.mail"  method="post">            
              <div class="form-group">
               <label for="loginId"><span class="glyphicon glyphicon-eye-open"></span> 계정 </label>
               <input type="text" class="form-control" id="ResetId" name="RestId" placeholder="ID나 EMAIL을 입력하세요">

@@ -52,20 +52,21 @@ public class LoginServlet extends HttpServlet {
 			m = ms.selectMemberI(m);
 			}
 		
-		
+		HttpSession session = request.getSession();
 		if(m != null) {
 			System.out.println("login 결과로 받은 값 : "+m);
 			
-			HttpSession session = request.getSession();
+			
 			
 			session.setAttribute("member", m);
 			
 			response.sendRedirect(request.getHeader("referer")); 
 			
 		} else {
-			request.setAttribute("msg", "회원 로그인 실패!!");
 			
-			request.getRequestDispatcher("views/errorPage.jsp").forward(request, response);
+			session.setAttribute("messageContent", "저장된 회원정보가 아닙니다.");
+			session.setAttribute("messageType", "오류메세지");
+			response.sendRedirect(request.getHeader("referer")); 
 		}
 	}
 

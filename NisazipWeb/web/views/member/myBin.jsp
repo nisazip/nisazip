@@ -14,7 +14,7 @@
 <body>
 <%@ include file="../../views/common/header.jsp" %>
 
-
+<div id="main">
 <div class="container-fluid">
   <div class="row content">
     <div class="col-sm-2 sidenav hidden-xs">
@@ -193,7 +193,7 @@
 	<div class="col-sm-2 hidden-xs">	</div>
 		
 	</div>
-</div>
+</div></div>
 <script>
 
 $(document).ready(function(){

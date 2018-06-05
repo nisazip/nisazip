@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
+    
 
 <!DOCTYPE html>
 <html>
@@ -8,7 +9,10 @@
       
 
 <style type="text/css">
-
+ img{
+   width: 21%;
+    height: 20%;
+ }
 
  select {
     width: 21%;
@@ -29,7 +33,20 @@
     border: 1px solid lightgray;
     border-radius: 3px;
 }
+
+
 </style>
+<script>
+
+
+function profileModal(){
+	$("#myModal4").modal();
+	
+}
+
+	
+</script>
+
 </head>
 
 
@@ -58,17 +75,25 @@
 
     <div class="col-sm-5"> 
     
-    	
-    		<form action="profile.pic" enctype="multipart/form-data" method="post">
-    			<h2>사진 업로드</h2>
-    			<span class="btn btn-default btn-file">이미지를 업로드 하세요
-    			<input type="file" name="userProfile">
-    			</span>
+    		<div class="col-sm-12 col-xs-12" style="">
+    			<fieldset>		
+    			<legend>프로필 사진 올리기</legend>	
     			
-    		</form>
+    			<div class="row">
+	    			<div class="col-lg-4 xs-hidden"></div>
+	    			<div class="col-lg-5 col-xs-12">	
+		    		    			
+						<img alt="" id="presentProfileImg"  class="align-center" style="width:200px; height: 200px;">
+			    			<br><br>
+    					<button class="btn btn-success" type="submit" style="width: 90%;" onclick="profileModal();">사진 입력/수정</button>
+    				</div>
+    			</div>
+    			</fieldset>   
+    		
+    	
     		<hr>
         	<form  class="form-horizontal" action="<%=request.getContextPath()%>/Update.me" method="post">  
-      		<fieldset>
+      			<fieldset>
         		<legend>프로필 수정</legend>
       			<div class="form-group">
              		 <label class="control-label col-sm-4" for="id">ID:</label>
@@ -271,7 +296,7 @@
 						
 				</div>
 
-
+</div>
       		</fieldset>  
       			<hr>
       <div class="form-group row">   
@@ -284,7 +309,70 @@
      </form>
     </div>
 </div>
+
+
+<div id="myModal4" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">프로필 사진 설정<span class=""></span></h4>
+      </div>
+      <div class="modal-body">
+       	<div class="row">
+       		<div class="col-sm-3 xs-hiiden"></div>       
+       		<div class="col-sm-6 col-xs-10">
+        	 <form  id="" role="form" action="<%= request.getContextPath()%>/profile.pic"  method="post" enctype="multipart/form-data">            
+	             <div class="form-group">
+	              
+	              <img alt="" id="titleImg">
+	              <input type="file"  id="profilePicture" name="profilePicture" onchange="LoadImg(this);">
+	              <input type="hidden" value="<%= m.getUser_id()%>" name="uploadId">
+	              
+	            </div>
+	            
+	             <button type="submit" class="btn btn-success btn-block" style="width: 100%;"><span class="glyphicon glyphicon-off"></span>입력</button>
+            </form>
+            </div>
+            <div class="col-sm-3 xs-hiiden""></div>
+     	 </div>
+      </div>
+      <div class="modal-footer">
+     	 
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
 <script>
+				
+				
+				
+				
+				
+				$(function(){
+				var id = "<%=m.getUser_id()%>";
+					console.log(id);
+					$.ajax({
+						url:'/semi//presentUser.pic',
+						type:'get',
+						data:{id:id},
+						success:function(result){
+						$("#presentProfileImg").attr("src", "<%=request.getContextPath()%>\\resources\\thumbnail_uploadFiles\\"+result);		
+						},
+						error:function(){
+						    alert("에러입니다");
+						}
+					});
+											
+				});
+		
+
 				$(function(){
 					if('<%=m.getGender()%>' != null){
 					$('input:radio').each(function(){
@@ -327,17 +415,35 @@
 					else if($('#userPwd').val() != $('#userPwd2').val()) alert("비밀번호 확인 값과 다릅니다.");
 					else return;
 					event.preventDefault();
+					
+					
+					
+					
 				}); */
-				
-				function deleteMember() {
-					location.href = "/myWeb/mDelete.me?mid=<%=m.getUser_id()%>";
-				}
-				
+				//function deleteMember() {
+				//	location.href = "/myWeb/mDelete.me?mid=";
+				//}
 				
 				
 				
+				function LoadImg(value, num) {
+				    if (value.files && value.files[0]) {
+				       var reader = new FileReader();
+				       reader.onload = function(e) {
+				         
+				             $("#titleImg").attr("src", e.target.result).css({"width":"200px","height":"200px"});	          
+				       }
+				       reader.readAsDataURL(value.files[0]);
+				    }
+				 }
+			
 				
-			</script>
+				
+				
+			</script>	
+			
+			
+			
 
 </body>
 </html>

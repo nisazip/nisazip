@@ -69,9 +69,10 @@ public class MemberUpdateServlet extends HttpServlet {
 			response.sendRedirect("views/member/memberUpdate.jsp");
 			
 		} else {
-			request.setAttribute("msg", "회원 정보 수정 중 에러가 발생하였습니다.");
-			RequestDispatcher view = request.getRequestDispatcher("views/errorPage.jsp");
-			view.forward(request, response);
+			session.setAttribute("messageContent", "회원 정보 수정 중 에러가 발생하였습니다.");
+			session.setAttribute("messageType", "오류메시지");
+
+			response.sendRedirect("views/member/memberUpdate.jsp");
 		}
 	}
 

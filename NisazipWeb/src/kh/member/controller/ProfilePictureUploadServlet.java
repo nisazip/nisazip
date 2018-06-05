@@ -18,7 +18,7 @@ import kh.member.model.service.MemberService;
 /**
  * Servlet implementation class ProfilePictureUploadServlet
  */
-@WebServlet("/profile.pic")
+@WebServlet("/profile.pic2")
 public class ProfilePictureUploadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

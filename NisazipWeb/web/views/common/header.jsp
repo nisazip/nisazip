@@ -75,6 +75,12 @@
 </style>
 </head>
 
+<%@ include file= "../../views/member/joinmodal.jsp" %>
+<%@ include file ="../../views/member/loginmodal.jsp" %>
+<%@ include file ="../../views/member/resetpwdModal.jsp" %>
+
+<%@ include file ="../../views/member/messageModal.jsp" %>
+
 
 <div id="header">
    <div class="container-fluid">
