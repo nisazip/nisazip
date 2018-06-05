@@ -152,7 +152,7 @@ li:hover{
 		$('li:nth-child(5)').addClass("active");
 	}
 	function goAdmin(){
-		location.href="";
+		location.href="<%=request.getContextPath()%>/views/manager/admin_home.jsp";
 		$('li').removeClass("active");
 		$('li:nth-child(6)').addClass("active");
 	}

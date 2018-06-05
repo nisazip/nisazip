@@ -314,7 +314,13 @@
             	});
             }
             
+            }).hover(function(){
+            	$(this).parent().css({
+    				"background":"snow",
+    				"cursor" : "pointer"	
+    			});
             });
+        
        
       	//모달 - 삭제하기 버튼
         $('#deleteRoom').click(function(){
@@ -326,7 +332,7 @@
         });
 	
         $('#home_btn').click(function(){
-        	location.href="admin_home.jsp";
+        	location.href="<%=request.getContextPath()%>/views/manager/admin_home.jsp";
         });
         </script>
     

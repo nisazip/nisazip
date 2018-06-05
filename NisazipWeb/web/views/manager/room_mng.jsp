@@ -476,6 +476,11 @@
             	});
             }
             
+            }).hover(function(){
+            	$(this).parent().css({
+    				"background":"snow",
+    				"cursor" : "pointer"	
+    			});
             });
         
         $('#saveData').hide();
@@ -549,8 +554,8 @@
         				
         			}
             		
-            	});
-            	
+            	})
+        	
             $('#myModal input').attr("disabled",true);
             $('#modify').show();
             $(this).hide();
@@ -561,7 +566,7 @@
         });
 	
         $('#home_btn').click(function(){
-        	location.href="admin_home.jsp";
+        	location.href="<%=request.getContextPath()%>/views/manager/admin_home.jsp";
         });
         
      // 주소 검색

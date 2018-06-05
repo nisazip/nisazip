@@ -431,8 +431,12 @@ if(request.getAttribute("mList")!=null){
          	});
 
             }
-           });
-        
+           }).hover(function(){
+           	$(this).parent().css({
+				"background":"snow",
+				"cursor" : "pointer"	
+			});
+        });
         $('#saveData').hide();
         
       	//모달  - 삭제하기 버튼
@@ -507,7 +511,7 @@ if(request.getAttribute("mList")!=null){
         
         //관리자 홈 화면 클릭시 이동
         $('#home_btn').click(function(){
-        	location.href="admin_home.jsp";
+        	location.href="<%=request.getContextPath()%>/views/manager/admin_home.jsp";
         });
 
     </script>
