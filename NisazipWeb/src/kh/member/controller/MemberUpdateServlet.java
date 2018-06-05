@@ -36,7 +36,12 @@ public class MemberUpdateServlet extends HttpServlet {
 				
 		String name = request.getParameter("updateName");
 		String phone = request.getParameter("phone1")+"-"+request.getParameter("phone2")+"-"+request.getParameter("phone3");
-		char gender = request.getParameter("gender").toUpperCase().charAt(0);
+		char gender ='?';
+		if(request.getParameter("gender") == null){
+			gender = '무';
+		}else { gender = request.getParameter("gender").toUpperCase().charAt(0);}
+		
+		
 				
 		String bDate =request.getParameter("upBirthday_year")+"-"
 				+request.getParameter("upBirthday_month")+"-"

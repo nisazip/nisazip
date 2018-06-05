@@ -325,6 +325,7 @@ $("#name").on("blur",function(){
     if (regexp.test(v)) {
 
     $("#name").css("border","2px solid lightgreen");
+    $("#chkMsg2").text("");
     ch2= true
     if(ch1 ==true && ch2 ==true && ch3 ==true && ch4 ==true && ch5 ==true  && ch6 ==true  && ch7 ==true  && ch8 ==true ){
     	$("#joinsubmit").removeAttr("disabled")
@@ -358,9 +359,9 @@ $("#email").on("blur",function(){
 	            	}
 	            	else{  ch3=true; $("#email").css("border","2px solid lightgreen"); $("#chkMsg3").text(""); 
 	            	
-	            	if(ch1 ==true && ch2 ==true && ch3 ==true && ch4 ==true && ch5 ==true  && ch6 ==true  && ch7 ==true  && ch8 ==true ){
-		            	$("#joinsubmit").removeAttr("disabled")
-		            	}
+			            	if(ch1 ==true && ch2 ==true && ch3 ==true && ch4 ==true && ch5 ==true  && ch6 ==true  && ch7 ==true  && ch8 ==true ){
+				            	$("#joinsubmit").removeAttr("disabled")
+				            	}
 	            	}
 	           
 	            }else{
@@ -411,7 +412,7 @@ $("#pwd2").on("blur",function(){
                $(".pwd2Ref2").show();
 
 
-               if($(this).val()==$("#pwd").val() && $(this).val() != ""){
+               if($(this).val()==$("#pwd").val() && $(this).val() != "" && ch4 ==true){
 
                 $("#pwd2").css("border","2px solid lightgreen");
                 $(".pwd2Ref").show().fadeOut(2000);

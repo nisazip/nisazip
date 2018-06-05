@@ -62,16 +62,16 @@ overflow: hidden;
     </div>
 
 
-  <div class="col-sm-5"> 
+  <div class="col-sm-8"> 
     
     		<div class="col-sm-12 col-xs-12" style="">
     			<fieldset>		
     			<legend>신분증 사진 올리기</legend>	
-    			
+    			 	
     			<div class="row">
 	    			<div class="col-lg-4 xs-hidden"></div>
 	    			<div class="col-lg-8 col-xs-12">	
-		    		    			
+		    		   
 						<center><img alt="" id="presentProfileImg"  class="align-center" style="width:300px; height: 200px; box-shadow: 4px 4px 3px gray;;"></center>
 			    			<br><br>
     					<center><button class="btn btn-success" type="submit" style="width: 80%;" onclick="certificationModal();">신분증 입력/수정</button></center>
