@@ -11,6 +11,7 @@ import java.util.HashMap;
 
 import kh.manager.model.dao.mDao;
 import kh.manager.model.vo.MemberList;
+import kh.manager.model.vo.ReportList;
 import kh.report.model.vo.Report;
 import kh.room.model.vo.Room;
 import kh.trip.model.vo.Trip;
@@ -411,6 +412,16 @@ public class ManagerService {
 		close(con);
 
 		return result;
+	}
+
+	public ArrayList<ReportList> reportTop5() {
+		Connection con = getConnection();
+		
+		ArrayList<ReportList> list = new mDao().reportTop5(con); 
+		
+		close(con);		
+		
+		return list;
 	}
 
 }

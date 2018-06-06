@@ -9,7 +9,7 @@
     
     <!-- bootStrapCDN -->
   	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/holder/2.9.4/holder.js"></script>
     
@@ -40,25 +40,20 @@
 	    color: white;
 	    text-align: center;
 	    padding: 15px 30px;
-	    
 	}
 	
 	.cst_div{
-		background: gray;
-		
+		border-radius: 25px;
+    border: 2px solid #73AD21;
+    padding: 20px; 
+    width: 50%;
+    height: 30%; 
 	}
-	/* 
-	.graphs{
-		height: 350px; 
-		width: 100%;
-		background:gray;
-		
-	} */
 
-li:hover{
-	font-weight: bold;
-	cursor: pointer;
-}
+	li:hover{
+		font-weight: bold;
+		cursor: pointer;
+	}
     
     </style>
 </head>
@@ -125,7 +120,6 @@ li:hover{
 	       		</div>
             </div>
 <script>
-
 	function goMember(){
 		location.href="<%=request.getContextPath()%>/memberList.mg";
 		$('li').removeClass("active");

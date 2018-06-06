@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.Properties;
 
 import kh.manager.model.vo.MemberList;
+import kh.manager.model.vo.ReportList;
 import kh.report.model.vo.Report;
 import kh.room.model.vo.Room;
 import kh.trip.model.vo.Trip;
@@ -1508,6 +1509,39 @@ public class mDao {
 		}
 				
 		return result;
+	}
+
+	public ArrayList<ReportList> reportTop5(Connection con) {
+
+		Statement stmt = null;
+		ResultSet rset = null;
+		
+		ArrayList<ReportList> list = new ArrayList<ReportList>();
+		ReportList re = null;
+		
+		String query = prop.getProperty("reportTop5");
+		
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			while(rset.next()) {
+				re = new ReportList();
+				re.setUserNo(rset.getInt("USER_NO"));
+				re.setUserId(rset.getString("RP_RECEIVER"));
+				re.setReCount(rset.getInt("RE_COUNT"));
+
+				list.add(re);
+				System.out.println("DAO : "+re);
+			} 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(stmt);
+		}
+				
+		return list;
 	}
 
 

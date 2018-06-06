@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="kh.manager.model.vo.*, java.util.*"%>
+    <%
+    ArrayList<ReportList> list = new ArrayList<ReportList>();
+    
+    
+    %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,56 +26,54 @@
                 <hr>
                 
                 <div class="cst_div col-xs-6">
-                	<h3>신고 회원</h3>
+                	<div class="row">
+                		<h3 class="text-center">신고 회원</h3>
+                		<a href=""><h6 class="text-right">더보기</h6></a>
+                	</div>
                 	<div class="table-responsive">          
-					  <table class="table">
+					  <table class="table  text-center" id="reportTable">
 					    <thead>
 					      <tr>
 					        <th>#</th>
-					        <th>Firstname</th>
-					        <th>Lastname</th>
-					        <th>Age</th>
-					        <th>City</th>
-					        <th>Country</th>
+					        <th>신고 당한 사용자 ID</th>
+					        <th>신고 횟수</th>
+					        <th>탈퇴</th>
 					      </tr>
 					    </thead>
 					    <tbody>
-					      <tr>
-					        <td>1</td>
-					        <td>Anna</td>
-					        <td>Pitt</td>
-					        <td>35</td>
-					        <td>New York</td>
-					        <td>USA</td>
-					      </tr>
+					   <%--  <% int i=1;
+					    for(ReportList re : list){ %>
+                    	<tr>
+                    		<td><%=i++%></td>
+                    		<td><%=re.getUserId() %></td>
+                    		<td><%=re.getReCount() %></td>
+                    		<td>
+                    			<button type="button" class="btn btn-danger">탈퇴</button>
+                    			<input type="hidden" name="userNo" id="userNo" value="<%=re.getUserNo()%>"/>
+                    		</td>
+                    	</tr>
+                   		<% } %>	 --%>
 					    </tbody>
 					  </table>
 					</div>
                 </div>
                 
                 <div class="cst_div col-xs-6">
-                	<h3>답변할 Q&A</h3>
-                	<div class="table-responsive">          
-					  <table class="table">
+                	<div class="row">
+                		<h3 class="text-center">답변할 Q&A</h3>
+                		<a href=""><h6 class="text-right">더보기</h6></a>
+                	</div>
+                	<div class="table-responsive text-center">          
+					  <table class="table text-center" id="qnaTable">
 					    <thead>
 					      <tr>
 					        <th>#</th>
 					        <th>Firstname</th>
 					        <th>Lastname</th>
 					        <th>Age</th>
-					        <th>City</th>
-					        <th>Country</th>
 					      </tr>
 					    </thead>
 					    <tbody>
-					      <tr>
-					        <td>1</td>
-					        <td>Anna</td>
-					        <td>Pitt</td>
-					        <td>35</td>
-					        <td>New York</td>
-					        <td>USA</td>
-					      </tr>
 					    </tbody>
 					  </table>
 					</div>
@@ -106,7 +109,37 @@
     
     <script>
 	$(function(){
-		
+			$.ajax({
+				url : "<%=request.getContextPath()%>/reportTop5.mg",
+				type: "GET",
+				success : function(data){
+					
+					var $tableBody = $('#reportTable tbody');
+					
+					$.each(data, function(index, value){
+						
+						var $tr = $('<tr>');
+						var $rankTd = $('<td>').text(index+1);
+						/* var $noTd = $('<td>').text(value.reNo); */
+						var $idTd = $('<td>').text(value.userId);
+						var $countTd = $('<td>').text(value.reCount);
+						var $btnTd = $('<td>').append( $('<button class="btn btn-danger">').text('탈퇴') );
+						
+						$tr.append($rankTd);
+						/* $tr.append($noTd); */
+						$tr.append($idTd);
+						$tr.append($countTd);
+						$tr.append($btnTd);
+						$tableBody.append($tr);
+						
+					});
+					
+				}, error : function(data) {
+					
+					console.log("신고 불러오기 실패");
+					
+				}
+			});
 
 		//예약 그래프
 		var reservation_Graph = {

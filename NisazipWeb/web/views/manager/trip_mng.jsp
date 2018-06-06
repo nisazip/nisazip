@@ -256,10 +256,27 @@
                                     <input type="number" id="price" name="price" class="form-control udInput" disabled>
                                 </div>
                             </div>
-                            <div class="form-group form-group-sm form-group-xs">
+                            <div class="form-group form-group-sm form-group-xs ">
                                 <label for="area" class="col-sm-3 col-xs-3">지역:</label>
                                 <div class="col-sm-9 col-xs-9">
-                                    <input type="text" id="area" name="area" class="form-control udInput" disabled>
+                                <select id="area" name="area" class="form-control udInput text-center" disabled>
+				                  <option value="지역선택" style="color: black">지역 선택</option>
+				                  <option value="제주시">제주시</option>
+				                  <option value="한경면">한경면</option>
+				                  <option value="한림읍">한림읍</option>
+				                  <option value="애월읍">애월읍</option>
+				                  <option value="조천읍">조천읍</option>
+				                  <option value="구좌읍">구좌읍</option>
+				                  <option value="서귀포시">서귀포시</option>
+				                  <option value="성산읍">성산읍</option>
+				                  <option value="표선면">표선면</option>
+				                  <option value="남원읍">남원읍</option>
+				                  <option value="안덕면">안덕면</option>
+				                  <option value="대정읍">대정읍</option>
+				                  <option value="우도면">우도면</option>
+				                  <option value="추자면">추자면</option>
+				               </select>
+                                    <!-- <input type="text" id="area" name="area" class="form-control udInput" disabled> -->
                                 </div>
                             </div>
                             
@@ -408,7 +425,6 @@
 			        $('#price').val(data.PRICE);
 			        $('#detail').val(data.T_DETAIL);
 			        $('#area').val(data.T_AREA);
-
 			         
 			        var addr = data.T_ADDR.split('| ');
 			        $('#zipCode').val(addr[0]);
@@ -482,6 +498,7 @@
         
         //모달 - 저장하기 버튼
         $('#saveData').click(function(){
+        	console.log($('#area').val());
         	if (confirm("변경한 트립 정보를 저장하시겠습니까??") == true){//확인
         		$.ajax({
             		url : "upTrip.mg",
@@ -517,6 +534,7 @@
             	})
             	var $cgDate = $('.cgDate');
                 $('#myModal input').attr("disabled",true);
+                $('#area').attr("disabled",true);
                 $('#modify').show();
                 $(this).hide();
         	}else{//취소
