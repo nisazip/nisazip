@@ -424,4 +424,30 @@ public class ManagerService {
 		return list;
 	}
 
+	public int deleteReReport(String userId) {
+		Connection con = getConnection();
+		
+		int result = new mDao().deleteReReport(con, userId);
+		
+		if(result >0) commit(con);
+		else rollback(con);
+		
+		close(con);
+
+		return result;
+	}
+
+	public int deleteReMember(String userId) {
+		Connection con = getConnection();
+		
+		int result = new mDao().deleteReMember(con, userId);
+		
+		if(result >0) commit(con);
+		else rollback(con);
+		
+		close(con);
+
+		return result;
+	}
+
 }

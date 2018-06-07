@@ -225,9 +225,10 @@
                 <!-- 모달 footer -->
                 <div class="modal-footer">
                     <div class="pull-left">
-                        <button type="button" class="btn btn-danger" id="deleteRoom">삭제하기</button>
+                        <button type="button" class="btn btn-danger" id="deleteReport">신고 삭제하기</button>
                     </div>
                     <div>
+                    	<button type="button" class="btn btn-danger" id="delMember">회원 탈퇴 시키기</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal" id="close">Close</button>
                     </div>
                 </div>
@@ -323,14 +324,26 @@
         
        
       	//모달 - 삭제하기 버튼
-        $('#deleteRoom').click(function(){
+        $('#deleteReport').click(function(){
         	if (confirm("해당 신고를 정말 삭제하시겠습니까??") == true){//확인
         		location.href="<%=request.getContextPath()%>/deleteReport.mg?reNo="+$('#reNo').val();
         	}else{//취소
         	    return;
         	}
         });
+      	
+        
 	
+      	//모달 - 회원탈퇴 하기 버튼
+        $('#delMember').click(function(){
+        	if (confirm("해당 회원을 탈퇴 시키시겠습니까??") == true){//확인
+        		location.href="<%=request.getContextPath()%>/deleteReMember.mg?reReceiver="+$('#reReceiver').val();
+        	}else{//취소
+        	    return;
+        	}
+        });
+        
+        
         $('#home_btn').click(function(){
         	location.href="<%=request.getContextPath()%>/views/manager/admin_home.jsp";
         });
