@@ -266,7 +266,7 @@ public class mDao {
 				
 		return result;
 	}
-
+/*<ㅁㄴㅇㄻㄴㅇㄹㅇㄴㄹ>*/
 	public int deleteMember(Connection con, int mNo) {
 		PreparedStatement pstmt = null;
 		int result = 0;

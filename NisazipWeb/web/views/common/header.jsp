@@ -20,6 +20,10 @@
     function userLogout(){
     	location.href= "<%=request.getContextPath()%>/logout.me";
     }
+    
+    function adminPage(){
+    	location.href= "<%=request.getContextPath()%>/views/manager/admin_home.jsp";
+    }
     </script>
 <style>
 #main {
@@ -96,6 +100,9 @@
             <button class="btn-link" type="button" id="join" onclick="userJoin();">회원가입 </button>
             <%}else{  %>
             <button class="btn-link col-sm-offset-7 col-xs-offset-7" type="button" id="logout" onclick="userLogout();"> 로그아웃</button>
+            <%} %>
+            <% if(m != null && m.getUser_id().equals("admin")){ %>
+            <button class="btn-link" type="button" id="adminPage" onclick="adminPage();">관리자 화면 가기 </button>
             <%} %>
          </div>
       </div>
