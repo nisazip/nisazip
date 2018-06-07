@@ -12,6 +12,15 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="../js/jquery-3.3.1.min.js"></script>
     <style>
+    #price {
+	text-align: right;
+}
+
+#score{
+	text-align:right;
+	margin-top:0px;
+}
+    
 #main {
 	position:absolute;
 	margin-top: 170px;
@@ -158,7 +167,8 @@ ul {
 	    							+'<img src="'+data.rlist[i].file_path+data.rlist[i].change_name+'.jpg" class="img" style="height:190px;">'
 	    							+' <div class="caption">'
 	    							+'<p>'+data.rlist[i].r_name+'</p>'
-	    							+'<p id="price">'+data.rlist[i].price+'</p>'
+	    							+'<p id="score">'+data.rlist[i].score+'점</p>'
+									+ '<p id="price">' + data.rlist[i].price + '￦</p>'
 	    							+'</div></a></div></div>';
 	    							
 	    							$div.append(str);
@@ -173,13 +183,13 @@ ul {
 
                 
                 <div class="col-sm-5" style="right:15%;">
-				  <div class="row">                
-                	<div class="col-sm-2">
+				                  
+                <!-- 	<div class="col-sm-2">
                 	<button type="button" id="filterBtn" name="filterBtn" data-toggle="modal" data-target="#myModal">필터</button>
                 	<div id="myModal" class="modal fade" role="dialog">
 					  <div class="modal-dialog">
 					
-					    <!-- Modal content-->
+					    Modal content
 					    <div class="modal-content">
 					      <div class="modal-header">
 					        <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -216,12 +226,12 @@ ul {
 					  </div>
 					</div>
 					</div>
-                	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <div class="col-sm-2">
-	                	<button type="button" id="sortBtn" name="sortBtn">정렬</button>
-	          	</div>
+                	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+                
+	                	<input type="checkbox" id="resAble" onclick="resAble();" >예약 가능한 숙소만 보기
+
 	          			
-	          			<div class="col-sm-7">
+	          			<!-- <div class="col-sm-7">
 	          			<div class="container">          
 						  <div id="sortGroup" class="btn-group">
 						    <button type="button" class="btn btn-primary sortGroup">인기순</button>
@@ -230,11 +240,9 @@ ul {
 						    <button type="button" class="btn btn-primary sortGroup">가격순</button>
 						  </div>
 						</div>
-	          	       </div>
+	          	       </div> -->
 	          	       
 	          	       
-	          	       
-                </div>
                 <br>
                 <br>
             </div>
@@ -243,9 +251,8 @@ ul {
         
         <script>
         	
-        	$("#sortBtn").click(function() {
+        	$("#resAble").click(function() {
 
-                $("#sortGroup").toggle(); 
 
             });
 
@@ -279,7 +286,8 @@ ul {
 							+'<img src="'+data[i].file_path+data[i].change_name+'.jpg" class="img" style="height:190px;">'
 							+' <div class="caption">'
 							+'<p>'+data[i].r_name+'</p>'
-							+'<p id="price">'+data[i].price+'</p>'
+							+'<p id="score">'+data[i].score+'점</p>'
+							+ '<p id="price">' + data[i].price + '￦</p>'
 							+'</div></a></div></div>';
 							
 							$div.append(str);
@@ -288,6 +296,8 @@ ul {
 				});
 				
 			}); 
+			 
+			 
 		</script>
     
              

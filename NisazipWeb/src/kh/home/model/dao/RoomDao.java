@@ -78,7 +78,7 @@ public class RoomDao {
 	}
 
 
-	public ArrayList<HashMap<String, Object>> select8roomList(Connection con) {
+	public ArrayList<HashMap<String, Object>> selectAllroomList(Connection con) {
 		PreparedStatement pstmt = null;
 		ArrayList<HashMap<String,Object>> rlist = null;
 		HashMap<String, Object> hmap = null;
@@ -91,7 +91,7 @@ public class RoomDao {
 		try{
 			pstmt = con.prepareStatement(query);
 			
-			pstmt.setInt(1, 8);
+			pstmt.setInt(1, 100);
 			
 			rset = pstmt.executeQuery();
 				
@@ -160,6 +160,51 @@ public class RoomDao {
 		
 		
 		String query = prop.getProperty("searchrKeyword");
+		
+		try{
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setString(1, keyword);
+			pstmt.setString(2, keyword);
+			pstmt.setString(3, keyword);
+			
+			rset = pstmt.executeQuery();
+				
+			rlist = new ArrayList<HashMap<String,Object>>();
+			
+			while(rset.next()){
+				hmap = new HashMap<String, Object>();
+				
+				hmap.put("r_id", rset.getString("r_id"));
+				hmap.put("r_name", rset.getString("r_name"));
+				hmap.put("price", rset.getInt("price"));
+				hmap.put("r_loc", rset.getString("r_loc"));
+				hmap.put("score", rset.getFloat("score"));
+				hmap.put("file_path", rset.getString("file_path"));
+				hmap.put("change_name", rset.getString("change_name"));
+				
+				
+				rlist.add(hmap);
+				
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			close(rset);
+			close(pstmt);
+		}
+		
+		return rlist;
+	}
+	
+	public ArrayList<HashMap<String, Object>> sortKeyword(Connection con,String keyword) {
+		PreparedStatement pstmt = null;
+		ArrayList<HashMap<String,Object>> rlist = null;
+		HashMap<String, Object> hmap = null;
+		ResultSet rset = null;
+		
+		
+		String query = prop.getProperty("sortrKeyword");
 		
 		try{
 			pstmt = con.prepareStatement(query);

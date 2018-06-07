@@ -54,6 +54,8 @@ public class HomeSearchServlet extends HttpServlet {
 			ArrayList<HashMap<String, Object>> rlist = new RoomService().searchRoom(location,checkin,checkout,people);
 			ArrayList<HashMap<String, Object>> tlist = new TripService().searchTrip(location,checkin,checkout,people);
 			
+			HashMap<String, ArrayList> data = new HashMap<String, ArrayList>();
+			
 			System.out.println("검색 결과인 rlist : "+rlist);
 			System.out.println("검색 결과인 tlist : "+tlist);
 			

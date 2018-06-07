@@ -33,7 +33,7 @@ public class TripServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<HashMap<String, Object>> tlist = new TripService().select8tripList();
+		ArrayList<HashMap<String, Object>> tlist = new TripService().selectAlltripList();
 		
 		response.setContentType("application/json; charset=UTF-8");
 		new Gson().toJson(tlist,response.getWriter());

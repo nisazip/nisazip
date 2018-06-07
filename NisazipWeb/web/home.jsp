@@ -38,7 +38,8 @@
 							+'<img src="'+data[i].file_path+data[i].change_name+'.jpg" class="img" style="height:190px;">'
 							+' <div class="caption">'
 							+'<p>'+data[i].r_name+'</p>'
-							+'<p id="price">'+data[i].price+'</p>'
+							+'<p id="score">'+data[i].score+'점</p>'
+							+'<p id="price">'+data[i].price+'￦</p>'
 							+'</div></a></div></div>';
 							
 							$div.append(str);
@@ -60,10 +61,11 @@
 												+ '<div class="thumbnail">'
 												+ '<a href="상세 페이지.html" target="_blank"> '
 												+ '<img src="'+data[i].file_path+data[i].change_name+'.jpg" class="img" style="height:190px;">'
-												+ ' <div class="caption">' + '<p>'
-												+ data[i].t_name + '</p>'
-												+ '<p id="price">' + data[i].price
-												+ '</p>' + '</div></a></div></div>';
+												+ ' <div class="caption">' 
+												+ '<p>'+ data[i].t_name + '</p>'
+												+'<p id="score">'+data[i].score+'점</p>'
+												+ '<p id="price">' + data[i].price + '￦</p>' 
+												+ '</div></a></div></div>';
 
 										$div.append(str);
 									}
@@ -94,15 +96,17 @@
 				}); 
 				 
 				
-					
-	 
-					
+				
 		</script>
-
 	 	
 <style>
 #price {
 	text-align: right;
+}
+
+#score{
+	text-align:right;
+	margin-top:0px;
 }
 
 .select {

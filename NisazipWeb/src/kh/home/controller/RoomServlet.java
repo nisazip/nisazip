@@ -33,7 +33,7 @@ public class RoomServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<HashMap<String, Object>> rlist = new RoomService().select8roomList();
+		ArrayList<HashMap<String, Object>> rlist = new RoomService().selectAllroomList();
 		
 		response.setContentType("application/json; charset=UTF-8");
 		new Gson().toJson(rlist, response.getWriter());

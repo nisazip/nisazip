@@ -24,10 +24,10 @@ public class TripService {
 		return tlist;
 	}
 	
-	public ArrayList<HashMap<String, Object>> select8tripList() {
+	public ArrayList<HashMap<String, Object>> selectAlltripList() {
 		Connection con = getConnection();
 		
-		ArrayList<HashMap<String,Object>> tlist = new TripDao().select8tripList(con);
+		ArrayList<HashMap<String,Object>> tlist = new TripDao().selectAlltripList(con);
 		
 		close(con);
 		
@@ -50,6 +50,16 @@ public class TripService {
 		TripDao tDao = new TripDao();
 		
 		ArrayList<HashMap<String,Object>> tlist =  new TripDao().searchKeyword(con,keyword);
+		
+		return tlist;
+	}
+	
+	public ArrayList<HashMap<String, Object>> sortKeyword(String keyword) {
+		Connection con = getConnection();
+		
+		TripDao tDao = new TripDao();
+		
+		ArrayList<HashMap<String,Object>> tlist =  new TripDao().sortKeyword(con,keyword);
 		
 		return tlist;
 	}
