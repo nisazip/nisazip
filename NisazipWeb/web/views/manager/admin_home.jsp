@@ -366,5 +366,9 @@
 	
 	</script>
 </body>
-
+	<br>
+    전체 : <%=session.getAttribute("totalCount") %>
+    <br>
+    오늘 : <%=session.getAttribute("todayCount") %>
+    <br>
 </html>

@@ -6,4 +6,5 @@
                background-color: darkSlateGray; color: white;
                text-align: center;">
 	<p>© Copyright 2018 H Class | Education | KH Academy</p>
+
 </footer>

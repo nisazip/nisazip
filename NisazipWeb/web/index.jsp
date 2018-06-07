@@ -28,7 +28,6 @@
 </pre>
 <!-- 지도 영역 -->
 <div id="map" style="width:500px;height:400px;"></div>
-
 <!-- GoogoleMap Asynchronously Loading the API ********************************************* -->
 <script>
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
@@ -71,4 +70,5 @@
 
 
 </body>
+
 </html>
