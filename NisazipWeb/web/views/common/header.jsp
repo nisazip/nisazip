@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8" import="kh.member.model.vo.*" %>
 <%
-	Member m = (Member) session.getAttribute("member");
+	Member m = (Member)session.getAttribute("member");
 %>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,10 +9,22 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/holder/2.9.4/holder.js"></script>
+     <script>
+    function userLogin(){
+    	$("#myModal").modal();
+    }
+    function userJoin(){
+    	 $("#myModal2").modal();
+    }
+    
+    function userLogout(){
+    	location.href= "<%=request.getContextPath()%>/logout.me";
+    }
+    </script>
 <style>
 #main {
    position: absolute;
-   margin-top: 200px;
+   margin-top: 150px;
    width: 100%;
 }
 #header {
@@ -63,19 +75,28 @@
 </style>
 </head>
 
+<%@ include file= "../../views/member/joinmodal.jsp" %>
+<%@ include file ="../../views/member/loginmodal.jsp" %>
+<%@ include file ="../../views/member/resetpwdModal.jsp" %>
+
+<%@ include file ="../../views/member/messageModal.jsp" %>
+
 
 <div id="header">
    <div class="container-fluid">
-      <div class="row">
+   		
+     <div class="row">
 
-         <div class="col-sm-4"
+          <div class="col-sm-4"
             style="background-color: rgb(0, 153, 51); height: 30px;"></div>
          <div class="col-sm-8"
             style="background-color: rgb(168, 207, 168); height: 30px;">
-            <button type="button" id="login"
-               class="col-sm-offset-9 col-xs-offset-8 btn-link">
-               <a href="login.html" style="color: rgb(41, 23, 23);">로그인/회원가입</a>
-            </button>
+            <% if(m == null){ %>
+            <button class="btn-link col-sm-offset-7 col-xs-offset-7" type="button" id="login" onclick="userLogin();"> 로그인</button>
+            <button class="btn-link" type="button" id="join" onclick="userJoin();">회원가입 </button>
+            <%}else{  %>
+            <button class="btn-link col-sm-offset-7 col-xs-offset-7" type="button" id="logout" onclick="userLogout();"> 로그아웃</button>
+            <%} %>
          </div>
       </div>
 
@@ -105,7 +126,9 @@
                               <li><a href="#">트립 등록/관리</a></li>
                            </ul></li>
                         <li class="navbtn"><a href="#">메시지</a></li>
-                        <li class="navbtn"><a href="#">마이페이지</a></li>
+                         <% if(m != null){ %>
+                        <li class="navbtn"><a href="/semi/views/member/memberUpdate.jsp">마이페이지</a></li>
+                        <%} %>
                      </ul>
                   </div>
                </div>

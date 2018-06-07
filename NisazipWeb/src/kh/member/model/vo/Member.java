@@ -3,6 +3,8 @@ package kh.member.model.vo;
 import java.sql.Date;
 
 public class Member {
+	
+	
 	private int user_no;
 	private String user_id;
 	private String password;
@@ -16,8 +18,6 @@ public class Member {
 	private int r_hosting;
 	private int t_hosting;
 	private Date join_date;
-	
-	
 	
 	public Member() {
 		super();
@@ -138,13 +138,15 @@ public class Member {
 		this.t_hosting = t_hosting;
 	}
 
+	public void setJoin_date(Date join_date) {
+		this.join_date = join_date;
+	}
+
 	public Date getJoin_date() {
 		return join_date;
 	}
 
-	public void setJoin_date(Date join_date) {
-		this.join_date = join_date;
-	}
+	
 
 	@Override
 	public int hashCode() {
