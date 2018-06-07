@@ -4,11 +4,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
+
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=912ba5ded38a05dd53c37b8850dd2427&libraries=services"></script>
+
 <title>메인페이지</title>
 </head>
 <body>
 <%@ include file ="views/common/header.jsp" %>
+
 <pre>
 
 
@@ -67,6 +70,7 @@
 	} 
 	});    
 </script>
+
 
 
 </body>
