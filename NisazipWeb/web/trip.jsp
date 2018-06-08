@@ -231,7 +231,7 @@ ul {
 					</div>
                 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
                
-	                	<input type="checkbox" id="resAble" onclick="resAble();" >예약 가능한 숙소만 보기
+	                	<input type="checkbox" id="sortPrice" onclick="sortPrice();" >낮은 가격 순
 	          
 	          			
 	          		<!-- 	<div class="col-sm-7">
@@ -254,19 +254,7 @@ ul {
         <br>
         </div>
         
-        <script>
-        	
-        	$("#resAble").click(function() {
-
-             
-
-            });
-
-        </script>
         
-  
-         
-	
              
 				<div class="container trip">
 			<h2>트립</h2>
@@ -280,9 +268,22 @@ ul {
 		</div>
 		<script>
 			 $(function(){
+				 
+          	   
+                 if($('input:checkbox[id="sortPrice"]').is(":checked") == true){
+            		 var checkVal = "true";
+            		 
+          	  	}else{
+            		var checkVal = "false";
+            		
+          	  	}
 				$.ajax({
 					url:"<%=request.getContextPath()%>/list.tr",
 					type:"get",
+					data : {
+						keyword : $('#keyword').val(),
+						checkVal : checkVal
+					},
 					success:function(data){
 						// 전체 영역
 						var $div = $('#trip2_thumb');
@@ -304,6 +305,13 @@ ul {
 				});
 				
 			}); 
+			 
+				
+	        	$("#sortPrice").click(function() {
+
+					search();
+	            });
+
 		</script>
         
     </div>

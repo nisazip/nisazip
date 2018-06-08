@@ -22,6 +22,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="resources/js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=912ba5ded38a05dd53c37b8850dd2427&libraries=services"></script>
     <style>
     #price {
 	text-align: right;
@@ -185,15 +186,16 @@ ul {
                 </div>
                 
                 <script>
+             
                 
                 function search(){
-                	
-                	if($('input:checkbox[id="resAble"]').is(":checked") == true){
-                		 var checkVal = "true";
-                	}else{
-                		var checkVal = "false";
-                	}
-
+                	 if($('input:checkbox[id="sortPrice"]').is(":checked") == true){
+                   		 var checkVal = "true";
+                   		 
+                 	  	}else{
+                   		var checkVal = "false";
+                   		
+                 	  	}  
                 	
         			$.ajax({
         				url:'<%=request.getContextPath()%>/keywordSearch.ho',
@@ -201,7 +203,6 @@ ul {
     					data : {
     						keyword : $('#keyword').val(),
     						checkVal : checkVal
-    						
     					},
     					success:function(data){
     						
@@ -216,8 +217,9 @@ ul {
     						$div = $('#inn2_thumb');
     						$div.text("");
     						
+    					
     						if(data.rlist.length > 0) {
-	    						for(var i in data.rlist){
+	    						for(var i=1 ; i<5 ; i++){
 	    							var str = '<div class="col-md-6">' 
 	    								+ '<div class="thumbnail">'
 	    							+'<a href="상세 페이지.html" target="_blank"> '
@@ -229,15 +231,18 @@ ul {
 	    							+'</div></a></div></div>';
 	    							
 	    							$div.append(str);
+	    							
+	    							console.log(i);
 	    						}
     						} else {
 	     						$div.append("<h3>검색하신 조건에 해당하는 결과가 없습니다.</h3><br><br><br>");
 	     					}
+    					
 	    						
     						$div = $('#trip2_thumb');
     						$div.text("");
     						if(data.tlist.length > 0){
-    							for(var i in data.tlist){
+    							for(var i=1 ; i<5 ; i++){
         							var str = '<div class="col-md-6">' 
         								+ '<div class="thumbnail">'
         							+'<a href="상세 페이지.html" target="_blank"> '
@@ -303,9 +308,8 @@ ul {
 					</div>
 					</div>  -->
                 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                	  <input type="checkbox" id="resAble" onclick="resAble();" >예약 가능한 숙소만 보기
-             
-	          			
+                	 <!--  <input type="checkbox" id="sortPrice" onclick="sortPrice();" >낮은 가격 순  -->
+             	<input type="checkbox" id="sortPrice" onclick="sortPrice();" >낮은 가격순
 	          			<!-- <div class="container">          
 						  <div id="sortGroup" class="btn-group">
 						    <button type="button" id="scoresort" onclick="scoresort();" class="btn btn-primary sortGroup">평점순</button>
@@ -381,7 +385,7 @@ ul {
 		</div>
 		<script>
 	    	
-	    	$("#resAble").click(function() {
+	    	$("#sortPrice").click(function() {
 	
 	          
 	
@@ -415,117 +419,48 @@ ul {
          <div class="col-xs-6 hidden-xs" style="position:fixed;top:320px;margin-left:50%;bottom:10px;">
                 <div id="map"></div>
                 <script>
-                     function initMap() {
-                      var map = new google.maps.Map(document.getElementById('map'), {
-                        zoom: 12,
-                        center: new google.maps.LatLng(33.499970, 126.535388),
-                        mapTypeId: 'roadmap'
-                      });
-
-
-                      var iconBase = 'https://maps.google.com/mapfiles/kml/shapes/';
-                      var icons = {
-                        info: {
-                          icon: iconBase + 'info-i_maps.png'
-                        }
-                      };
-
-                      var features = [
-                        {
-                          position: new google.maps.LatLng(33.458061, 126.502540),
-                          type: 'info'
-                        }, {
-                          position: new google.maps.LatLng(33.438982, 126.476705),
-                          type: 'info'
-                        }, {
-                          position: new google.maps.LatLng(33.420325, 126.432910),
-                          type: 'info'
-                        }, {
-                          position: new google.maps.LatLng(33.486092, 126.571213),
-                          type: 'info'
-                        }                      ];
-
-                      // Create markers.
-                      features.forEach(function(feature) {
-                        var marker = new google.maps.Marker({
-                          position: feature.position,
-                          icon: icons[feature.type].icon,
-                          map: map,
-                          title: 'Hello World!'
-                        });
-                      }); 
-                    }
-/*                     var customLabel = {
-                            restaurant: {
-                              label: '가격'
-                            }
-                          };
-
-                            function initMap() {
-                            var map = new google.maps.Map(document.getElementById('map'), {
-                              center: new google.maps.LatLng(33.499970, 126.535388),
-                              zoom: 12
+                <% for(HashMap<String,Object> map : rlist) { %>
+                        var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+                        mapOption = {
+                            center: new daum.maps.LatLng(33.499970, 126.535388), // 지도의 중심좌표
+                            level: 3 // 지도의 확대 레벨
+                        };  
+                        
+                        //지도를 생성합니다    
+                        var map = new daum.maps.Map(mapContainer, mapOption); 
+                        
+                        //주소-좌표 변환 객체를 생성합니다
+                        var geocoder = new daum.maps.services.Geocoder();
+                        
+                        //주소로 좌표를 검색합니다
+                        geocoder.addressSearch('<%= map.get("r_addr")%>', function(result, status) {
+                        
+                        console.log(r_addr);
+                        // 정상적으로 검색이 완료됐으면 
+                         if (status === daum.maps.services.Status.OK) {
+                        
+                            var coords = new daum.maps.LatLng(result[0].y, result[0].x);
+                        
+                            // 결과값으로 받은 위치를 마커로 표시합니다
+                            var marker = new daum.maps.Marker({
+                                map: map,
+                                position: coords
                             });
-                            var infoWindow = new google.maps.InfoWindow;
-
-                              // Change this depending on the name of your PHP or XML file
-                              downloadUrl('https://storage.googleapis.com/mapsdevsite/json/mapmarkers2.xml', function(data) {
-                                var xml = data.responseXML;
-                                var markers = xml.documentElement.getElementsByTagName('marker');
-                                Array.prototype.forEach.call(markers, function(markerElem) {
-                                  var name = markerElem.getAttribute('name');
-                                  var address = markerElem.getAttribute('address');
-                                  var type = markerElem.getAttribute('type');
-                                  var point = new google.maps.LatLng(
-                                      parseFloat(markerElem.getAttribute('lat')),
-                                      parseFloat(markerElem.getAttribute('lng')));
-
-                                  var infowincontent = document.createElement('div');
-                                  var strong = document.createElement('strong');
-                                  strong.textContent = name
-                                  infowincontent.appendChild(strong);
-                                  infowincontent.appendChild(document.createElement('br'));
-
-                                  var text = document.createElement('text');
-                                  text.textContent = address
-                                  infowincontent.appendChild(text);
-                                  var icon = customLabel[type] || {};
-                                  var marker = new google.maps.Marker({
-                                    map: map,
-                                    position: point,
-                                    label: icon.label
-                                  });
-                                  marker.addListener('click', function() {
-                                    infoWindow.setContent(infowincontent);
-                                    infoWindow.open(map, marker);
-                                  });
-                                });
-                              });
-                            }
-
-
-
-                          function downloadUrl(url, callback) {
-                            var request = window.ActiveXObject ?
-                                new ActiveXObject('Microsoft.XMLHTTP') :
-                                new XMLHttpRequest;
-
-                            request.onreadystatechange = function() {
-                              if (request.readyState == 4) {
-                                request.onreadystatechange = doNothing;
-                                callback(request, request.status);
-                              }
-                            };
-
-                            request.open('GET', url, true);
-                            request.send(null);
-                          }
-
-                          function doNothing() {} */
-
+                        
+                            // 인포윈도우로 장소에 대한 설명을 표시합니다
+                            var infowindow = new daum.maps.InfoWindow({
+                                content: '<div style="width:150px;text-align:center;padding:6px 0;">우리 집</div>'
+                            });
+                            infowindow.open(map, marker);
+                        
+                            // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+                            map.setCenter(coords);
+                        } 
+                        });    
+                        
+                        <%}%>
                 </script>
-                <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBUmuy9dG2U1qXJBPEFCf7rFpDdsyZY-4k&callback=initMap">
-                </script>
+              
         </div>
 
     </div>

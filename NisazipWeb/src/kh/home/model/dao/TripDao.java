@@ -98,6 +98,7 @@ public class TripDao {
 				hmap.put("host_id", rset.getString("host_id"));
 				hmap.put("price", rset.getString("price"));
 				hmap.put("t_loc", rset.getString("t_loc"));
+				hmap.put("t_addr", rset.getString("t_addr"));
 				hmap.put("score", rset.getString("score"));
 				hmap.put("file_path", rset.getString("file_path"));
 				hmap.put("change_name", rset.getString("change_name"));
@@ -130,6 +131,7 @@ public class TripDao {
 			pstmt.setString(1, keyword);
 			pstmt.setString(2, keyword);
 			pstmt.setString(3, keyword);
+			pstmt.setInt(4, 100);
 			
 			rset = pstmt.executeQuery();
 			
@@ -143,6 +145,7 @@ public class TripDao {
 				hmap.put("host_id", rset.getString("host_id"));
 				hmap.put("price", rset.getString("price"));
 				hmap.put("t_loc", rset.getString("t_loc"));
+				hmap.put("t_addr", rset.getString("t_addr"));
 				hmap.put("score", rset.getString("score"));
 				hmap.put("file_path", rset.getString("file_path"));
 				hmap.put("change_name", rset.getString("change_name"));
@@ -189,6 +192,7 @@ public class TripDao {
 				hmap.put("host_id", rset.getString("host_id"));
 				hmap.put("price", rset.getString("price"));
 				hmap.put("t_loc", rset.getString("t_loc"));
+				hmap.put("t_addr", rset.getString("t_addr"));
 				hmap.put("score", rset.getString("score"));
 				hmap.put("file_path", rset.getString("file_path"));
 				hmap.put("change_name", rset.getString("change_name"));
@@ -240,6 +244,7 @@ public class TripDao {
 				hmap.put("t_end_date", rset.getDate("t_end_date"));
 				hmap.put("t_max_num", rset.getInt("t_max_num"));
 				hmap.put("t_loc", rset.getString("t_loc"));
+				hmap.put("t_addr", rset.getString("t_addr"));
 				hmap.put("score", rset.getString("score"));
 				hmap.put("file_path", rset.getString("file_path"));
 				hmap.put("change_name", rset.getString("change_name"));

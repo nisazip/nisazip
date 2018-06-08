@@ -167,6 +167,7 @@ public class RoomDao {
 			pstmt.setString(1, keyword);
 			pstmt.setString(2, keyword);
 			pstmt.setString(3, keyword);
+			pstmt.setInt(4,100);
 			
 			rset = pstmt.executeQuery();
 				
@@ -179,6 +180,7 @@ public class RoomDao {
 				hmap.put("r_name", rset.getString("r_name"));
 				hmap.put("price", rset.getInt("price"));
 				hmap.put("r_loc", rset.getString("r_loc"));
+				hmap.put("r_addr", rset.getString("r_addr"));
 				hmap.put("score", rset.getFloat("score"));
 				hmap.put("file_path", rset.getString("file_path"));
 				hmap.put("change_name", rset.getString("change_name"));
@@ -196,6 +198,8 @@ public class RoomDao {
 		
 		return rlist;
 	}
+	
+	
 	
 	public ArrayList<HashMap<String, Object>> sortKeyword(Connection con,String keyword) {
 		PreparedStatement pstmt = null;
@@ -224,6 +228,7 @@ public class RoomDao {
 				hmap.put("r_name", rset.getString("r_name"));
 				hmap.put("price", rset.getInt("price"));
 				hmap.put("r_loc", rset.getString("r_loc"));
+				hmap.put("r_addr", rset.getString("r_addr"));
 				hmap.put("score", rset.getFloat("score"));
 				hmap.put("file_path", rset.getString("file_path"));
 				hmap.put("change_name", rset.getString("change_name"));
@@ -274,6 +279,7 @@ public class RoomDao {
 				hmap.put("r_end_date", rset.getDate("r_end_date"));
 				hmap.put("r_max_num", rset.getInt("r_max_num"));
 				hmap.put("r_loc", rset.getString("r_loc"));
+				hmap.put("r_addr", rset.getString("r_addr"));
 				hmap.put("score", rset.getFloat("score"));
 				hmap.put("file_path", rset.getString("file_path"));
 				hmap.put("change_name", rset.getString("change_name"));

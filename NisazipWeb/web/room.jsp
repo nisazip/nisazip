@@ -145,11 +145,20 @@ ul {
                 </div>
                 <script>
                 function search(){
+             	   
+                    if($('input:checkbox[id="sortPrice"]').is(":checked") == true){
+               		 var checkVal = "true";
+               		 
+             	  	}else{
+               		var checkVal = "false";
+               		
+             	  	}
         			$.ajax({
     					url:'<%=request.getContextPath()%>/keywordSearch.ho',
     					type:"get",
     					data : {
-    						keyword : $('#keyword').val()
+    						keyword : $('#keyword').val(),
+    						checkVal : checkVal
     					},
     					success:function(data){
     						
@@ -179,6 +188,12 @@ ul {
     					}
     				});
         		};
+        		
+        		$("#sortPrice").click(function() {
+					search();
+
+            });
+
                 </script>
 
                 
@@ -228,7 +243,7 @@ ul {
 					</div>
                 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
                 
-	                	<input type="checkbox" id="resAble" onclick="resAble();" >예약 가능한 숙소만 보기
+	                	<input type="checkbox" id="sortPrice" onclick="sortPrice();" >낮은 가격순
 
 	          			
 	          			<!-- <div class="col-sm-7">
@@ -249,14 +264,6 @@ ul {
         <br>
         </div>
         
-        <script>
-        	
-        	$("#resAble").click(function() {
-
-
-            });
-
-        </script>
         
   
          

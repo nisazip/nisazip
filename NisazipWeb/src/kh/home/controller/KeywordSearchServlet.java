@@ -37,42 +37,49 @@ public class KeywordSearchServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String keyword = request.getParameter("keyword");
-		String resAble = request.getParameter("checkVal");
+		String sortPrice = request.getParameter("checkVal");
 		
 		System.out.println("ajax가 전달 받은 값 : "+keyword);
-		System.out.println("ajax가 전달 받은 값 : "+resAble);
+		System.out.println("ajax가 전달 받은 값 : "+sortPrice);
 		
-		if(resAble=="false"){
-			
-		ArrayList<HashMap<String, Object>> rlist = new RoomService().searchKeyword(keyword);
-		ArrayList<HashMap<String, Object>> tlist = new TripService().searchKeyword(keyword);
-		
-		HashMap<String, ArrayList> data = new HashMap<String, ArrayList>();
-		System.out.println("검색 결과인 rlist : "+rlist);
-		System.out.println("검색 결과인 tlist : "+tlist);
-		data.put("rlist", rlist);
-		data.put("tlist", tlist);
-		
-		response.setContentType("application/json; charset=UTF-8");
-		
-		//if(rlist.size() > 0|| tlist.size() > 0){
-			new Gson().toJson(data, response.getWriter());
-		//}
-		}else{
+		if(sortPrice.equals("true")){
+
 			ArrayList<HashMap<String, Object>> rlist = new RoomService().sortKeyword(keyword);
 			ArrayList<HashMap<String, Object>> tlist = new TripService().sortKeyword(keyword);
 			
 			HashMap<String, ArrayList> data = new HashMap<String, ArrayList>();
 			System.out.println("검색 결과인 rlist : "+rlist);
 			System.out.println("검색 결과인 tlist : "+tlist);
+			
 			data.put("rlist", rlist);
 			data.put("tlist", tlist);
 			
 			response.setContentType("application/json; charset=UTF-8");
 			
-			//if(rlist.size() > 0|| tlist.size() > 0){
-				new Gson().toJson(data, response.getWriter());
+			
+			new Gson().toJson(data, response.getWriter());
+	
+			
+		}else{
+
+			ArrayList<HashMap<String, Object>> rlist = new RoomService().searchKeyword(keyword);
+			ArrayList<HashMap<String, Object>> tlist = new TripService().searchKeyword(keyword);
+			
+			HashMap<String, ArrayList> data = new HashMap<String, ArrayList>();
+			System.out.println("검색 결과인 rlist : "+rlist);
+			System.out.println("검색 결과인 tlist : "+tlist);
+			
+			data.put("rlist", rlist);
+			data.put("tlist", tlist);
+			
+			response.setContentType("application/json; charset=UTF-8");
+			
+			new Gson().toJson(data, response.getWriter());
+
+			
 		}
+			
+	
 	
 	}
 

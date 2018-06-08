@@ -120,4 +120,15 @@
       </div>
    </div>
 </div>
+<script>
+$('#menu').on('click',function(){
+    $('.navbar-collapse').css({
+        'background': 'white',
+        'overflow': 'hidden',
+        'text-align': 'center'
+    });
+    $('.navbar-collapse').toggle();
+  });
+  
+</script>
 
