@@ -110,7 +110,7 @@
       <div class="row">
          <div class="col-md-2"></div>
          <div class="col-md-3">
-            <h1>네가 사는 제주</h1>
+            <button class="btn btn-link" onclick="location.href='<%=request.getContextPath()%>'"><h1>네가 사는 제주</h1></button>
          </div>
          <div class="col-md-7">
             <nav class="navbar navbar-inverse">
@@ -133,6 +133,7 @@
                               <li><a href="#">트립 등록/관리</a></li>
                            </ul></li>
                         <li class="navbtn"><a href="#">메시지</a></li>
+                        <li class="navbtn"><a href="<%=request.getContextPath()%>/boardList.bo">Q&A</a></li>
                          <% if(m != null){ %>
                         <li class="navbtn"><a href="/semi/views/member/memberUpdate.jsp">마이페이지</a></li>
                         <%} %>

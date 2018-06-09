@@ -1,7 +1,6 @@
 package kh.manager.controller;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,33 +13,32 @@ import com.google.gson.Gson;
 import kh.manager.model.service.ManagerService;
 
 
-@WebServlet("/getMember.mg")
-public class GetMemeberServlet extends HttpServlet {
+@WebServlet("/confirm.mg")
+public class ConfirmServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-    public GetMemeberServlet() { }
-
+       
+    public ConfirmServlet() { }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String userId = request.getParameter("userId");
 		
-		/*HashMap<String, Object> m = new ManagerService().selectOneMember(userNo);*/
-		HashMap<String, Object> m = new ManagerService().selectOneMember(userId);
-		/*MemeberList m = new ManagerService().selectOneMember(userNo);*/
+		int result = new ManagerService().confirm(userId);
 		
-		/*
-		ArrayList<HashMap<String, Object>> rlist = new RoomService().selectrList();	   */
+		String msg = "";
 		
+		if(result >0){
+			System.out.println("맴버 인증 성공");
+			msg="맴버 인증이 완료되었습니다.";
+		}else{
+			System.out.println("맴버 인증 실패");
+			msg="맴버 인증이 실패하였습니다.";
+		}
 		
 		response.setContentType("application/json; charset=UTF-8");
-	      new Gson().toJson(m, response.getWriter());
-	    
+	      new Gson().toJson(msg, response.getWriter());
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);

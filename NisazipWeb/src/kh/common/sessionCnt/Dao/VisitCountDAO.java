@@ -32,7 +32,7 @@ public class VisitCountDAO
         PreparedStatement pstmt = null;
         
         try {
-            
+            System.out.println("사용자  접속");
             // 쿼리생성
             // 총 방문자수를 증가시키기 위해 테이블에 현재 날짜 값을 추가시킨다.
             StringBuffer sql = new StringBuffer();
@@ -41,9 +41,9 @@ public class VisitCountDAO
             // 커넥션을 가져온다.
             conn = getConnection();
                         
-            // 자동 커밋을 false로 한다.
+/*            // 자동 커밋을 false로 한다.
             conn.setAutoCommit(false);
-            
+            */
             pstmt = conn.prepareStatement(sql.toString());
             // 쿼리 실행
             pstmt.executeUpdate();
@@ -75,7 +75,7 @@ public class VisitCountDAO
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         int totalCount = 0;
-        
+        System.out.println("total count 조회");
         try {
             
             // 테이블의 테이터 수를 가져온다.

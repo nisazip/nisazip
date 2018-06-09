@@ -137,23 +137,15 @@
 	 function delMember(obj){
 	  		
 	  		if (confirm("해당 회원을 탈퇴 시키시겠습니까??") == true){//확인
-	    		 
 	  			console.log($(obj).parent().parent().children(":eq(1)").text());
-	  			
-	  			 /* var tr =$(this).text();
-	    		 
-	    		 $(this).parent().parent().parent().css('background-color', 'red'); */ 
-	    		/* var tr = $(this).parent();	
-	    		var $td = $(tr).children().eq(1);
-	    		console.log($td.text());
-	    		console.log($td.text());
-	    		console.log($td.text()); */
-
-	<%-- location.href="<%=request.getContextPath()%>/deleteReMember.mg?reReceiver="+$('#reReceiver').val(); --%>
+				location.href="<%=request.getContextPath()%>/deleteReMember.mg?reReceiver="+$(obj).parent().parent().children(":eq(1)").text();
+				
 	    	}else{//취소
 	    	    return;
 	    	}
 	  	}
+  	
+  	
 
 	$(function(){
 		//신고 top5	
@@ -180,7 +172,7 @@
 						$tr.append($btnTd); 
 						$tableBody.append($tr);
 						
-					});
+					})
 					
 				}, error : function(data) {
 					
@@ -222,33 +214,32 @@
 			}
 		});
 		
-			
-			 $('#reportTable td').mouseenter(function(){
-					$(this).parent().css({
-						"background":"red",
-						"cursor" : "pointer"	
-					});
-				}).mouseout(function(){
-					$(this).parent().css({
-						"background": "white",
-					});
-				}).click(function(){
-					/* var num = $(this).parent().children().eq(0).text(); */
-					console.log('11');
-					<%-- location.href="<%=request.getContextPath()%>/selectOne.bo?num="+num; --%>
-				});
 			 
 		$(function(){
-			var sampleData = [];
+			
+			var RoomData = [];
+			var TripData = [];
 			
 			$.ajax({
-				url : "",
+				url : "<%=request.getContextPath()%>/roomReserv.mg",
 				async : false,
 				dataType : "json",
 				success : function(data){
-					sampleData = data;
+					RoomData = data;
+					console.log(RoomData);
 				}
 			});
+			
+			$.ajax({
+				url : "<%=request.getContextPath()%>/tripReserv.mg",
+				async : false,
+				success : function(data){
+					TripData = data;
+					console.log(TripData);
+				}
+			});
+			
+			
 			//예약 그래프
 			var reservation_Graph = {
 				animationEnabled: true,
@@ -267,40 +258,15 @@
 					name: "숙소 예약",
 					showInLegend: "true",
 					yValueFormatString: "#,##0 회",
-					dataPoints: [
-						{ y: 40 , label: "1월" },
-						{ y: 30, label: "2월" },
-						{ y: 35, label: "3월" },
-						{ y: 40, label: "4월" },
-						{ y: 80, label: "5월" },
-						{ y: 91, label: "6월" },
-						{ y: 50, label: "7월" },
-						{ y: 150, label: "8월" },
-						{ y: 70, label: "9월" },
-						{ y: 50, label: "10월" },
-						{ y: 60, label: "11월" },
-						{ y: 200, label: "12월" }
-					]
+					dataPoints: RoomData
+					
 				},
 				{
 					type: "stackedColumn",
 					name: "트립 예약",
 					showInLegend: "true",
 					yValueFormatString: "#,##0 회",
-					dataPoints: [
-						{ y: 20 , label: "1월" },
-						{ y: 15, label: "2월" },
-						{ y: 15, label: "3월" },
-						{ y: 20, label: "4월" },
-						{ y: 80, label: "5월" },
-						{ y: 91, label: "6월" },
-						{ y: 80, label: "7월" },
-						{ y: 100, label: "8월" },
-						{ y: 70, label: "9월" },
-						{ y: 50, label: "10월" },
-						{ y: 60, label: "11월" },
-						{ y: 50, label: "12월" }
-					]
+					dataPoints: TripData
 				}]
 			};
 			
@@ -308,60 +274,39 @@
 			
 			
 		});
-		
-		
-/* 
-		//Better to construct options first and then pass it as a parameter
-		var options = {
-			title: {
-				text: "최근 방문자 수"              
-			},
-			data: [              
-			{
-				// Change type to "doughnut", "line", "splineArea", etc.
-				type: "column",
-				dataPoints: [
-					{ label: "apple",  y: 10  },
-					{ label: "orange", y: 15  },
-					{ label: "banana", y: 25  },
-					{ label: "mango",  y: 30  },
-					{ label: "grape",  y: 28  }
-				]
-			}
-			]
-		};
-		$("#chartContainer").CanvasJSChart(options);
-		$("#chartContainer1").CanvasJSChart(options);
- */       
-		//사이트 방문자 그래프
-		  var recentVisit_Graph = {
-		      exportEnabled: true,
-		      animationEnabled: true,
-		      title: {
-		          text: "최근 접속자 수"
-		      },
-		      data: [
-		      {
-		          type: "splineArea",
-		          dataPoints: [
-		              { y: 100 , label:"15일"},
-		              { y: 60 , label:"16일"},
-		              { y: 140 , label:"17일"},
-		              { y: 500 , label:"18일"},
-		              { y: 190 , label:"19일"},
-		              { y: 140 , label:"20일"},
-		              { y: 206 , label:"21일"},
-		              { y: 300 , label:"22일"},
-		              { y: 220 , label:"23일"},
-		              { y: 220 , label:"24일"},
-		          ]
-		      }
-		      ]
-		  };
-		  $("#recentVisit_Graph").CanvasJSChart(recentVisit_Graph);
 
-        
 			});
+	
+	//최근 7일 데이터 받아오기
+	 $(function(){
+			var recentVisitCnt = [];
+			
+			$.ajax({
+				url : "<%=request.getContextPath()%>/visteCnt.mg",
+				async : false,
+				dataType : "json",
+				success : function(data){
+					recentVisitCnt = data;
+					console.log(recentVisitCnt);
+				}
+			});
+			
+			//사이트 방문자 그래프
+			  var recentVisit_Graph = {
+			      exportEnabled: true,
+			      animationEnabled: true,
+			      title: {
+			          text: "최근 접속자 수"
+			      },
+			      data: [
+			      {
+			          type: "splineArea",
+			          dataPoints: recentVisitCnt
+			      }
+			      ]
+			  };
+			  $("#recentVisit_Graph").CanvasJSChart(recentVisit_Graph);
+	});
 	
 	
 	</script>

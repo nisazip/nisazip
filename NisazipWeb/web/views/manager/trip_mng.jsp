@@ -194,7 +194,9 @@
                         </div>
                         <form class="form-horizontal" role="form">
                             <div class="form-group form-group-sm form-group-xs text-center">
-                                <img data-src="holder.js/200x200" alt="트립 사진" class="img">
+                                <img data-src="holder.js/185x200" id="tripPic1" alt="트립 사진" class="img">
+                                <img data-src="holder.js/185x200" id="tripPic2" alt="트립 사진" class="img">
+                                <img data-src="holder.js/185x200" id="tripPic3" alt="트립 사진" class="img">
                             </div>
                             <div class="form-group form-group-sm form-group-xs">
                                 <label for="tripNo" class="col-sm-3 col-xs-3">트립번호 : </label>
@@ -443,6 +445,12 @@
 			        $('#regiDate').attr("value",rDate[0]+'-'+rDate[1]+'-'+rDate[2]);
 			        
 			        $('#count').val(data.RCNT);
+			        
+			        <%-- 
+		   		 	$("#tripPic1").attr("src", "<%=request.getContextPath()%>\\resources\\room_images\\"+data.PIC1);
+		   		 	$("#tripPic2").attr("src", "<%=request.getContextPath()%>\\resources\\room_images\\"+data.PIC2);
+		   			$("#tripPic3").attr("src", "<%=request.getContextPath()%>\\resources\\room_images\\"+data.PIC3);
+		   			 --%>
 			      
          		}, error : function(request, status, error){
     				// 연결에 실패했을 때

@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.Properties;
 
 import kh.manager.model.vo.MemberList;
+import kh.manager.model.vo.RecentCnt;
 import kh.manager.model.vo.ReportList;
 import kh.report.model.vo.Report;
 import kh.room.model.vo.Room;
@@ -184,7 +185,7 @@ public class mDao {
 		
 	}
 
-	public HashMap<String, Object> selectMember(Connection con, int userNo) {
+	public HashMap<String, Object> selectMember(Connection con, String userId) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		HashMap<String, Object> m = null;
@@ -193,7 +194,9 @@ public class mDao {
 		
 		try {
 			pstmt = con.prepareStatement(query);
-			pstmt.setInt(1, userNo);
+			pstmt.setString(1, userId);
+			pstmt.setString(2, userId);
+			pstmt.setString(3, userId);
 			
 			rset = pstmt.executeQuery();
 			
@@ -212,7 +215,8 @@ public class mDao {
 				m.put("JOIN_DATE", rset.getDate("JOIN_DATE"));
 				m.put("RCNT",rset.getInt("RCNT"));
 				m.put("OAUTH",rset.getString("OAUTH").charAt(0));
-
+				m.put("CHANGE_NAME", rset.getString("CHANGE_NAME"));
+				m.put("CERTIFI_NAME",rset.getString("CERTIFI_NAME"));
 				System.out.println("selectOneMemeber : "+m);
 			} 
 		} catch (SQLException e) {
@@ -1570,6 +1574,138 @@ public class mDao {
 		int result = 0;
 		
 		String query = prop.getProperty("deleteReMember");
+
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, userId);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+				
+		return result;
+	}
+
+	public ArrayList<HashMap<String, Object>> recentCnt(Connection con) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		
+		HashMap<String, Object> result = null;
+		ArrayList<HashMap<String, Object>> list =new ArrayList<HashMap<String, Object>>() ;
+		String query = prop.getProperty("recentCnt");
+		
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			while(rset.next()) {
+				result = new HashMap<String, Object>();
+				result.put("y", rset.getInt("CCNT"));
+				result.put("label", rset.getString("V_DATE")+"일");
+				list.add(result);
+				
+				System.out.println("DAO : "+result);
+			} 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(stmt);
+		}
+				
+		return list;
+	}
+
+	public ArrayList<HashMap<String, Object>> roomReserv(Connection con) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		
+		HashMap<String, Object> result = null;
+		ArrayList<HashMap<String, Object>> list =new ArrayList<HashMap<String, Object>>() ;
+		String query = prop.getProperty("roomReserv");
+		
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			while(rset.next()) {
+				result = new HashMap<String, Object>();
+				result.put("y", rset.getInt("RCNT"));
+				result.put("label", rset.getString("R_DATE")+"월");
+				list.add(result);
+				
+				System.out.println("DAO : "+result);
+			} 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(stmt);
+		}
+				
+		return list;
+	}
+
+	public ArrayList<HashMap<String, Object>> tripReserv(Connection con) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		
+		HashMap<String, Object> result = null;
+		ArrayList<HashMap<String, Object>> list =new ArrayList<HashMap<String, Object>>() ;
+		String query = prop.getProperty("tripReserv");
+		
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			while(rset.next()) {
+				result = new HashMap<String, Object>();
+				result.put("y", rset.getInt("TCNT"));
+				result.put("label", rset.getString("T_DATE")+"월");
+				list.add(result);
+				
+				System.out.println("DAO : "+result);
+			} 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(stmt);
+		}
+				
+		return list;
+	}
+
+	public int confirm(Connection con, String userId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("confirm");
+
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, userId);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+				
+		return result;
+	}
+
+	public int deny(Connection con, String userId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("deny");
 
 		try {
 			pstmt = con.prepareStatement(query);

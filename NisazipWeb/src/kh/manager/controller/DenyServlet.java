@@ -7,35 +7,35 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 import kh.manager.model.service.ManagerService;
 
-@WebServlet("/deleteReMember.mg")
-public class DeleteReMember extends HttpServlet {
+
+@WebServlet("/deny.mg")
+public class DenyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public DeleteReMember() { }
+    public DenyServlet() { }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String UserId = request.getParameter("reReceiver");
-		int result =0;
-		String page="";
-		
-		//해당 회원의 신고 삭제 부터
-		result += new ManagerService().deleteReReport(UserId);
-		
-		//해당 회원의  삭제 
-		result += new ManagerService().deleteReMember(UserId);
 
-		if(result>0){
-			page="/reportList.mg";
-			request.getRequestDispatcher(page).forward(request, response);
+		String userId = request.getParameter("userId");
+		
+		int result = new ManagerService().deny(userId);
+		
+		String msg = "";
+		
+		if(result >0){
+			System.out.println("맴버 인증취소 성공");
+			msg="맴버 인증취소가 완료되었습니다.";
 		}else{
-			System.out.println("회원 탈퇴 실패");
-			page="views/common/errorPage";
-			request.getRequestDispatcher(page).forward(request, response);
+			System.out.println("맴버 인증취소 실패");
+			msg="맴버 인증취소가 실패하였습니다.";
 		}
-				
-				
+		
+		response.setContentType("application/json; charset=UTF-8");
+	      new Gson().toJson(msg, response.getWriter());
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

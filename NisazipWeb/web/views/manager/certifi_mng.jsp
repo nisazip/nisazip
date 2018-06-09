@@ -36,7 +36,7 @@ if(request.getAttribute("mList")!=null){
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-   <title>관리자 페이지_회원관리</title>
+   <title>관리자 페이지_인증관리</title>
     
 </head>
 <body>
@@ -45,7 +45,7 @@ if(request.getAttribute("mList")!=null){
     <div class="container">
         <div class="row">
             <%@ include file="common/admin_menu.jsp" %>
-            <h1>회원 관리</h1>
+            <h1>인증 관리</h1>
             <hr />
             <!-- 본문  -->
             <div class="col-sm-10">
@@ -81,7 +81,7 @@ if(request.getAttribute("mList")!=null){
 				<!--테이블 영역 -->
 				<div class="table-responsive">
                 <% if( list!=null) {%>
-                <table class="table table-striped table-bordered table-hover " id="userTable" data-toggle="modal" data-target="#myModal">
+                <table class="table table-striped table-bordered table-hover " id="oAuthTable" data-toggle="modal" data-target="#myModal">
                     <thead>
 	                    <tr onclick="event.cancelBubble=true">
 	                        <th>회원 번호</th>
@@ -90,11 +90,10 @@ if(request.getAttribute("mList")!=null){
 	                        <th>연락처</th>
 	                        <th>성별</th>
 	                        <th>생년월일</th>
-	                        <th>숙소 호스팅</th>
-	                        <th>트립 호스팅</th>
-	                        <th>신분증 인증</th>
 	                        <th>가입일</th>
 	                        <th>신고</th>
+	                        <th>인증 상태</th>
+	                        <th>신분증 인증</th>
 	                    </tr>
                     </thead>
                     <tbody>
@@ -106,19 +105,25 @@ if(request.getAttribute("mList")!=null){
 							<td><%=m.getPhone() %></td>
 							<td><%=m.getGender() %></td>
 							<td><%=m.getBirthdate() %></td>
-							<td><%=m.getR_hosting() %></td>
-							<td><%=m.getT_hosting() %></td>
-							<td><%=m.getOauth() %></td>
 							<td><%=m.getJoin_date() %></td>
 							<td><%=m.getrCnt() %></td>
+							<td><%=m.getOauth() %></td>
+							<td><% if(m.getOauth()=='Y') {%>
+								<button class="col-xs-6 col-sm-5 btn btn-primary" id="cretifi" disabled>인증</button>
+								<button class="col-xs-5 col-sm-6 btn btn-danger" id="uncretifi" >인증 취소</button>
+								<% }else{ %>
+								<button class="col-xs-6 col-sm-5 btn btn-primary" id="cretifi" >인증</button>
+								<button class="col-xs-5 col-sm-6 btn btn-danger" id="uncretifi" disabled>인증 취소</button>
+								<% } %>
+							</td>							
 						</tr>
 						<% } %>
 					</tbody>
                 </table>
                 
                  <%}else{ %>
-                      <div><p class="text-center">트립이 없습니다. <br/>
-                      		새로운 트립을 등록하거나 검색조건을 확인해 주세요</p>
+                      <div><p class="text-center">인증 회원이 없습니다. <br/>
+                      		검색조건을 확인해 주세요</p>
                       </div>
                    <% } %>
                 </div>
@@ -129,7 +134,7 @@ if(request.getAttribute("mList")!=null){
 					
 					<!-- 가장 첫 페이지로 이동 -->
 					<li class="page-item">
-						<a class="page-item" onclick="location.href='<%=request.getContextPath()%>/searchMember.mg?con='+$('#searchCondition').val()+'&keyword='+$('#keyword').val()+'&currentPage=1'">처음</a>
+						<a class="page-item" onclick="location.href='<%=request.getContextPath()%>/certification.mg?con='+$('#searchCondition').val()+'&keyword='+$('#keyword').val()+'&currentPage=1'">처음</a>
 					</li>
 					<!-- 한페이지 씩 앞으로 이동 -->
 					<% if(currentPage <= 1){ %>
@@ -138,7 +143,7 @@ if(request.getAttribute("mList")!=null){
 					</li>					
 					<% }else{ %>
 					<li class="page-item ">
-						<a class="page-item" onclick="location.href='<%=request.getContextPath()%>/searchMember.mg?con='+$('#searchCondition').val()+'&keyword='+$('#keyword').val()+'&currentPage=<%=currentPage -1%>'">&lt;</a>
+						<a class="page-item" onclick="location.href='<%=request.getContextPath()%>/certification.mg?con='+$('#searchCondition').val()+'&keyword='+$('#keyword').val()+'&currentPage=<%=currentPage -1%>'">&lt;</a>
 					</li>
 					<% }%>
 					
@@ -150,7 +155,7 @@ if(request.getAttribute("mList")!=null){
 						</li>	
 						<% } else{ %>
 						<li class="page-item">
-							<a class="page-item" onclick="location.href='<%=request.getContextPath()%>/searchMember.mg?con='+$('#searchCondition').val()+'&keyword='+$('#keyword').val()+'&currentPage=<%=i %>'"><%=i %></a>
+							<a class="page-item" onclick="location.href='<%=request.getContextPath()%>/certification.mg?con='+$('#searchCondition').val()+'&keyword='+$('#keyword').val()+'&currentPage=<%=i %>'"><%=i %></a>
 						</li>	
 						<% } %>
 					<% } %>
@@ -162,13 +167,13 @@ if(request.getAttribute("mList")!=null){
 					</li>	
 					<% }else{ %>
 					<li class="page-item">
-						<a class="page-item" onclick="location.href='<%=request.getContextPath()%>/searchMember.mg?con='+$('#searchCondition').val()+'&keyword='+$('#keyword').val()+'&currentPage=<%=currentPage +1%>'">&gt;</a>
+						<a class="page-item" onclick="location.href='<%=request.getContextPath()%>/certification.mg?con='+$('#searchCondition').val()+'&keyword='+$('#keyword').val()+'&currentPage=<%=currentPage +1%>'">&gt;</a>
 					</li>
 					<% }%>
 					
 					<!-- 가장 마지막 페이지로 이동 -->
 					<li class="page-item">
-						<a class="page-item" onclick="location.href='<%=request.getContextPath()%>/searchMember.mg?con='+$('#searchCondition').val()+'&keyword='+$('#keyword').val()+'&currentPage=<%=maxPage%>'">마지막</a>
+						<a class="page-item" onclick="location.href='<%=request.getContextPath()%>/certification.mg?con='+$('#searchCondition').val()+'&keyword='+$('#keyword').val()+'&currentPage=<%=maxPage%>'">마지막</a>
 					</li>	
 	
 					</ul>
@@ -178,7 +183,7 @@ if(request.getAttribute("mList")!=null){
 			
             </div>
         </div>
-    <!-- 컨테이너 끝 --> 
+ <!-- 컨테이너 끝 --> 
        
     <!-- Modal -->
     <div id="myModal" class="modal fade" role="dialog">
@@ -188,17 +193,16 @@ if(request.getAttribute("mList")!=null){
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" id="close2">&times;</button>
-                    <h4 class="modal-title">회원 관리</h4>
+                    <h4 class="modal-title">인증 관리</h4>
                 </div>
                 <!-- 모달 body -->
                 <div class="modal-body">
                     <div class="container-fluid">
                         <div class="form-group">
-                            <h3>회원 상세 정보</h3>
+                            <h3>인증 상세 정보</h3>
                         </div>
                         <form class="form-horizontal" role="form" >
                             <div class="form-group form-group-sm form-group-xs text-center">
-                                <img data-src="holder.js/140x140" id="userPic" alt="프로필 사진" class="img-circle">
                                 <img data-src="holder.js/300x200" id="certifiPic" alt="인증 사진" class="img">
                             </div>
                             <div class="form-group form-group-sm form-group-xs">
@@ -245,7 +249,6 @@ if(request.getAttribute("mList")!=null){
                                     </div>
                                 </div>
                             </div>
-
                             <div class="form-group form-group-sm form-group-xs">
                                 <!-- <label for="gender">성별 : </label> -->
                                 <label for="gender" class="col-sm-3 col-xs-3">성별 : </label>
@@ -257,23 +260,10 @@ if(request.getAttribute("mList")!=null){
                                         <input type="radio" name="gender" value="F" disabled>여성</label>
                                 </div>
                             </div>
-
                             <div class="form-group form-group-sm form-group-xs">
                                 <label for="birth" class="col-sm-3 col-xs-3">생년월일:</label>
                                 <div class="col-sm-9 col-xs-9">
                                     <input type="date" id="birth" name="birth" class="form-control udInput" disabled>
-                                </div>
-                            </div>
-                            <div class="form-group form-group-sm form-group-xs">
-                                <label for="roomhosting" class="col-sm-3 col-xs-3">숙소호스팅:</label>
-                                <div class="col-sm-9 col-xs-9">
-                                    <input type="number" id="roomHosting" name="roomshosting" class="form-control udInput" disabled>
-                                </div>
-                            </div>
-                            <div class="form-group form-group-sm form-group-xs">
-                                <label for="tripHosting" class="col-sm-3 col-xs-3">트립호스팅:</label>
-                                <div class="col-sm-9 col-xs-9">
-                                    <input type="number" id="tripHosting" name="tripHosting" class="form-control udInput" disabled>
                                 </div>
                             </div>
                             <div class="form-group form-group-sm form-group-xs">
@@ -302,13 +292,11 @@ if(request.getAttribute("mList")!=null){
                 <!-- 모달 footer -->
                 <div class="modal-footer">
                     <div class="pull-left">
-                        <button type="button" class="btn btn-danger" id="deleteMember">삭제하기</button>
-                        <button class="btn btn-primary" id="cretifi">인증</button>
-						<button class="btn btn-danger" id="uncretifi">인증 취소</button>
+                        <button type="button" class="btn btn-danger" id="deleteMember">회원 삭제하기</button>
                     </div>
                     <div>
-                        <button type="button" class="btn btn-primary" id="modify">수정하기</button>
-                        <button type="button" class="btn btn-primary" id="saveData" >저장하기</button>
+                        <button class="btn btn-primary" id="cretifi">인증</button>
+						<button class="btn btn-danger" id="uncretifi">인증 취소</button>
                         <button type="button" class="btn btn-default" id="close" data-dismiss="modal">Close</button>
                     </div>
                 </div>
@@ -328,6 +316,7 @@ if(request.getAttribute("mList")!=null){
     	<%if(condi != null){%>
 		$('#searchCondition').val('<%=condi%>');
 		<%}%>
+
     	
     	
     });
@@ -345,6 +334,20 @@ if(request.getAttribute("mList")!=null){
 			search();
 		}
 	}
+  	
+    //모달 - 취소 버튼
+    $('#close').click(function(){
+    	$('#myModal input').attr("disabled",true);
+    	$('#saveData').hide();
+    	$('#modify').show()
+    });
+    
+  	//모달 - 취소 버튼
+    $('#close2').click(function(){
+    	$('#myModal input').attr("disabled",true);
+    	$('#saveData').hide();
+    	$('#modify').show()
+    });
     
 
     //테이블 hover 효과 지정
@@ -372,7 +375,6 @@ if(request.getAttribute("mList")!=null){
          		url : "getMember.mg",
          		type: "GET",
          		data : {
-         			userNo : td.eq(0).text(),
          			userId : td.eq(1).text()
          		},success : function(data){
          			//성공했을 때 
@@ -416,38 +418,15 @@ if(request.getAttribute("mList")!=null){
 			        	$('#birth').attr("value",null);
 			        }
 			       
-			        
-			        $('#roomHosting').val(data.R_HOSTING);
-			        $('#tripHosting').val(data.T_HOSTING);
 			        $('#joinDate').val(data.JOIN_DATE);
 			        $('#report').val(data.RCNT);
+			        
 			        $('#oAuth').val(data.OAUTH);
 			        
-			        console.log(data.OAUTH);
-			        
-			        if(data.OAUTH =='Y' && data.CERTIFI_NAME!=null){
-			        	$('#cretifi').attr("disabled","disabled");
-			        	$('#uncretifi').removeAttr("disabled");
-			        }else if(data.OAUTH=='N' && data.CERTIFI_NAME!=null){
-			        	$('#cretifi').removeAttr("disabled");
-			        	$('#uncretifi').attr("disabled","disabled");
-			        }else{
-			        	$('#cretifi').attr("disabled","disabled");
-			        	$('#uncretifi').attr("disabled","disabled");  	
-			        }
-			        
-			         //프로필 사진 띄우기
 			        if(data.CHANGE_NAME!=null){
 			        	$("#userPic").attr("src", "<%=request.getContextPath()%>\\resources\\thumbnail_uploadFiles\\"+data.CHANGE_NAME);
 			        }else{
 			        	$("#userPic").attr("src", "<%=request.getContextPath()%>\\resources\\thumbnail_uploadFiles\\sampleIMG.png");
-			        }
-			         
-			         //인증 사진 띄우기
-		         	if(data.CERTIFI_NAME!=null){
-			        	$("#certifiPic").attr("src", "<%=request.getContextPath()%>\\resources\\thumbnail_uploadFiles\\"+data.CERTIFI_NAME);
-			        }else{
-			        	$("#certifiPic").attr("src", "<%=request.getContextPath()%>\\resources\\thumbnail_uploadFiles\\sampleIMG2.jpg");
 			        }
 			      
          		}, error : function(request, status, error){
@@ -478,75 +457,19 @@ if(request.getAttribute("mList")!=null){
         	    return;
         	}
         });
-		//모달 - 인증 버튼
-        $('#cretifi').click(function(){
-        	if (confirm("인증을 승인 하시겠습니까??") == true){//확인
-        		$.ajax({ <%-- location.href="<%=request.getContextPath()%>/confirm.mg?userId="+$('#userId').val(); --%>
-            		url : "<%=request.getContextPath()%>/confirm.mg",
-            		type:"POST",
-            		data:{
-            			userId : $('#userId').val()
-            		}, success : function(data){
-            			alert(data);
-            			$('#cretifi').attr("disabled","disabled");
-        	        	$('#uncretifi').removeAttr("disabled");
-            		}, error : function(request, status, error){
-        				// 연결에 실패했을 때
-        				console.log("에러 코드 : "+request.status
-        						+ "에러 내용 : "+ request.responseText 
-        						+ "에러 메시지 : " + error);
-        				
-        				alert("데이터 전달 실패");
-        				
-        			}
-            		
-            	});
-        	}else{//취소
-        	    return;
-        	}
-        });
-		
-      	//모달 - 인증 취소 버튼
-        $('#uncretifi').click(function(){
-        	if (confirm("인증을 취소 하시겠습니까??") == true){//확인
-        		$.ajax({ <%-- location.href="<%=request.getContextPath()%>/confirm.mg?userId="+$('#userId').val(); --%>
-            		url : "<%=request.getContextPath()%>/deny.mg",
-            		type:"POST",
-            		data:{
-            			userId : $('#userId').val()
-            		}, success : function(data){
-            			alert(data);
-            			$('#uncretifi').attr("disabled","disabled");
-        	        	$('#cretifi').removeAttr("disabled");
-            		}, error : function(request, status, error){
-        				// 연결에 실패했을 때
-        				console.log("에러 코드 : "+request.status
-        						+ "에러 내용 : "+ request.responseText 
-        						+ "에러 메시지 : " + error);
-        				
-        				alert("데이터 전달 실패");
-        			}
-            		
-            	});
-        	}else{//취소
-        	    return;
-        	}
-        });
-        
+
         //모달 - 취소 버튼
         $('#close').click(function(){
         	$('#myModal input').attr("disabled",true);
         	$('#saveData').hide();
-        	$('#modify').show();
-        	
+        	$('#modify').show()
         });
         
       	//모달 - 취소 버튼
         $('#close2').click(function(){
         	$('#myModal input').attr("disabled",true);
         	$('#saveData').hide();
-        	$('#modify').show();
-        	 	
+        	$('#modify').show()
         });
         
         //모달 - 수정하기 버튼
@@ -595,7 +518,7 @@ if(request.getAttribute("mList")!=null){
         }
         	
         });
-        
+       
         //관리자 홈 화면 클릭시 이동
         $('#home_btn').click(function(){
         	location.href="<%=request.getContextPath()%>/views/manager/admin_home.jsp";

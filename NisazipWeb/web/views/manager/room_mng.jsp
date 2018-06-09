@@ -195,7 +195,9 @@
                         </div>
                         <form class="form-horizontal" role="form">
                             <div class="form-group form-group-sm form-group-xs text-center">
-                                <img data-src="holder.js/200x200" alt="숙소 사진" class="img">
+                                <img data-src="holder.js/185x200" id="roomPic1" alt="숙소 사진" class="img">
+                                <img data-src="holder.js/185x200" id="roomPic2" alt="숙소 사진" class="img">
+                                <img data-src="holder.js/185x200" id="roomPic3" alt="숙소 사진" class="img">
                             </div>
                             <div class="form-group form-group-sm form-group-xs">
                                 <label for="roomNo" class="col-sm-3 col-xs-3">숙소번호 : </label>
@@ -481,6 +483,11 @@
 			        $('#regiDate').attr("value",rDate[0]+'-'+rDate[1]+'-'+rDate[2]);
 		   			
 		   			$('#count').val(data.RCNT);
+		   			<%-- 
+		   		 	$("#roomPic1").attr("src", "<%=request.getContextPath()%>\\resources\\room_images\\"+data.PIC1);
+		   		 	$("#roomPic2").attr("src", "<%=request.getContextPath()%>\\resources\\room_images\\"+data.PIC2);
+		   			$("#roomPic3").attr("src", "<%=request.getContextPath()%>\\resources\\room_images\\"+data.PIC3);
+		   			 --%>
 		   			
             		}, error : function(request, status, error){
        				// 연결에 실패했을 때

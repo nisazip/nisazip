@@ -49,10 +49,10 @@ public class ManagerService {
 		return list;
 	}
 
-	public HashMap<String, Object> selectOneMember(int userNo) {
+	public HashMap<String, Object> selectOneMember(String userId) {
 		Connection con = getConnection();
 		
-		HashMap<String, Object> m = new mDao().selectMember(con, userNo);
+		HashMap<String, Object> m = new mDao().selectMember(con, userId);
 		
 		close(con);
 		
@@ -441,6 +441,71 @@ public class ManagerService {
 		Connection con = getConnection();
 		
 		int result = new mDao().deleteReMember(con, userId);
+		
+		if(result >0) commit(con);
+		else rollback(con);
+		
+		close(con);
+
+		return result;
+	}
+
+	public ArrayList<HashMap<String, Object>> recentCnt() {
+		Connection con = getConnection();
+		
+		ArrayList<HashMap<String, Object>> result = new mDao().recentCnt(con);
+		
+		if(result !=null) commit(con);
+		else rollback(con);
+		
+		close(con);
+
+		return result;
+	}
+
+	public ArrayList<HashMap<String, Object>> roomReserv() {
+		Connection con = getConnection();
+		
+		ArrayList<HashMap<String, Object>> result = new mDao().roomReserv(con);
+		
+		if(result !=null) commit(con);
+		else rollback(con);
+		
+		close(con);
+		
+		return result;
+	}
+
+	public ArrayList<HashMap<String, Object>> tripReserv() {
+		Connection con = getConnection();
+		
+		ArrayList<HashMap<String, Object>> result = new mDao().tripReserv(con);
+		
+		if(result !=null) commit(con);
+		else rollback(con);
+		
+		close(con);
+		
+		return result;
+	}
+
+	public int confirm(String userId) {
+		Connection con = getConnection();
+		
+		int result = new mDao().confirm(con, userId);
+		
+		if(result >0) commit(con);
+		else rollback(con);
+		
+		close(con);
+
+		return result;
+	}
+
+	public int deny(String userId) {
+		Connection con = getConnection();
+		
+		int result = new mDao().deny(con, userId);
 		
 		if(result >0) commit(con);
 		else rollback(con);
