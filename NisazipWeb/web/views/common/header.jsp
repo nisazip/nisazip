@@ -67,6 +67,170 @@
 	text-decoration: none;
 	color:black;
 }
+body, h1, h2, h3, h4, h5 {
+	font-family: "Poppins", sans-serif
+}
+
+body {
+	font-size: 16px;
+}
+
+.w3-half img {
+	margin-bottom: -6px;
+	margin-top: 16px;
+	opacity: 0.8;
+	cursor: pointer
+}
+
+.w3-half img:hover {
+	opacity: 1
+}
+
+#memberJoin {
+	width: 100%;
+	height: 100%;
+	margin-right: 15px;
+	text-align: right;
+}
+
+#menuBox {
+	width: 45%;
+	height: 100%;
+}
+
+ul {
+	list-style: none;
+	margin: 1px;
+	padding: 1px;
+}
+
+.pic_upLoad {
+	height: 100% !important;
+	font-weight: 700 !important;
+	cursor: pointer !important;
+	width: auto !important;
+	font-size: 19px !important;
+	line-height: 22px !important;
+	color: white !important;
+	background: #008489 !important;
+	padding-right: 24px !important;
+	padding-left: 24px !important;
+	padding-top: 11px !important;
+	padding-bottom: 11px !important;
+	display: inline-block !important;
+	border: 2px solid transparent !important;
+	border-radius: 4px !important;
+}
+
+#btn_style {
+	height: 50px !important;
+	font-weight: 700 !important;
+	cursor: pointer !important;
+	width: auto !important;
+	font-size: 19px !important;
+	line-height: 22px !important;
+	color: white !important;
+	background: green !important;
+	padding-right: 24px !important;
+	padding-left: 24px !important;
+	padding-top: 11px !important;
+	padding-bottom: 11px !important;
+	display: inline-block !important;
+	border: 2px solid transparent !important;
+	border-radius: 4px !important;
+}
+#btn_style1 {
+	height: 50px !important;
+	font-weight: 700 !important;
+	cursor: pointer !important;
+	width: auto !important;
+	font-size: 19px !important;
+	line-height: 22px !important;
+	color: white !important;
+	background: green !important;
+	padding-right: 24px !important;
+	padding-left: 24px !important;
+	padding-top: 11px !important;
+	padding-bottom: 11px !important;
+	display: inline-block !important;
+	border: 2px solid transparent !important;
+	border-radius: 4px !important;
+}
+
+._1f9rmq80 {
+	border-bottom: 1px solid #DBDBDB !important;
+	padding-top: 24px !important;
+	padding-bottom: 24px !important;
+}
+
+._1c2mf8i {
+	font-weight: normal !important;
+	margin: 0px !important;
+	word-wrap: break-word !important;
+	font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto,
+		Helvetica Neue, sans-serif !important;
+	font-size: 16px !important;
+	line-height: 22px !important;
+	padding-top: 0px !important;
+	padding-bottom: 0px !important;
+	color: #484848 !important;
+}
+
+._foo5i5 {
+	white-space: pre-line !important;
+}
+
+._1l18zhtm {
+	margin: 0px !important;
+	word-wrap: break-word !important;
+	font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto,
+		Helvetica Neue, sans-serif !important;
+	font-size: 16px !important;
+	line-height: 22px !important;
+	padding-top: 0px !important;
+	padding-bottom: 0px !important;
+	color: #484848 !important;
+	font-weight: 300 !important;
+	display: inline !important;
+}
+
+._1txkby91 {
+	font-weight: normal !important;
+	margin: 0px !important;
+	word-wrap: break-word !important;
+	font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto,
+		Helvetica Neue, sans-serif !important;
+	font-size: 16px !important;
+	line-height: 22px !important;
+	letter-spacing: undefined !important;
+	padding-top: 0px !important;
+	padding-bottom: 0px !important;
+	color: #ffffff !important;
+}
+
+._1fcg9vv {
+	padding-top: 48px !important;
+	padding-bottom: 48px !important;
+}
+
+#jb-content {
+	width: 450px;
+	padding: 20px;
+	margin-bottom: 20px;
+	float: left;
+}
+
+#jb-sidebar {
+	width: 590px;
+	padding: 20px;
+	margin-bottom: 20px;
+	float: right;
+}
+
+#jb-footer {
+	clear: both;
+	padding: 20px;
+}
 </style>
 </head>
 
@@ -119,7 +283,7 @@
                            data-toggle="dropdown" href="#">호스트 <span class="caret"></span></a>
                            <ul class="dropdown-menu">
                               <li><a href="<%=request.getContextPath()%>/views/room/Room.jsp">숙소 등록/관리</a></li>
-                              <li><a href="#">트립 등록/관리</a></li>
+                              <li><a href="<%=request.getContextPath() %>/views/regist/1trip_name.jsp">트립 등록/관리</a></li>
                            </ul></li>
                         <li class="navbtn"><a href="<%= request.getContextPath()%>/messageList.m">메시지</a></li>
                         <li class="navbtn"><a href="<%=request.getContextPath()%>/boardList.bo">Q&A</a></li>

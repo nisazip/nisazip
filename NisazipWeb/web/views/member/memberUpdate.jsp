@@ -110,7 +110,7 @@
         
 		        <li class="sele" style="background:#5cb85c"><a href="/semi/views/member/memberUpdate.jsp">사용자 정보 수정/추가</a></li>
 		        <li><a href="/semi/views/member/certification.jsp">인증</a></li>
-		        <li><a href="/semi/storage.do">보관 목록</a></li>
+		        <li><a href="/semi/storage.do?id=<%= m.getUser_id()%>">보관 목록</a></li>
 		        <li><a href="/semi/views/member/account.jsp">계정 관리</a></li>
 			</ul><br>
       		<br><br><br><br><br><br><br>
