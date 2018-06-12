@@ -446,11 +446,16 @@
 			        
 			        $('#count').val(data.RCNT);
 			        
-			        <%-- 
-		   		 	$("#tripPic1").attr("src", "<%=request.getContextPath()%>\\resources\\room_images\\"+data.PIC1);
-		   		 	$("#tripPic2").attr("src", "<%=request.getContextPath()%>\\resources\\room_images\\"+data.PIC2);
-		   			$("#tripPic3").attr("src", "<%=request.getContextPath()%>\\resources\\room_images\\"+data.PIC3);
-		   			 --%>
+			        if(data.PIC1!=null){
+			   		 	$("#tripPic1").attr("src", "<%=request.getContextPath()%>\\resources\\trip_images\\"+data.PIC1);
+			   		 	$("#tripPic2").attr("src", "<%=request.getContextPath()%>\\resources\\trip_images\\"+data.PIC2);
+			   			$("#tripPic3").attr("src", "<%=request.getContextPath()%>\\resources\\trip_images\\"+data.PIC3);
+		   			}else{
+		   				$("#tripPic1").attr("src", "<%=request.getContextPath()%>\\resources\\trip_images\\sampleImages.png");
+			   		 	$("#tripPic2").attr("src", "<%=request.getContextPath()%>\\resources\\trip_images\\sampleImages.png");
+			   			$("#tripPic3").attr("src", "<%=request.getContextPath()%>\\resources\\trip_images\\sampleImages.png");
+		   			}
+			        
 			      
          		}, error : function(request, status, error){
     				// 연결에 실패했을 때

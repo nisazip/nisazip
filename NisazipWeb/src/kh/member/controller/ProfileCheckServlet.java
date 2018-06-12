@@ -25,7 +25,7 @@ import kh.member.model.vo.UserPic;
 /**
  * Servlet implementation class SInsertServlet
  */
-@WebServlet("/presentUser.pic")
+@WebServlet("/presentUser.pic") //ajax로 기존 프로필 사진 정보 불러오는 것!
 public class ProfileCheckServlet extends HttpServlet {
    private static final long serialVersionUID = 1L;
        
@@ -57,11 +57,6 @@ public class ProfileCheckServlet extends HttpServlet {
         }
         
         
-      
-    
-     
-            
-      
    }
    /**
     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Properties;
 
+import kh.home.model.vo.RecRoom;
 import kh.home.model.vo.Room;
 
 public class RoomDao {
@@ -32,7 +33,7 @@ public class RoomDao {
 	
 	}
 
-	public ArrayList<HashMap<String, Object>> selectrList(Connection con) {
+	public ArrayList<HashMap<String, Object>> select4roomList(Connection con) {
 		PreparedStatement pstmt = null;
 		ArrayList<HashMap<String,Object>> rlist = null;
 		HashMap<String, Object> hmap = null;
@@ -56,9 +57,9 @@ public class RoomDao {
 				
 				hmap.put("r_id", rset.getString("r_id"));
 				hmap.put("r_name", rset.getString("r_name"));
-				hmap.put("price", rset.getString("price"));
+				hmap.put("price", rset.getInt("price"));
 				hmap.put("r_loc", rset.getString("r_loc"));
-				hmap.put("score", rset.getString("score"));
+				hmap.put("score", rset.getFloat("score"));
 				hmap.put("file_path", rset.getString("file_path"));
 				hmap.put("change_name", rset.getString("change_name"));
 				
@@ -66,7 +67,6 @@ public class RoomDao {
 				rlist.add(hmap);
 				
 			}
-			System.out.println("rlist");
 		}catch(SQLException e){
 			e.printStackTrace();
 		}finally{
@@ -76,6 +76,227 @@ public class RoomDao {
 		
 		return rlist;
 	}
+
+
+	public ArrayList<HashMap<String, Object>> selectAllroomList(Connection con) {
+		PreparedStatement pstmt = null;
+		ArrayList<HashMap<String,Object>> rlist = null;
+		HashMap<String, Object> hmap = null;
+		ResultSet rset = null;
+		
+		
+		String query = prop.getProperty("toprList");
+		
+		System.out.println("rlist");
+		try{
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setInt(1, 100);
+			
+			rset = pstmt.executeQuery();
+				
+			rlist = new ArrayList<HashMap<String,Object>>();
+			
+			while(rset.next()){
+				hmap = new HashMap<String, Object>();
+				
+				hmap.put("r_id", rset.getString("r_id"));
+				hmap.put("r_name", rset.getString("r_name"));
+				hmap.put("price", rset.getInt("price"));
+				hmap.put("r_loc", rset.getString("r_loc"));
+				hmap.put("score", rset.getFloat("score"));
+				hmap.put("file_path", rset.getString("file_path"));
+				hmap.put("change_name", rset.getString("change_name"));
+				
+				
+				rlist.add(hmap);
+				
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			close(rset);
+			close(pstmt);
+		}
+		
+		return rlist;
+	}
+	public ArrayList<RecRoom> recRoom(Connection con){
+		Statement stmt = null;
+		ResultSet rset=null;
+		ArrayList<RecRoom> reclist = null;
+		
+		String query = prop.getProperty("cntRoom");
+		
+		try {
+			stmt = con.createStatement();
+			
+			rset = stmt.executeQuery(query);
+		
+			reclist = new ArrayList<RecRoom>();
+			
+			while(rset.next()){
+				RecRoom rec = new RecRoom();
+				
+				rec.setCntRoom(rset.getInt(1));
+				rec.setArea(rset.getString(2));
+				
+				reclist.add(rec);
+			}
+		} catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			close(rset);
+			close(stmt);
+		}
+		return reclist;
+	}
+
+	public ArrayList<HashMap<String, Object>> searchKeyword(Connection con,String keyword) {
+		PreparedStatement pstmt = null;
+		ArrayList<HashMap<String,Object>> rlist = null;
+		HashMap<String, Object> hmap = null;
+		ResultSet rset = null;
+		
+		
+		String query = prop.getProperty("searchrKeyword");
+		
+		try{
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setString(1, keyword);
+			pstmt.setString(2, keyword);
+			pstmt.setString(3, keyword);
+			pstmt.setInt(4,100);
+			
+			rset = pstmt.executeQuery();
+				
+			rlist = new ArrayList<HashMap<String,Object>>();
+			
+			while(rset.next()){
+				hmap = new HashMap<String, Object>();
+				
+				hmap.put("r_id", rset.getString("r_id"));
+				hmap.put("r_name", rset.getString("r_name"));
+				hmap.put("price", rset.getInt("price"));
+				hmap.put("r_loc", rset.getString("r_loc"));
+				hmap.put("r_addr", rset.getString("r_addr"));
+				hmap.put("score", rset.getFloat("score"));
+				hmap.put("file_path", rset.getString("file_path"));
+				hmap.put("change_name", rset.getString("change_name"));
+				
+				
+				rlist.add(hmap);
+				
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			close(rset);
+			close(pstmt);
+		}
+		
+		return rlist;
+	}
+	
+	
+	
+	public ArrayList<HashMap<String, Object>> sortKeyword(Connection con,String keyword) {
+		PreparedStatement pstmt = null;
+		ArrayList<HashMap<String,Object>> rlist = null;
+		HashMap<String, Object> hmap = null;
+		ResultSet rset = null;
+		
+		
+		String query = prop.getProperty("sortrKeyword");
+		
+		try{
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setString(1, keyword);
+			pstmt.setString(2, keyword);
+			pstmt.setString(3, keyword);
+			
+			rset = pstmt.executeQuery();
+				
+			rlist = new ArrayList<HashMap<String,Object>>();
+			
+			while(rset.next()){
+				hmap = new HashMap<String, Object>();
+				
+				hmap.put("r_id", rset.getString("r_id"));
+				hmap.put("r_name", rset.getString("r_name"));
+				hmap.put("price", rset.getInt("price"));
+				hmap.put("r_loc", rset.getString("r_loc"));
+				hmap.put("r_addr", rset.getString("r_addr"));
+				hmap.put("score", rset.getFloat("score"));
+				hmap.put("file_path", rset.getString("file_path"));
+				hmap.put("change_name", rset.getString("change_name"));
+				
+				
+				rlist.add(hmap);
+				
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			close(rset);
+			close(pstmt);
+		}
+		
+		return rlist;
+	}
+	
+	public ArrayList<HashMap<String, Object>> homeRoomSearch(Connection con,String location,String checkin,
+			String checkout,int people) {
+		PreparedStatement pstmt = null;
+		ArrayList<HashMap<String,Object>> rlist = null;
+		HashMap<String, Object> hmap = null;
+		ResultSet rset = null;
+		
+		
+		String query = prop.getProperty("homeRsearch");
+		
+		try{
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setString(1, location);
+			pstmt.setString(2, checkin);
+			pstmt.setString(3, checkout);
+			pstmt.setInt(4, people);
+			
+			rset = pstmt.executeQuery();
+				
+			rlist = new ArrayList<HashMap<String,Object>>();
+			
+			while(rset.next()){
+				hmap = new HashMap<String, Object>();
+				
+				hmap.put("r_id", rset.getString("r_id"));
+				hmap.put("r_name", rset.getString("r_name"));
+				hmap.put("price", rset.getInt("price"));
+				hmap.put("r_start_date", rset.getDate("r_start_date"));
+				hmap.put("r_end_date", rset.getDate("r_end_date"));
+				hmap.put("r_max_num", rset.getInt("r_max_num"));
+				hmap.put("r_loc", rset.getString("r_loc"));
+				hmap.put("r_addr", rset.getString("r_addr"));
+				hmap.put("score", rset.getFloat("score"));
+				hmap.put("file_path", rset.getString("file_path"));
+				hmap.put("change_name", rset.getString("change_name"));
+				
+				rlist.add(hmap);
+				
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}finally{
+			close(rset);
+			close(pstmt);
+		}
+		
+		return rlist;
+	}
+	
 
 
 }

@@ -33,15 +33,13 @@ public class MemberUpdateServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-				
+		
 		String name = request.getParameter("updateName");
 		String phone = request.getParameter("phone1")+"-"+request.getParameter("phone2")+"-"+request.getParameter("phone3");
-		char gender ='?';
+		char gender;
 		if(request.getParameter("gender") == null){
-			gender = '무';
+			gender = 'x';
 		}else { gender = request.getParameter("gender").toUpperCase().charAt(0);}
-		
-		
 				
 		String bDate =request.getParameter("upBirthday_year")+"-"
 				+request.getParameter("upBirthday_month")+"-"
@@ -70,14 +68,17 @@ public class MemberUpdateServlet extends HttpServlet {
 
 			
 			session.setAttribute("member", m);
-
+			session.setAttribute("messageContent", "성공적으로 <br> 회원정보가 수정되었습니다.");
+			session.setAttribute("messageType", "확인 메세지");
 			response.sendRedirect("views/member/memberUpdate.jsp");
 			
 		} else {
+			
 			session.setAttribute("messageContent", "입력값이 없거나 유효하지 않습니다.");
-			session.setAttribute("messageType", "오류메시지");
+			session.setAttribute("messageType", "오류메세지");
 			response.sendRedirect("views/member/memberUpdate.jsp");
 		}
+		
 	}
 
 	/**

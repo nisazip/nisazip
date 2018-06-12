@@ -303,6 +303,9 @@ public class mDao {
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, tno);
 			pstmt.setString(2, tno);
+			pstmt.setString(3, tno);
+			pstmt.setString(4, tno);
+			pstmt.setString(5, tno);
 			
 			rset = pstmt.executeQuery();
 			
@@ -327,6 +330,9 @@ public class mDao {
 				t.put("SCORE",rset.getFloat("SCORE"));
 				t.put("T_DATE",rset.getString("T_DATE"));
 				t.put("RCNT",rset.getInt("RCNT"));
+				t.put("PIC1",rset.getString("PIC1"));
+				t.put("PIC2",rset.getString("PIC2"));
+				t.put("PIC3",rset.getString("PIC3"));
 				
 				System.out.println("selectOneTrip : "+t);
 			} 
@@ -406,6 +412,9 @@ public class mDao {
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, rNo);
 			pstmt.setString(2, rNo);
+			pstmt.setString(3, rNo);
+			pstmt.setString(4, rNo);
+			pstmt.setString(5, rNo);
 			
 			rset = pstmt.executeQuery();
 			
@@ -433,6 +442,9 @@ public class mDao {
 				r.put("SCORE",rset.getFloat("SCORE"));
 				r.put("R_DATE",rset.getString("R_DATE"));
 				r.put("RCNT",rset.getInt("RCNT"));
+				r.put("PIC1",rset.getString("PIC1"));
+				r.put("PIC2",rset.getString("PIC2"));
+				r.put("PIC3",rset.getString("PIC3"));
 				
 				System.out.println("selectOneRoom : "+r);
 			} 
@@ -1717,6 +1729,64 @@ public class mDao {
 			e.printStackTrace();
 		}finally {
 			close(pstmt);
+		}
+				
+		return result;
+	}
+
+	public ArrayList<HashMap<String, Object>> certifiTop(Connection con) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		
+		HashMap<String, Object> result = null;
+		ArrayList<HashMap<String, Object>> list =new ArrayList<HashMap<String, Object>>() ;
+		String query = prop.getProperty("certifiTop");
+		
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			while(rset.next()) {
+				result = new HashMap<String, Object>();
+				result.put("userId", rset.getString("USER_ID"));
+				result.put("userName", rset.getString("USER_NAME"));
+				list.add(result);
+				
+				System.out.println("DAO : "+result);
+			} 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(stmt);
+		}
+				
+		return list;
+	}
+
+	public HashMap<String, Object> visitAllCnt(Connection con) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		
+		HashMap<String, Object> result = null;
+		
+		String query = prop.getProperty("visitAllCnt");
+		
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			while(rset.next()) {
+				result = new HashMap<String, Object>();
+				result.put("cnt", rset.getString("CNT"));
+				
+				System.out.println("DAO : "+result);
+			} 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(stmt);
 		}
 				
 		return result;

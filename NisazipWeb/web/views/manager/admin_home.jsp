@@ -25,6 +25,11 @@
                	<h3>대시보드</h3>
                 <hr>
                 
+                <!-- 누적 접속자 수 -->
+                <div class="row">
+                	<h3><p class="bg-success" id="VisitAllCnt"></p></h3>
+                </div>
+                
                 <!-- 차트영역 div -->
 				<div class="row">
 					<div class="cst_div col-xs-6 col-sm-6">
@@ -32,7 +37,7 @@
 						<!--접속자 수 -->
 						<div class="graphs">
 							<div id="recentVisit_Graph" style="height: 300px; width: 90%;"></div>
-							<!-- <h4>누적 접속자수 : 23,323,234 명</h4> -->
+							
 						</div>
 					</div>
 					<div class="cst_div col-xs-6 col-sm-6">
@@ -69,50 +74,20 @@
 	                
 	                <div class="cst_div col-sm-6 col-xs-6">
 	                	<div class="row">
-	                		<h3 class="text-center">답변할 Q&A</h3>
-	                		<a href=""><h6 class="text-right">더보기</h6></a>
+	                		<h3 class="text-center">인증 승인</h3>
+	                		<a href="<%=request.getContextPath()%>/memberList.mg"><h6 class="text-right">더보기</h6></a>
 	                	</div>
 	                	<div class="table-responsive text-center">          
-						  <table class="table text-center" id="qnaTable">
+						  <table class="table text-center" id="certifiTable">
 						    <thead>
 						      <tr>
 						        <th>#</th>
-						        <th>제목</th>
-						        <th>작성자</th>
-						        <th>조회수</th>
+						        <th>사용자 ID</th>
+						        <th>사용자 이름</th>
+						        <th>인증</th>
 						      </tr>
 						    </thead>
 						    <tbody>
-							    <tr>
-							    	<td>1</td>
-							    	<td>1</td>
-							    	<td>1</td>
-							    	<td>1</td>
-							    </tr>
-							    <tr>
-							    	<td>1</td>
-							    	<td>1</td>
-							    	<td>1</td>
-							    	<td>1</td>
-							    </tr>
-							    <tr>
-							    	<td>1</td>
-							    	<td>1</td>
-							    	<td>1</td>
-							    	<td>1</td>
-							    </tr>
-							    <tr>
-							    	<td>1</td>
-							    	<td>1</td>
-							    	<td>1</td>
-							    	<td>1</td>
-							    </tr>
-							    <tr>
-							    	<td>1</td>
-							    	<td>1</td>
-							    	<td>1</td>
-							    	<td>1</td>
-							    </tr>
 						    </tbody>
 						  </table>
 						</div>
@@ -132,20 +107,55 @@
     
     
     <script>
-  	// 회원탈퇴 하기 버튼
-
+  	// 회원탈퇴 하기 버튼 클릭시
 	 function delMember(obj){
 	  		
 	  		if (confirm("해당 회원을 탈퇴 시키시겠습니까??") == true){//확인
-	  			console.log($(obj).parent().parent().children(":eq(1)").text());
 				location.href="<%=request.getContextPath()%>/deleteReMember.mg?reReceiver="+$(obj).parent().parent().children(":eq(1)").text();
 				
 	    	}else{//취소
 	    	    return;
 	    	}
 	  	}
-  	
-  	
+	
+  	// 인증 버튼 클릭 시 
+  	function certifiMember(obj){
+  		console.log($(obj).parent().parent().children(":eq(1)").text());
+  		if (confirm("해당 회원의 인증을 승인 하시겠습니까??") == true){//확인
+  			$.ajax({
+    		url : "<%=request.getContextPath()%>/confirm.mg",
+    		type:"POST",
+    		data:{
+    			userId : $(obj).parent().parent().children(":eq(1)").text()
+    		}, success : function(data){
+    			alert(data);
+    		}, error : function(request, status, error){
+				// 연결에 실패했을 때
+				console.log("에러 코드 : "+request.status
+						+ "에러 내용 : "+ request.responseText 
+						+ "에러 메시지 : " + error);
+				
+				alert("데이터 전달 실패");
+			}
+    	});
+    	}else{//취소
+    	    return;
+    	}
+  	}
+
+  	//총 접속자수 구하기
+	$(function(){
+		$.ajax({
+			url : "<%=request.getContextPath()%>/visiteAllCnt.mg",
+			type: "POST",
+			success : function(data){
+					 $('#VisitAllCnt').text('누적 접속자 수 : '+data.cnt+'명'); 
+			}, error : function(data) {
+				console.log("총 접속자 수 불러오기 실패");
+			}
+		});
+	});
+	
 
 	$(function(){
 		//신고 top5	
@@ -163,7 +173,7 @@
 						/* var $noTd = $('<td>').text(value.reNo); */
 						var $idTd = $('<td>').text(value.userId);
 						var $countTd = $('<td>').text(value.reCount);
-						var $btnTd = $('<td>').append( $('<button class="btn btn-danger btn-xs delbtn" onclick="delMember(this);">').text('탈퇴') );
+						var $btnTd = $('<td>').append( $('<button class="btn btn-danger btn-sm delbtn" onclick="delMember(this);">').text('탈퇴') );
 						
 						$tr.append($rankTd);
 						/* $tr.append($noTd); */
@@ -181,13 +191,13 @@
 				}
 			});
 		
-		//  Q&A top5
+		//  Certification top5
 		$.ajax({
-			url : "<%=request.getContextPath()%>/qnaTop5.mg",
+			url : "<%=request.getContextPath()%>/certifiTop5.mg",
 			type: "GET",
 			success : function(data){
 				
-				var $tableBody = $('#qnaTable tbody');
+				var $tableBody = $('#certifiTable tbody');
 				
 				$.each(data, function(index, value){
 					
@@ -195,9 +205,8 @@
 					var $rankTd = $('<td>').text(index+1);
 					/* var $noTd = $('<td>').text(value.reNo); */
 					var $idTd = $('<td>').text(value.userId);
-					var $countTd = $('<td>').text(value.reCount);
-					var $btnTd = $('<td>').append( $('<button class="btn btn-danger btn-sm delbtn" onclick="delMember();">').text('탈퇴') );
-					
+					var $countTd = $('<td>').text(value.userName);
+					var $btnTd = $('<td>').append( $('<button class="btn btn-primary btn-sm" onclick="certifiMember(this);">').text('승인하기') );
 					$tr.append($rankTd);
 					/* $tr.append($noTd); */
 					$tr.append($idTd);
@@ -209,7 +218,7 @@
 				
 			}, error : function(data) {
 				
-				console.log("Q&A 불러오기 실패");
+				console.log("승인 불러오기 실패");
 				
 			}
 		});
@@ -307,6 +316,7 @@
 			  };
 			  $("#recentVisit_Graph").CanvasJSChart(recentVisit_Graph);
 	});
+	
 	
 	
 	</script>

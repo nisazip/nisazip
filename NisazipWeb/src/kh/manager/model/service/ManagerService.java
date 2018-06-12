@@ -515,4 +515,30 @@ public class ManagerService {
 		return result;
 	}
 
+	public ArrayList<HashMap<String, Object>> certifiTop() {
+		Connection con = getConnection();
+		
+		ArrayList<HashMap<String, Object>> result = new mDao().certifiTop(con);
+		
+		if(result !=null) commit(con);
+		else rollback(con);
+		
+		close(con);
+		
+		return result;
+	}
+
+	public HashMap<String, Object> visitAllCnt() {
+		Connection con = getConnection();
+		
+		HashMap<String, Object> result = new mDao().visitAllCnt(con);
+		
+		if(result !=null) commit(con);
+		else rollback(con);
+		
+		close(con);
+		
+		return result;
+	}
+
 }

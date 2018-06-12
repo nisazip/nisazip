@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-       <title>Join</title>      
+       <title>Update</title>      
       
 
 <style type="text/css">
@@ -33,20 +33,64 @@
     border: 1px solid lightgray;
     border-radius: 3px;
 }
+.nav-stacked>li.sele>a{
+ 
+   color:white;
+}
+.nav-stacked>li>a:hover{
+ 
+   color:black;
+}
 
+.item {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.item #presentProfileImg {
+    width: 100%;
+    height: auto;
+}
+
+.item .btn {
+    position: absolute;
+   	
+    top: 50%;
+    left: 50%;
+    transform: translate(100%, -220%);
+    -ms-transform: translate(120%, -220%);
+    background-color: black;
+    background: transparent;
+    color: gray;
+    font-size: 15px;
+    padding: 12px 24px;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+    text-align: center;
+}
+.item .btn >p{
+ font-size: 4px;
+ text-align: center;
+}
+.item .btn:hover {
+    color: red;
+    background-color: transparent;
+    background: transparent;
+}
 
 </style>
 <script>
-
-
-function profileModal(){
-	$("#myModal4").modal();
-	
-}
-
-	
+	function profileModal(){
+		$("#myModal4").modal();
+		
+	}
+	function delProf(){
+		$("#delProf").modal();
+	}
 </script>
-
 </head>
 
 
@@ -58,23 +102,22 @@ function profileModal(){
 
 
 <div id="main">
-<div class="container-fluid">
-
-  <div class="row content">
-    <div class="col-sm-3 sidenav">
+	<div class="row content">
+		<div class="col-sm-1 " ></div>  
+    	<div class="col-sm-2 sidenav xs-hidden" >
   
-      <ul class="nav nav-pills nav-stacked">
+			<ul class="nav nav-pills nav-stacked" data-spy="affix xs-hidden"  >
         
-        <li><a href="/semi/views/member/memberUpdate.jsp">사용자 정보 수정/추가</a></li>
-        <li><a href="/semi/views/member/certification.jsp">사진 등록 및 인증</a></li>
-        <li><a href="/semi/views/member/myBin.jsp">보관 목록</a></li>
-      </ul><br>
-      <br><br><br><br><br><br><br>
-    </div>
+		        <li class="sele" style="background:#5cb85c"><a href="/semi/views/member/memberUpdate.jsp">사용자 정보 수정/추가</a></li>
+		        <li><a href="/semi/views/member/certification.jsp">인증</a></li>
+		        <li><a href="/semi/storage.do">보관 목록</a></li>
+		        <li><a href="/semi/views/member/account.jsp">계정 관리</a></li>
+			</ul><br>
+      		<br><br><br><br><br><br><br>
+    	</div>
 
 
-    <div class="col-sm-6"> 
-    
+    	<div class="col-sm-6"> 
     		<div class="col-sm-12 col-xs-12" style="">
     			<fieldset>		
     			<legend>프로필 사진 올리기</legend>
@@ -82,23 +125,37 @@ function profileModal(){
 	    			<div class="col-lg-3 xs-hidden"></div>	
     			 	<div class="col-lg-9 panel panel-info">
       					<div class="panel-heading">사진을 올리시기 전에</div>
-     				   <div class="panel-body">호스트와 게스트가 서로를 알 수 있도록 선명하게 나온 얼굴 정면 사진을 사용하는 것이 중요합니다. 풍경 사진을 올리면 호스트가 알아보기 힘들겠죠? 회원님의 얼굴이 선명하게 보이며 호스트나 게스트에게 공개하고 싶지 않은 개인 정보나 민감한 정보가 나타나지 않은 사진을 사용하세요.</div>
+     					<div class="panel-body">
+     					호스트와 게스트가 서로를 알 수 있도록 선명하게 나온 얼굴 정면 사진을 사용하는 것이 중요합니다. 
+     					풍경 사진을 올리면 호스트가 알아보기 힘들겠죠? 
+     					회원님의 얼굴이 선명하게 보이며 호스트나 게스트에게 공개하고 싶지 않은 개인 정보나 민감한 정보가 나타나지 않은 사진을 사용하세요.
+			
+     					</div>
+    				</div>
+    				<div class="col-lg-3 xs-hidden"></div>	
+    				<div class="col-lg-9 panel panel-default">
+      					<div class="panel-heading">사진 업로드</div>
+      					
+     					<div class="panel-body align-center">
+     					<center><div class="item">
+     						<button type="button" class="btn" onclick="delProf();">
+									<span class="glyphicon glyphicon-folder-close"></span>
+							</button>
+							
+	     					<img id="presentProfileImg"  class="align-center" style="width:200px; height: 200px; box-shadow: 4px 4px 3px gray; border-radius: 50em;">
+				    			<br><br>
+    					</div></center>
+     					
+     					<center><button class="btn btn-success" type="submit" style="width: 60%; z-index:1000; " onclick="profileModal();">사진 입력/수정</button></center>
+     					
+     					</div>
     				</div>   
     			</div>	
-    			<div class="row">
-	    			<div class="col-lg-4 xs-hidden"></div>
-	    			<div class="col-lg-7 col-xs-12">	
-		    		 			
-						<center><img alt="" id="presentProfileImg"  class="align-center" style="width:200px; height: 200px; box-shadow: 4px 4px 3px gray; border-radius: 50em;"></center>
-			    			<br><br>
-    					<center><button class="btn btn-success" type="submit" style="width: 60%;" onclick="profileModal();">사진 입력/수정</button></center>
-    				</div>
-    			</div>
-    			</fieldset>   
+    			
+    			</fieldset>   	
+    			<hr>
     		
-    	
-    		<hr>
-        	<form  class="form-horizontal" action="<%=request.getContextPath()%>/Update.me" method="post">  
+        	<form id="updateFrm" class="form-horizontal" action="<%=request.getContextPath()%>/Update.me" method="post">  
       			<fieldset>
         		<legend>프로필 수정</legend>
       			<div class="form-group">
@@ -140,16 +197,16 @@ function profileModal(){
   				<div class="form-group ">
 					    	<label class="control-label col-sm-4" for="select">핸드폰 번호:</label>
 					    <div class="col-sm-8 phone align-right">
-					      <select id="phone1" class="phoneNum" name="phone1" >
+					      <select id="phone1" class="phoneNum" id="phone1" name="phone1" >
 					          <option value="010">010</option>
 					          <option value="011">011</option>
 					          <option value="016">016</option>
 					          <option value="017">017</option>
 					          <option value="019">019</option></select>
 					      -
-					      <input  type="text" class="phoneNum" name="phone2">
+					      <input  type="text" class="phoneNum" id="phone2" name="phone2">
 					      -
-					      <input type="text" class="phoneNum" name="phone3">
+					      <input type="text" class="phoneNum" id="phone3" name="phone3">
 					      <br>
 					      <p>예약이 완료될 경우에만 공유됩니다. 번호가 공유되면 개인적으로 연락할 수 있습니다.</p>
 					    </div>
@@ -301,18 +358,22 @@ function profileModal(){
 			            </div>
 						
 				</div>
-
-</div>
+			<div class="form-group">
+			 <div class=" col-sm-3"></div>
+			 <center><div class=" col-sm-9"><button id="updateSubmit" type="submit" class="btn btn-success" style="width:60%;">회원정보 수정하기</button></div></center>
+ 				</div>
+			</div>
+			
+			
       		</fieldset>  
-      			<hr>
-      <div class="form-group row">   
-            <div class="col-sm-4 xs-hidden"></div>   
-            <div class="col-sm-8 ">
-            <center><button type="submit" class="btn btn-success" style="width:60%;">회원정보 수정하기</button></center>
-             </div>  
-   		 </div>
-
-     </form>
+      		<hr>
+   			
+   		  </form>
+   		  <br><br>
+   		  <br><br>
+   		  <br><br><br>
+	</div>
+    
     </div>
 </div>
 
@@ -339,7 +400,7 @@ function profileModal(){
 	              
 	            </div>
 	            
-	             <button type="submit" class="btn btn-success btn-block" style="width: 100%;"><span class="glyphicon glyphicon-off"></span>입력</button>
+	             <button id="profSubmit" type="submit" class="btn btn-success btn-block" style="width: 100%;">저장</button>
             </form>
             </div>
             <div class="col-sm-3 xs-hiiden""></div>
@@ -352,16 +413,61 @@ function profileModal(){
     </div>
 
   </div>
-</div>
+  </div>
+<div id="delProf" class="modal fade" role="dialog">
+  <div class="modal-dialog">
 
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="background: #e06377; color:white;" >
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" style="background: #e06377; color:white;">주의하세요<span class=""></span></h4>
+      </div>
+      <div class="modal-body">
+      	<div class="row">
+		  	<div class="col-sm-2"></div>
+		       <div class="col-sm-8">	
+		       <br>	 
+		        <form action="<%=request.getContextPath()%>/prof.del">
+				프로필을 삭제하면 <strong>인증</strong>에 불이익이 있을 수 있습니다. <br>
+				그래도 삭제하시겠습니까?
+				<input type="hidden" value="<%=m.getUser_id()%>" id="profDelId" name="profDelId">
+				 <br>	<br>	
+				<button id="authDelSubmit" type="submit" class="btn btn-danger btn-block" style="width: 100%;">삭제</button>
+				</form>
+				</div>
+      		<div class="col-sm-2"></div>     
+     	 
+     </div>
+      <div class="modal-footer">
+     	 
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+  
+</div>
+<script>
+$("#updateFrm").on("submit", function(){
+	var regexp =/^[0-9]{3,4}$/;
+	var v = $("#phone2").val();
+	var v2 = $("#phone3").val();
+	var nameregexp =/^[가-힣]{2,4}|[a-zA-Z]{5,20}\s[a-zA-Z]{5,20}$/;
+    var namev = $("#updateName").val();
+	if (!(regexp.test(v)) || !(regexp.test(v2)) || !(nameregexp.test(namev)) || $("#upBirthday_year").val()==null|| $("#upBirthday_month").val()==null ||$("#upBirthday_day").val()==null){  
+		alert("모든 입력값을 알맞게 입력하셨나요? \n입력값을 확인하세요");
+		return false;
+	}
+});
+</script>
 
 <script>
-				
-				
-				
-				
-				
-				$(function(){
+
+	
+		
+	
+			$(function(){
 				var id = "<%=m.getUser_id()%>";
 					console.log(id);
 					$.ajax({
@@ -379,7 +485,7 @@ function profileModal(){
 				});
 		
 
-				$(function(){
+			$(function(){
 					if('<%=m.getGender()%>' != null){
 					$('input:radio').each(function(){
 						if( $(this).val() == '<%=m.getGender()%>'){
@@ -400,10 +506,10 @@ function profileModal(){
 					
 					var birthArrST = '<%=m.getBirthdate()%>'.substring(0,10)
 					var birthArr = birthArrST.split('-');
-					console.log(birthArrST);
-					console.log(birthArr[0]);
-					console.log(birthArr[1]);
-					console.log(birthArr[2]);
+					//console.log(birthArrST);
+					//console.log(birthArr[0]);
+					//console.log(birthArr[1]);
+					//console.log(birthArr[2]);
 					
 					$('#upBirthday_year').val(birthArr[0]);
 					$('#upBirthday_month').val(birthArr[1]);
@@ -415,20 +521,6 @@ function profileModal(){
 				function updateMember() {
 					$("#updateForm").submit();
 				}
-				
-				/* $("#updateForm").submit(function(event){
-					if($("#userPwd").val() == "" || $("#userId").val() == "") alert("아이디나 비밀번호는 필수 값입니다.");
-					else if($('#userPwd').val() != $('#userPwd2').val()) alert("비밀번호 확인 값과 다릅니다.");
-					else return;
-					event.preventDefault();
-					
-					
-					
-					
-				}); */
-				//function deleteMember() {
-				//	location.href = "/myWeb/mDelete.me?mid=";
-				//}
 				
 				
 				
@@ -442,11 +534,21 @@ function profileModal(){
 				       reader.readAsDataURL(value.files[0]);
 				    }
 				 }
-			
+				if($("#profilePicture").val() == ""){
+					$("#profSubmit").attr('disabled','disabled');
+				}
+				$("#profilePicture").on("change",function(){
+					console.log($("#authSubmit").val());
+					if($("#profilePicture").val() != "" ){
+						$("#profSubmit").removeAttr("disabled")
+						
+					}
+				});			
+				
+								
 				
 				
-				
-			</script>	
+</script>	
 			
 			
 			

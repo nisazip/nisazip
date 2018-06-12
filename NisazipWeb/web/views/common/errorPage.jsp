@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%
+    	String msg =(String) request.getAttribute("msg");
+    %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,6 +10,6 @@
 <title>Insert title here</title>
 </head>
 <body>
- 에러페이지
+	<h1>오류 : <%= msg %></h1>
 </body>
 </html>

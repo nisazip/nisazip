@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="kh.room.model.vo.Room" %>
+    pageEncoding="UTF-8" import="kh.room.model.vo.Room, java.util.*" %>
+<%
+	ArrayList<HashMap<String,Object>> tCompleteList = (ArrayList<HashMap<String,Object>>)session.getAttribute("tCompleteList");
+	ArrayList<HashMap<String,Object>> tGoingtoList = (ArrayList<HashMap<String,Object>>)session.getAttribute("tGoingtoList");
+	ArrayList<HashMap<String,Object>> rCompleteList = (ArrayList<HashMap<String,Object>>)session.getAttribute("rCompleteList");
+	ArrayList<HashMap<String,Object>> rGoingtoList = (ArrayList<HashMap<String,Object>>)session.getAttribute("rGoingtoList");
+
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,23 +16,31 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/holder/2.9.4/holder.js"></script>
-	
+	<style type="text/css">
+	.nav-stacked>li.sele>a{
+ 
+   		color:white;
+	}
+	.nav-stacked>li>a:hover{
+ 		
+   		color:black;
+	}
+	</style>
 </head>
 <body>
 <%@ include file="../../views/common/header.jsp" %>
 
 <div id="main">
-<div class="container-fluid">
-  <div class="row content">
-    <div class="col-sm-2 sidenav hidden-xs">
-    
-      <ul class="nav nav-pills nav-stacked">
-        <br>
-     <li><a href="/semi/views/member/memberUpdate.jsp">사용자 정보 수정/추가</a></li>
-        <li><a href="/semi/views/member/certification.jsp">사진 등록 및 인증</a></li>
-        <li><a href="/semi/views/member/myBin.jsp">보관 목록</a></li>
-      </ul><br>
-      <br><br><br><br><br><br><br>
+<div class="row content">
+		<div class="col-sm-1 " ></div>  		
+    	<div class="col-sm-2 sidenav xs-hidden" >
+	        <ul class="nav nav-pills nav-stacked" data-spy="affix xs-hidden"  >        
+	        <li ><a href="/semi/views/member/memberUpdate.jsp">사용자 정보 수정/추가</a></li>
+	        <li><a href="/semi/views/member/certification.jsp">사진 등록 및 인증</a></li>
+	        <li lass="sele" style="background:#5cb85c"><a href="/semi/storage.do">보관 목록</a></li>
+	        <li><a href="/semi/views/member/account.jsp">계정 관리</a></li>
+	      </ul><br>
+	      <br><br><br><br><br><br><br>
     </div>
     
     
@@ -88,22 +103,24 @@
 			  <p>행복한 여행이 되길 바랍니다.</p>            
 			  <table class="table table-hover">
 			    <thead>
+			    
 			      <tr>
-			        <th>숙소명dddd</th>
-			        <th>호스트명</th>
-			        <th>Check In/Out</th>
+			        <th>숙소명</th>
+			       <th>Check In/Out</th>
 			        <th>지역</th>
 			        <th>가격</th>
 			      </tr>
+			      
 			    </thead>
 			    <tbody>
+			    <%for(HashMap<String,Object> map : rCompleteList){ %>
 			      <tr class="success">
-			        <td>Jesu</td>
-			        <td>Doe</td>
-			        <td>18/07/06 - 18/08/01</td>
-			        <td>서귀포	</td>
-			        <td>$10.66	</td>
-			      </tr>		   
+			        <td><%= map.get("r_name") %></td>			
+			        <td><%= map.get("check_in") %> - <%= map.get("check_out") %></td>
+			        <td><%= map.get("r_area") %></td>
+			        <td><%= map.get("total_price") %></td>
+			      </tr>	
+			      <%} %>	   
 			    </tbody>
 			  </table>
 			</div>
@@ -121,13 +138,15 @@
 			      </tr>
 			    </thead>
 			    <tbody>
-			        <tr class="active">
-			        <td>Jesu</td>
-			        <td>Doe</td>
-			        <td>18/07/06 - 18/08/01</td>
-			        <td>서귀포	</td>
-			        <td>$10.66	</td>
-			      </tr>
+			       <%for(HashMap<String,Object> map : rGoingtoList){ %>
+			      <tr class="active">
+			        <td><%= map.get("r_name") %></td>			
+			        <td><%= map.get("check_in") %> - <%= map.get("check_out") %></td>
+			        <td><%= map.get("r_area") %></td>
+			        <td><%= map.get("total_price") %></td>
+			      </tr>	
+			      <%} %>	
+			      
 			    </tbody>
 			  </table>
 			</div>		
@@ -152,13 +171,14 @@
 			      </tr>
 			    </thead>
 			    <tbody>
+			       <%for(HashMap<String,Object> map : tCompleteList){ %>
 			      <tr class="success">
-			        <td>Jesu</td>
-		
-			        <td>18/07/06 - 18/08/01</td>
-			        <td>서귀포	</td>
-			        <td>$10.66	</td>
-			      </tr>		   
+			        <td><%= map.get("t_name") %></td>			
+			        <td><%= map.get("t_date") %></td>
+			        <td><%= map.get("t_area") %></td>
+			        <td><%= map.get("total_price") %></td>
+			      </tr>	
+			      <%} %>	   
 			    </tbody>
 			  </table>
 			</div>
@@ -176,23 +196,24 @@
 			      </tr>
 			    </thead>
 			    <tbody>
-			        <tr  class="active">
-			        <td>Jesu</td>
-			     
-			        <td>18/07/06 - 18/08/01</td>
-			        <td>서귀포	</td>
-			        <td>$10.66	</td>
-			      </tr>
+			        <%for(HashMap<String,Object> map : tGoingtoList){ %>
+			      <tr class="active">
+			        <td><%= map.get("t_name") %></td>			
+			        <td><%= map.get("t_date") %></td>
+			        <td><%= map.get("t_area") %></td>
+			        <td><%= map.get("total_price") %></td>
+			      </tr>	
+			      <%} %>	   
 			    </tbody>
 			  </table>
 			</div>
 		</div>
 	</div>
 
-	<div class="col-sm-2 hidden-xs">	</div>
+	<div class="col-sm-2 xs-hidden">	</div>
 		
 	</div>
-</div></div>
+</div>
 <script>
 
 $(document).ready(function(){

@@ -2,18 +2,18 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>
-    
-        <title>Bootstrap Example</title>
+<head>    
        
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <style>
-  .modal-header, h4, .close {
+   <style>
+  .close {
       background-color: #5cb85c;
-      color:white !important;
+      color:black !important;
+      text-align: center;
+      font-size: 30px;
+  }
+  .modal-header, h4 {
+ 
+      color:!important;
       text-align: center;
       font-size: 30px;
   }
@@ -51,18 +51,11 @@
         
         <div class="modal-body" style="padding:40px 50px;">
         
-        
-        
-          <form id="joinForm" role="form" action="join.me" method="POST">
-           
-	          <div class="form-group">
-	                <center>
-	                <input type="text" class="form-control" id="user_id" placeholder="ID" name="user_id" style="width:80%;" >
-	                
-	                </center>
-	            	<center>	<span id = "chkMsg"></span> </center>
-	            </div>
-	            
+          <form id="joinForm" role="form" action="join.me" method="POST">           
+	            <div class="form-group">
+	                <center><input type="text" class="form-control" id="user_id" placeholder="ID" name="user_id" style="width:80%;" > </center>
+	            	<center><span id = "chkMsg"></span> </center>
+	            </div>	            
 	            <div class="form-group">
 	                <center><input type="text" class="form-control" id="name" placeholder="이름" name="name" style="width: 80%" ></center>
 	            	<center>	<span id = "chkMsg2"></span> </center>
@@ -74,7 +67,7 @@
 	            <div class="form-group">
 	                <center><input type="password" class="form-control" id="pwd" placeholder="비밀번호" name="pwd" style="width: 80%"></center>    
 	                <center>
-	                  <div style="width: 80%; text-align: left;" >
+	                  <div style="width: 80%; text-align: center;" >
 	                  <span class="pwdRef2" style="display: none; color: #228b22;">유효한 비밀번호입니다.<br></span>
 	
 	                  <span class="pwdRef" style="display: none;">비밀번호는 8자 이상이어야 합니다.<br></span>
@@ -89,12 +82,12 @@
             <div class="form-group">
                 <center><input type="password" class="form-control" id="pwd2" placeholder="비밀번호 확인" name="pwd2" style="width: 80%" >  </center>
 
-                  
-                  <div style="width: 80%; text-align: left;" >
-                  <center><span class="pwd2Ref2" style="display: none; ">비밀번호가 일치하지 않습니다.<br></span></center>
+                  <center>
+                  <div style="width: 80%; " >
+                  <span class="pwd2Ref2" style="display: none; ">비밀번호가 일치하지 않거나 입력값이 없습니다.<br></span>
 
-                  <center><span class="pwd2Ref" style="display: none; color: #228b22;">비밀번호가 일치합니다.<br></span></center>
-                  </div>
+                  <span class="pwd2Ref" style="display: none; color: #228b22;">비밀번호가 일치합니다.<br></span>
+                  </div></center>
                   
 
             </div>  
@@ -234,14 +227,15 @@
                     <option value="29">29일</option>
                     <option value="30">30일</option>
                     <option value="31">31일</option></select></div></div></center>
+                    
             
               <center><button type="submit" class="btn btn-success btn-block" id="joinsubmit" style="width:80%;" onclick="check();" ><span class="glyphicon glyphicon-off"></span> 회원가입</button></center>
           </form>
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
-          <p>Already a member? <a data-target="#myModal" data-toggle="modal" class="MainNavText" data-dismiss="modal"
-       href="#myModal">Login</a></p>
+          <button type="submit" class="btn btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> 취소</button>
+          <p> 회원이시라면 <a data-target="#myModal" data-toggle="modal" class="MainNavText" data-dismiss="modal"
+       href="#myModal">로그인 </a>하세요</p>
           
         </div>
       </div>
@@ -305,7 +299,7 @@ $("#user_id").on("blur",function(){
 	            	 
 	           
 	            }else{
-	            	$("#chkMsg").text("사용할 수 없는 아이디입니다.");
+	            	$("#chkMsg").text("이미 사용 중인 아이디입니다.");
 	   	            $("#user_id").css("border","1px solid red");
 	            	//console.log('0'+data);
 	            	ch1 =false;
@@ -365,7 +359,7 @@ $("#email").on("blur",function(){
 	            	}
 	           
 	            }else{
-	            	$("#chkMsg3").text("사용할 수 없는 이메일입니다.");
+	            	$("#chkMsg3").text("이미 사용 중인 이메일입니다.");
 	   	            $("#email").css("border","1px solid red");
 	            	//console.log('0'+data);
 	            	ch3 =false;

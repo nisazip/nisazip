@@ -27,6 +27,33 @@ public class BinService {
 		return tCompleteList;
 	}
 
+
+	public ArrayList<HashMap<String, Object>> myTripsListW(String id) {
+		Connection con = getConnection();
+		
+		 ArrayList<HashMap<String,Object>> tGoingtoList = bDao.myTripsListW(con,id);
+		
+		return tGoingtoList;
+	}
+
+
+	public ArrayList<HashMap<String, Object>> myRoomsListP(String id) {
+		Connection con = getConnection();
+		
+		 ArrayList<HashMap<String,Object>> rCompleteList = bDao.myRoomsListP(con,id);
+		
+		return rCompleteList;
+	}
+
+
+	public ArrayList<HashMap<String, Object>> myRoomsListW(String id) {
+		Connection con = getConnection();
+		
+		 ArrayList<HashMap<String,Object>> rGoingtoList = bDao.myRoomsListW(con,id);
+		
+		return rGoingtoList;
+	}
+
 	
 	
 

@@ -8,6 +8,7 @@ import java.util.Properties;
 import static kh.common.JDBCTemplate.*;
 
 import kh.member.model.vo.Member;
+import kh.member.model.vo.MemberConfirm;
 import kh.member.model.vo.UserPic;
 
 public class MemberDao {
@@ -427,4 +428,148 @@ public class MemberDao {
 		
 		return profile;
 	}
+
+	public Member checkEmail(Connection con, Member m) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Member checkId(Connection con, Member m) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		System.out.println("dao:" + m);		
+		Member member = null;
+		try { 
+			String query = prop.getProperty("checkId");	
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, m.getUser_id());
+			rset = pstmt.executeQuery();
+			if(rset.next()){
+				System.out.println("rset:" + m);		
+				member = new Member();
+				member.setUser_id(m.getUser_id());
+				member.setPassword(rset.getString("PASSWORD"));
+				member.setUser_no(rset.getInt("USER_NO"));
+				member.setUser_name(rset.getString("USER_NAME"));
+				member.setGender(rset.getString("GENDER").charAt(0));	
+				member.setBirthdate(rset.getString("BIRTHDATE"));
+				member.setEmail(rset.getString("EMAIL"));
+				member.setPhone(rset.getString("PHONE"));
+				member.setJoin_date(new Date(rset.getDate("JOIN_DATE").getTime()));
+				//System.out.println("date:"+new Date(rset.getDate("JOIN_DATE").getTime()));
+				member.setLikerooms(rset.getString("LIKEROOMS"));
+				member.setLiketrips(rset.getString("LIKETRIPS"));
+				member.setR_hosting(rset.getInt("R_HOSTING"));
+				member.setT_hosting(rset.getInt("T_HOSTING"));
+
+			}else{
+
+				System.out.println("안됩니다.");
+		}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		} finally {
+
+			close(rset);
+
+			close(pstmt);
+
+		}
+
+		
+
+		return member;
+	}
+
+	public int resetPwd(Connection con, String id, String pwd) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		try {
+			String query = prop.getProperty("resetPwd");
+			
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setString(1, pwd);
+			pstmt.setString(2, id);
+			
+		
+			result = pstmt.executeUpdate();
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public MemberConfirm findCerYN(Connection con, MemberConfirm mc) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		MemberConfirm memberConfirm =null;
+		
+		try { 
+			
+			String query = prop.getProperty("findCerYN");
+					
+			pstmt = con.prepareStatement(query);
+			System.out.println("dao"+mc);
+			pstmt.setInt(1, mc.getUser_no());		
+			System.out.println("dao mc.getUser_no():"+mc.getUser_no());
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()){
+				memberConfirm = new MemberConfirm();
+				memberConfirm.setUser_no(mc.getUser_no());
+				memberConfirm.setPic_check(rset.getString("pic_check"));
+				
+				
+				System.out.println("sel: "+memberConfirm);
+				
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return memberConfirm;
+	}
+
+	public int setCerN(Connection con, int no) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		
+		try {
+			String query = prop.getProperty("setCerN");
+			
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setInt(1, no);
+			
+		
+			result = pstmt.executeUpdate();
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+
+
+	
+	
 }

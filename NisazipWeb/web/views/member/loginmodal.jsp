@@ -36,10 +36,11 @@
               <label for="loginPwd"><span class="glyphicon glyphicon-lock"></span> 비밀번호</label>
               <input type="password" class="form-control" id="loginPwd" name="pwd" placeholder="패스워드를 입력하세요">
             </div>
-            <div class="checkbox">
+            <!-- <div class="checkbox">
               <label><input type="checkbox" value="" checked>Remember me</label>
-            </div>
-              <button type="submit" id="loginSubmit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span>Login</button>
+            </div> -->
+            <br>
+              <button type="submit" id="loginSubmit" class="btn btn-success btn-block" style="height: 40px;"><span class="glyphicon glyphicon-off"></span>로그인</button>
           </form>
         </div>
         
@@ -53,11 +54,11 @@
         
         
         <div class="modal-footer">
-          <button type="submit" class="btn btn-danger btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Cancel</button>
-          <p>Not a member?   <a data-target="#myModal2" data-toggle="modal" class="MainNavText" data-dismiss="modal" id="MainNavHelp" 
-       href="#myModal">Join</a></p>
-          <p>Forgot <a data-target="#myModal3" data-toggle="modal" class="findPwd" data-dismiss="modal" id="" 
-       href="#myModal">Password?</a></p>
+          <button type="submit" class="btn btn-default pull-left" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> 취소</button>
+          <p>아직 회원이 아시니라면  <a data-target="#myModal2" data-toggle="modal" class="MainNavText" data-dismiss="modal" id="MainNavHelp" 
+       href="#myModal">회원가입</a></p>
+          <p> <a data-target="#myModal3" data-toggle="modal" class="findPwd" data-dismiss="modal" id="" 
+       href="#myModal">비밀번호</a>를 잊으셨나요?</p>
           
         </div>
       </div>

@@ -44,12 +44,12 @@ public class ProfileUploadServlet extends HttpServlet {
       
     
       if (ServletFileUpload.isMultipartContent(request)) {
-         int maxSize = 1024 * 1024 * 10;
+        int maxSize = 1024 * 1024 * 10;
         
-         String root = request.getSession().getServletContext().getRealPath("/resources");
-         System.out.println(root);
+        String root = request.getSession().getServletContext().getRealPath("/resources");
+        System.out.println(root);
          
-         String savePath = root + "/thumbnail_uploadFiles/";
+        String savePath = root + "/thumbnail_uploadFiles/";
 
          MultipartRequest multiRequest = new MultipartRequest(request, savePath, maxSize, "UTF-8",
                new MyFileRenamePolicy());
@@ -83,8 +83,11 @@ public class ProfileUploadServlet extends HttpServlet {
            pic.setUser_id(id); 
         
          int base = new MemberService().deleteProfile(id);  
-           
-         int result = new MemberService().insertProfile(pic);
+        
+         int result=0;
+         if(saveFiles!= null){
+         result = new MemberService().insertProfile(pic);
+         }
          System.out.println("base:"+base);
          System.out.println(result);
          

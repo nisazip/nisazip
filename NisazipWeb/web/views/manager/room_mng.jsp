@@ -427,15 +427,6 @@
             var tdArr = new Array();
             var tr = $(this);
             var td = tr.children();
- 
-            /*
-             //데이터값을 받아 배열에 담음 
-             // ## 필요하지는 않음
-             td.each(function (i) {
-                 tdArr.push(td.eq(i).text());
-             });
-             console.log("데이터 값 : " + tdArr);
-            */
 
             //테이블의 첫 행을 클릭했을 때는 모달창을 띄우지 않는다.
             if(td.eq(0).text()!="숙소 번호"){
@@ -483,12 +474,16 @@
 			        $('#regiDate').attr("value",rDate[0]+'-'+rDate[1]+'-'+rDate[2]);
 		   			
 		   			$('#count').val(data.RCNT);
-		   			<%-- 
-		   		 	$("#roomPic1").attr("src", "<%=request.getContextPath()%>\\resources\\room_images\\"+data.PIC1);
-		   		 	$("#roomPic2").attr("src", "<%=request.getContextPath()%>\\resources\\room_images\\"+data.PIC2);
-		   			$("#roomPic3").attr("src", "<%=request.getContextPath()%>\\resources\\room_images\\"+data.PIC3);
-		   			 --%>
 		   			
+		   			if(data.PIC1!=null){
+			   		 	$("#roomPic1").attr("src", "<%=request.getContextPath()%>\\resources\\ROOM_PIC\\"+data.PIC1);
+			   		 	$("#roomPic2").attr("src", "<%=request.getContextPath()%>\\resources\\ROOM_PIC\\"+data.PIC2);
+			   			$("#roomPic3").attr("src", "<%=request.getContextPath()%>\\resources\\ROOM_PIC\\"+data.PIC3);
+		   			}else{
+		   				$("#roomPic1").attr("src", "<%=request.getContextPath()%>\\resources\\ROOM_PIC\\sampleImages.png");
+			   		 	$("#roomPic2").attr("src", "<%=request.getContextPath()%>\\resources\\ROOM_PIC\\sampleImages.png");
+			   			$("#roomPic3").attr("src", "<%=request.getContextPath()%>\\resources\\ROOM_PIC\\sampleImages.png");
+		   			}
             		}, error : function(request, status, error){
        				// 연결에 실패했을 때
        				console.log("에러 코드 : "+request.status

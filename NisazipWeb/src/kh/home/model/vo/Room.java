@@ -8,33 +8,31 @@ public class Room {
 	private String r_id;
 	private String r_name;
 	private String host_id;
-	private String r_max_num;
+	private int r_max_num;
 	private String r_type;
 	private String r_type2;
 	private String r_option;
-	private String room_num;
-	private String toilet_num;
-	private String bed_num;
+	private int room_num;
+	private int toilet_num;
+	private int bed_num;
 	private String r_detail;
 	private String r_role;
-	private String price;
+	private int price;
 	private String r_area;
 	private String r_addr;
 	private String r_loc;
-	private String r_start_date;
-	private String r_end_date;
-	private String score;
-	private String r_pic;
+	private Date r_start_date;
+	private Date r_end_date;
+	private float score;
 	
 	public Room() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Room(String r_id, String r_name, String host_id, String r_max_num, String r_type, String r_type2,
-			String r_option, String room_num, String toilet_num, String bed_num, String r_detail, String r_role,
-			String price, String r_area, String r_addr, String r_loc, String r_start_date, String r_end_date,
-			String score, String r_pic) {
+	public Room(String r_id, String r_name, String host_id, int r_max_num, String r_type, String r_type2,
+			String r_option, int room_num, int toilet_num, int bed_num, String r_detail, String r_role, int price,
+			String r_area, String r_addr, String r_loc, Date r_start_date, Date r_end_date, float score) {
 		super();
 		this.r_id = r_id;
 		this.r_name = r_name;
@@ -55,7 +53,6 @@ public class Room {
 		this.r_start_date = r_start_date;
 		this.r_end_date = r_end_date;
 		this.score = score;
-		this.r_pic = r_pic;
 	}
 
 	public String getR_id() {
@@ -82,11 +79,11 @@ public class Room {
 		this.host_id = host_id;
 	}
 
-	public String getR_max_num() {
+	public int getR_max_num() {
 		return r_max_num;
 	}
 
-	public void setR_max_num(String r_max_num) {
+	public void setR_max_num(int r_max_num) {
 		this.r_max_num = r_max_num;
 	}
 
@@ -114,27 +111,27 @@ public class Room {
 		this.r_option = r_option;
 	}
 
-	public String getRoom_num() {
+	public int getRoom_num() {
 		return room_num;
 	}
 
-	public void setRoom_num(String room_num) {
+	public void setRoom_num(int room_num) {
 		this.room_num = room_num;
 	}
 
-	public String getToilet_num() {
+	public int getToilet_num() {
 		return toilet_num;
 	}
 
-	public void setToilet_num(String toilet_num) {
+	public void setToilet_num(int toilet_num) {
 		this.toilet_num = toilet_num;
 	}
 
-	public String getBed_num() {
+	public int getBed_num() {
 		return bed_num;
 	}
 
-	public void setBed_num(String bed_num) {
+	public void setBed_num(int bed_num) {
 		this.bed_num = bed_num;
 	}
 
@@ -154,11 +151,11 @@ public class Room {
 		this.r_role = r_role;
 	}
 
-	public String getPrice() {
+	public int getPrice() {
 		return price;
 	}
 
-	public void setPrice(String price) {
+	public void setPrice(int price) {
 		this.price = price;
 	}
 
@@ -186,36 +183,28 @@ public class Room {
 		this.r_loc = r_loc;
 	}
 
-	public String getR_start_date() {
+	public Date getR_start_date() {
 		return r_start_date;
 	}
 
-	public void setR_start_date(String r_start_date) {
+	public void setR_start_date(Date r_start_date) {
 		this.r_start_date = r_start_date;
 	}
 
-	public String getR_end_date() {
+	public Date getR_end_date() {
 		return r_end_date;
 	}
 
-	public void setR_end_date(String r_end_date) {
+	public void setR_end_date(Date r_end_date) {
 		this.r_end_date = r_end_date;
 	}
 
-	public String getScore() {
+	public float getScore() {
 		return score;
 	}
 
-	public void setScore(String score) {
+	public void setScore(float score) {
 		this.score = score;
-	}
-
-	public String getR_pic() {
-		return r_pic;
-	}
-
-	public void setR_pic(String r_pic) {
-		this.r_pic = r_pic;
 	}
 
 	public static long getSerialversionuid() {
@@ -228,11 +217,9 @@ public class Room {
 				+ ", r_type=" + r_type + ", r_type2=" + r_type2 + ", r_option=" + r_option + ", room_num=" + room_num
 				+ ", toilet_num=" + toilet_num + ", bed_num=" + bed_num + ", r_detail=" + r_detail + ", r_role="
 				+ r_role + ", price=" + price + ", r_area=" + r_area + ", r_addr=" + r_addr + ", r_loc=" + r_loc
-				+ ", r_start_date=" + r_start_date + ", r_end_date=" + r_end_date + ", score=" + score + ", r_pic="
-				+ r_pic + "]";
+				+ ", r_start_date=" + r_start_date + ", r_end_date=" + r_end_date + ", score=" + score + "]";
 	}
-	
-	
+
 	
 	
 	

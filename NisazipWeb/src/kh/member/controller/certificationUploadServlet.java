@@ -79,8 +79,11 @@ public class certificationUploadServlet extends HttpServlet {
 	           pic.setUser_id(id); 
 	        
 	         int base = new MemberService().deleteCertification(id);  
-	           
-	         int result = new MemberService().insertCertication(pic);
+	         int result=0;
+	         if(saveFiles!= null){
+	         result =  new MemberService().insertCertication(pic);
+	         }  
+	  
 	         System.out.println("base:"+base);
 	         System.out.println(result);
 	         

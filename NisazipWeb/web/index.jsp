@@ -28,6 +28,15 @@
 
 
 <a href="views/manager/admin_home.jsp">관리자 페이지로 이동</a>
+
+
+
+<a href="<%= request.getContextPath()%>/messageList.m">메세지 목록</a> <br />
+	 <a href="views/message/messageSend.jsp">메시지 보내기</a> <br /> // 여기서 시작해야됨 .
+	 
+<h1><a href="views/report/reportSend.jsp">신고하기</a></h1> <br /><br />
+<h1><a href="views/review/review.jsp">후기</a></h1>
+
 </pre>
 <!-- 지도 영역 -->
 <div id="map" style="width:500px;height:400px;"></div>

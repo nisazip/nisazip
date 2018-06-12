@@ -12,6 +12,7 @@ public class Board {
 	private Date b_date;
 	private String delflag;
 	
+	
 	private String b_date_time;  // DB x 시간받을 때만.
 	
 

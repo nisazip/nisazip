@@ -33,22 +33,33 @@ public class MyBinServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String id = request.getParameter("userIDtoBin");
-		
+		String id = request.getParameter("userIDtoBin");		
 		System.out.println(id);
 		
-		ArrayList<HashMap<String,Object>> tCompleteList = null;				
+		ArrayList<HashMap<String,Object>> tCompleteList = null;		
+		ArrayList<HashMap<String,Object>> tGoingtoList = null;		
+		ArrayList<HashMap<String,Object>> rCompleteList = null;		
+		ArrayList<HashMap<String,Object>> rGoingtoList = null;		
+
 		BinService bs = new BinService();		
-		tCompleteList = bs.myTripsListP(id);
+		tCompleteList = bs.myTripsListP(id); //과거트립		
+		tGoingtoList =  bs.myTripsListW(id); //미래트립				
+		rCompleteList = bs.myRoomsListP(id); //과거 트립
+		rGoingtoList = bs.myRoomsListW(id); //미래 트립
 		
+		
+		HttpSession session = request.getSession(false);
+
 		String page = "";
 		if(tCompleteList != null) {
 			page = "views/member/myBin.jsp";
-			request.setAttribute("tCompleteList", tCompleteList);
+			session.setAttribute("tCompleteList", tCompleteList);
+			session.setAttribute("tGoingtoList", tGoingtoList);
+			session.setAttribute("rCompleteList", rCompleteList);
+			session.setAttribute("rGoingtoList", rGoingtoList);
 		} else {
-			HttpSession session = request.getSession(false);
-
-			session.setAttribute("messageContent", "저장된 회원정보가 아닙니다.");
+			
+			session.setAttribute("messageContent", "페이지를 올바르게 불러올 수 없습니다.");
 			session.setAttribute("messageType", "오류메세지");
 			response.sendRedirect(request.getHeader("referer")); 
 		}

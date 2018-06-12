@@ -2,6 +2,7 @@ package kh.member.model.service;
 
 import kh.member.model.dao.MemberDao;
 import kh.member.model.vo.Member;
+import kh.member.model.vo.MemberConfirm;
 import kh.member.model.vo.UserPic;
 
 import java.sql.*;
@@ -148,6 +149,57 @@ public class MemberService {
 		
 		return profile;
 	}
+
+
+	public Member findbyEmail(Member m) {
+		Member member= null;
+		Connection con = getConnection();
+		member = mDao.checkEmail(con, m);
+		close(con);
+		return member ;
+	}
+
+
+	public Member findbyId(Member m) {
+		Member member= null;
+		Connection con = getConnection();
+		member = mDao.checkId(con, m);
+		close(con);
+		return member ;
+	}
+
+
+	public int resetPwd(String id, String pwd) {
+		int result =0;	
+		Connection con = getConnection();
+		result = mDao.resetPwd(con, id, pwd);
+		close(con);
+		return result ;
+	}
+
+
+	public MemberConfirm findCerYN(MemberConfirm mc) {
+		MemberConfirm memberConfirm =null;
+		Connection con = getConnection();
+		memberConfirm = mDao.findCerYN(con,mc);
+		close(con);
+		return memberConfirm ;
+	}
+
+
+	public int setCerN(int no) {
+		int result =0;	
+		Connection con = getConnection();
+		result = mDao.setCerN(con, no);
+		close(con);
+		return result ;
+	}
+
+
+	
+
+
+	
 	
 
 }

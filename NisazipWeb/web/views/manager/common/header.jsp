@@ -92,7 +92,7 @@
                   <li class="dropdown navbtn">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">호스트 <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                    <li><a href="#">숙소 등록/관리</a></li>
+                    <li><a href="<%=request.getContextPath()%>/views/room/Room.jsp">숙소 등록/관리</a></li>
                     <li><a href="#">트립 등록/관리</a></li>
                   </ul>
                 </li>

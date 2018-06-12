@@ -1,8 +1,8 @@
 <%@page import="kh.board.model.service.BoardCommentService"%>
 <%@page import="kh.board.model.service.BoardService"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import ="java.util.*, kh.member.model.vo.*,  kh.board.model.vo.*, java.text.SimpleDateFormat"%>
-    <% 
+    pageEncoding="UTF-8" import ="java.util.*,  kh.board.model.vo.*,java.text.SimpleDateFormat"%>
+    <%
     	ArrayList<Board> list = (ArrayList<Board>) request.getAttribute("list");
     	PageInfo pi = (PageInfo)request.getAttribute("pi");
     	int listCount = pi.getListCount();
@@ -12,45 +12,49 @@
     	int endPage = pi.getEndPage();
     	String key=(String)request.getAttribute("key");
     	String con=(String)request.getAttribute("con");
-    	
     %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta  charset="UTF-8">
-      <!--  <script src="/semi/resources/js/jquery-3.3.1.min.js"></script>
-  	<link rel="stylesheet" href="/semi/resources/css/bootstrap.css">        
-      <script src="/semi/resources/js/bootstrap.js"></script>   -->
-  <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script> -->
-      
-     
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">         
    
-<title>Insert title here</title>
+<title>Q & A 목록</title>
 <style>
-	table th{
-	vertical-align: middle;
+	table th {
+		vertical-align: middle;
+		text-align: center;
 	}
-.page-item.active .page-link {
-  z-index: 1;
-  color: #fff;
-  background-color: #dddddd;
-  border-color: #dddddd;
-}
-.table td{
-	padding : 10px;
-}
-
+	
+	.table td {
+		padding: 10px;
+	}
+	
+	.label-danger {
+		background-color: white !important;
+	}
+	
+	.pagination>li>a {
+		color: black !important;
+	}
+	
+	a {
+		color: black !important;
+	}
+	
+	.pagination>.active>a, .pagination>.active>a:hover{
+		background-color: #5cb85c !important;
+		border-color: #5cb85c !important;
+		color:#fff  !important;
+	}
 </style>
 </head>
 
-    <body  >
-      <%@ include file="../common/header4.jsp" %>
-        <br><br><br><br> <br /> <br /><br /><br />
-
+    <body >
+      <%@ include file="../common/header.jsp" %>
+     <div id = "main">
 <script>
+	
 	// 검색
  	function search(){
  		var key=$('#searchKey').val();
@@ -69,26 +73,26 @@
 </script>
 
 
-    <div class="container col-sm-6 table-responsive" >
+    <div class="container col-sm-6 col-sm-offset-3 " >
         <h1>Q & A 게시판</h1>
- <p> <i class="fas fa-exclamation-circle"> 개인정보가 포함된 글이나 게시판 성격에 맞지 않은 글은 관리자에 의해 통보없이 삭제 될 수 있습니다.</i></p><br />
+ 		<p> <i class="fas fa-exclamation-circle"> 개인정보가 포함된 글이나 게시판 성격에 맞지 않은 글은 관리자에 의해 통보없이 삭제 될 수 있습니다.</i></p><br />
 		<!-- 검색창 -->
-		
-		       <div class=" row" >
-		           <div class="input-group  justify-content-end ">
-		                   <select name="searchCon" id="searchCon" class="form-control col-sm-2 "  >
+			
+		       <div class="row" >
+		            <div class="form-group form-inline pull-right" >  
+		                   <select name="searchCon" id="searchCon" class=" col-sm-2  form-control "  >
 		                       <option value="all">전체</option>
 		                       <option value="title">제목</option>
 		                       <option value="content">내용</option>
 		                       <option value="writer">작성자</option>
 		                   </select>&nbsp;
-		                   <input  id= "searchKey" name = "searchKey" class="form-control col-sm-3" type="text" onkeyup="enterKey();"> &nbsp;
-		                   <button id="searchBtn"class="btn btn-outline-secondary" onclick="search();" style="border: 1px solid #ced4da;" >검색</button>
-		           </div>
+		                   <input  id= "searchKey" name = "searchKey" class="col-sm-3 form-control " type="text" onkeyup="enterKey();"> &nbsp;
+		                  	<input type="button" id="searchBtn"class="btn btn-success  col-sm-2 form-control" onclick="search();" style="border: 1px solid #ced4da;" value="검색" >
+		           </div> 
 		       </div>
      
         
-        
+        	
            	전체 게시물 : <%=listCount %>  <br />        
 			<div  class="table-responsive">
 		        <table   id="listTable" class="table table-hover table-bordered " style=" text-align:center; ">
@@ -101,7 +105,7 @@
 	                </colgroup>
 		            <thead>
 			            <tr style=" text-align:center; background-color: #eeeeee;">
-			                <th style="  border-left: none;  vertical-align:middle;"> 게시물번호</th>
+			                <th style="  border-left: none;  vertical-align:middle;"> 게시물<br />번호</th>
 			                <th style="vertical-align:middle;">제목</th>
 			                <th style="vertical-align:middle;">작성자</th>
 			                <th style="vertical-align:middle;">작성일</th>
@@ -123,18 +127,16 @@
 		                <td align="left" ><%= b.getB_title()%>
 		                <%  
 		                	int result = new BoardCommentService().commentCheck(b.getB_no());
-		                	if(result>0){
-		                		check="[답변완료]";
-		                	}
-		                	
+		                	if(result>0) check="[답변완료]";
+
 		              		SimpleDateFormat sdf = new  SimpleDateFormat("yyyy-MM-dd");
 							String b_date = sdf.format(b.getB_date());
 							String now = sdf.format(new Date());
 
-								if(b_date.equals(now)) mark="new";
+							if(b_date.equals(now)) mark="new";
 							%>
 							<span align="right"> <b><%= check %> </b></span>
-							<span   class="<%if(mark.equals("new")){ out.print("badge badge-light");}%>" style="color:red;"> <%= mark %> </span>
+							<span   class="<%if(mark.equals("new")){ out.print("label label-danger");}%>" style="color:red;"> <%= mark %> </span>
 		                </td>
 		                <td><%= b.getB_writer() %> </td>
 		                <td><%= b.getB_date()%></td>
@@ -142,57 +144,50 @@
 		            </tr>
 		            <%} %>
 		            </tbody>
-		        </table>
+		        </table>	
 	 
 	        </div>
-		<% if(m!=null){%> 
-        <div class=" row justify-content-end">	
-    	  <button type="button" class="btn btn-success"
-      	    onclick="location.href='views/board/boardInsert.jsp'">글쓰기</button> 
-        </div>
-       <%}%>
-        
-        
-        
-   
-        
-        	<!-- 페이징 페이지 수 5개씩 -->
-	        <div class="row justify-content-center ">
-	            	
-				<ul class="pagination" >
-	                
-	                <li class="page-item "><a class="page-link" onclick="location.href='<%= request.getContextPath()%>/boardList.bo?currentPage=1&condition=<%=con%>&keyword=<%=key%>'" >처음</a></li>
-	                
-	               <%if(currentPage <=1){ %>
-						 <li class="page-item "><a class="page-link "  onclick="firstPage()" >이전</a></li>
-					<%} else {%>
-						 <li class="page-item "><a class="page-link" onclick="location.href='<%= request.getContextPath()%>/boardList.bo?currentPage=<%=currentPage-1%>&condition=<%=con%>&keyword=<%=key%>'" >이전</a></li>
-					<%} %>
-	               
-	          
-	               <%for(int i=startPage;i<= endPage; i++) {%>
-	               <% if(i== currentPage) { %>
-							<li class="page-item active "><a class="page-link"  ><%=i%></a></li>
-						<%}  else{%>
-							 <li class="page-item "><a class="page-link" onclick="location.href='<%= request.getContextPath()%>/boardList.bo?currentPage=<%=i%>&condition=<%=con%>&keyword=<%=key%>'" ><%=i%></a></li>
-						<%} %>
-					<%} %>
-	               
-	            	<%if(currentPage >=maxPage){ %>
-						 <li class="page-item "><a class="page-link" onclick="lastPage();" >다음</a></li>
-					<%} else {%>
-						 <li class="page-item "><a class="page-link" onclick="location.href='<%= request.getContextPath()%>/boardList.bo?currentPage=<%=currentPage+1%>&condition=<%=con%>&keyword=<%=key%>'" >다음</a></li>
-					<%} %>
-	            
-	            <li class="page-item "><a class="page-link" 
-	            	onclick="location.href='<%= request.getContextPath()%>/boardList.bo?currentPage=<%=maxPage %>&condition=<%=con%>&keyword=<%=key%>'" >마지막 </a></li>
-	            </ul>
-	        </div>
 
+        <div class="row ">	
+    	  <button type="button" class="btn btn-success pull-right"
+      	    onclick="<% if(m==null){out.print("location.href='index.jsp'");} else{%>location.href='views/board/boardInsert.jsp'<%}%>">글쓰기</button> 
+        </div>
+        
+
+        	<!-- 페이징 페이지 수 5개씩 -->
+			<div class="row" align="center">
+					<ul class="pagination"  >
+			                
+			                <li><a  onclick="location.href='<%= request.getContextPath()%>/boardList.bo?currentPage=1&condition=<%=con%>&keyword=<%=key%>'" >처음</a></li>
+			                
+			               <%if(currentPage <=1){ %>
+								 <li><a onclick="firstPage()" >이전</a></li>
+							<%} else {%>
+								 <li ><a  onclick="location.href='<%= request.getContextPath()%>/boardList.bo?currentPage=<%=currentPage-1%>&condition=<%=con%>&keyword=<%=key%>'" >이전</a></li>
+							<%} %>
+			               
+			          
+			               <%for(int i=startPage;i<= endPage; i++) {%>
+			               <% if(i== currentPage) { %>
+									<li class="active "><a  ><%=i%></a></li>
+								<%}  else{%>
+									 <li ><a onclick="location.href='<%= request.getContextPath()%>/boardList.bo?currentPage=<%=i%>&condition=<%=con%>&keyword=<%=key%>'" ><%=i%></a></li>
+								<%} %>
+							<%} %>
+			               
+			            	<%if(currentPage >=maxPage){ %>
+								 <li ><a  onclick="lastPage();" >다음</a></li>
+							<%} else {%>
+								 <li ><a  onclick="location.href='<%= request.getContextPath()%>/boardList.bo?currentPage=<%=currentPage+1%>&condition=<%=con%>&keyword=<%=key%>'" >다음</a></li>
+							<%} %>
+			            
+			          		 <li><a onclick="location.href='<%= request.getContextPath()%>/boardList.bo?currentPage=<%=maxPage %>&condition=<%=con%>&keyword=<%=key%>'" >마지막 </a></li>
+			            </ul>
+		            </div>
     </div>
 
 
-      <hr>   <br><br><br><br> 
+
       
       <script>
       
@@ -210,8 +205,12 @@
     	  alert("마지막 페이지 입니다.");
       }
 
+      $('.pagination').find('li').on('mouseenter',function(){
+    	 	 $(this).css("cursor","pointer");
+      });
      
 
       </script>
+      </div>
    </body>
 </html>

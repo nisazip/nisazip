@@ -53,26 +53,19 @@ public class LoginServlet extends HttpServlet {
 			}
 		
 		HttpSession session = request.getSession(false);
-		  if(m != null) {
+		if(m != null) {
 			System.out.println("login 결과로 받은 값 : "+m);
-			
-			session.setAttribute("member", m);
-			
+			session.setAttribute("member", m);			
 			response.sendRedirect(request.getHeader("referer")); 
-
-		}else {
+			
+		} else {
+			
 			session.setAttribute("messageContent", "저장된 회원정보가 아닙니다.");
 			session.setAttribute("messageType", "오류메세지");
 			response.sendRedirect(request.getHeader("referer")); 
 		}
-		  /*if(m.getUser_id().equals("admin")){
-				System.out.println("관리자 로그인");
-				session.setAttribute("member", m);
-				response.sendRedirect("views/manager/admin_home.jsp");
-				
-		 }*/
 	}
-	
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
