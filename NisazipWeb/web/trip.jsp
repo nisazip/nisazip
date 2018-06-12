@@ -147,41 +147,81 @@ ul {
                 </div>
                 <script>
                 function search(){
+              	   
+                    if($('input:checkbox[id="sortPrice"]').is(":checked") == true){
+               		 var checkVal = "true";
+               		 
+             	  	}else{
+               		var checkVal = "false";
+               		
+             	  	}
         			$.ajax({
     					url:'<%=request.getContextPath()%>/keywordSearch.ho',
     					type:"get",
     					data : {
-    						keyword : $('#keyword').val()
+    						keyword : $('#keyword').val(),
+    						checkVal : checkVal
     					},
     					success:function(data){
     						
     						console.log(data);
-    						console.log(data.rlist);
     						console.log(data.tlist);
     						// 전체 영역
     						
-    						
-    						$div = $('#trip2_thumb');
+    						var $div = $('#trip2_thumb');
     						$div.text("");
+	    						for(var i in data.tlist){
+	    							var str = '<div class="col-md-3">' 
+	    								+ '<div class="thumbnail">'
+	    							+'<a href="상세 페이지.html" target="_blank"> '
+	    							+'<img src="'+data.tlist[i].file_path+data.tlist[i].change_name+'.jpg" class="img" style="height:190px;">'
+	    							+' <div class="caption">'
+	    							+'<p>'+data.tlist[i].t_name+'</p>'
+	    							+'<p id="score">'+data.tlist[i].score+'점</p>'
+									+ '<p id="price">' + data.tlist[i].price + '￦</p>'
+	    							+'</div></a></div></div>';
+	    							
+	    							$div.append(str);
+	    						}
     						
-    						for(var i in data.tlist){
-    							var str = '<div class="col-md-3">' 
-    								+ '<div class="thumbnail">'
-    							+'<a href="상세 페이지.html" target="_blank"> '
-    							+'<img src="'+data.tlist[i].file_path+data.tlist[i].change_name+'.jpg" class="img" style="height:190px;">'
-    							+' <div class="caption">'
-    							+'<p>'+data.tlist[i].t_name+'</p>'
-    							+'<p id="score">'+data.tlist[i].score+'점</p>'
-								+ '<p id="price">' + data.tlist[i].price + '￦</p>'
-    							+'</div></a></div></div>';
-    							
-    							$div.append(str);
-    						}
-    						
+    				
     					
     					}
     				});
         		};
+        		
+        		$("#sortPrice").click(function() {
+					search();
+
+            });
+        		
+
+	        	 $(function(){
+	 				$.ajax({
+	 					url:"<%=request.getContextPath()%>/list.tr",
+	 					type:"get",
+	 					success:function(data){
+	 						// 전체 영역
+	 						var $div = $('#trip2_thumb');
+	 						
+	 						for(var i in data){
+	 							var str = '<div class="col-md-3">' 
+	 								+ '<div class="thumbnail">'
+	 							+'<a href="상세 페이지.html" target="_blank"> '
+	 							+'<img src="'+data[i].file_path+data[i].change_name+'.jpg" class="img" style="height:190px;">'
+	 							+' <div class="caption">'
+	 							+'<p>'+data[i].t_name+'</p>'
+	 							+'<p id="score">'+data[i].score+'점</p>'
+	 							+ '<p id="price">' + data[i].price + '￦</p>'
+	 							+'</div></a></div></div>';
+	 							
+	 							$div.append(str);
+	 						}
+	 					}
+	 				});
+	 				
+	 			}); 
+	 			 
                 </script>
 
                 
@@ -266,53 +306,7 @@ ul {
 			</div>
 			
 		</div>
-		<script>
-			 $(function(){
-				 
-          	   
-                 if($('input:checkbox[id="sortPrice"]').is(":checked") == true){
-            		 var checkVal = "true";
-            		 
-          	  	}else{
-            		var checkVal = "false";
-            		
-          	  	}
-				$.ajax({
-					url:"<%=request.getContextPath()%>/list.tr",
-					type:"get",
-					data : {
-						keyword : $('#keyword').val(),
-						checkVal : checkVal
-					},
-					success:function(data){
-						// 전체 영역
-						var $div = $('#trip2_thumb');
-						
-						for(var i in data){
-							var str = '<div class="col-md-3">' 
-								+ '<div class="thumbnail">'
-							+'<a href="상세 페이지.html" target="_blank"> '
-							+'<img src="'+data[i].file_path+data[i].change_name+'.jpg" class="img" style="height:190px;">'
-							+' <div class="caption">'
-							+'<p>'+data[i].t_name+'</p>'
-							+'<p id="score">'+data[i].score+'점</p>'
-							+ '<p id="price">' + data[i].price + '￦</p>'
-							+'</div></a></div></div>';
-							
-							$div.append(str);
-						}
-					}
-				});
-				
-			}); 
-			 
-				
-	        	$("#sortPrice").click(function() {
-
-					search();
-	            });
-
-		</script>
+		
         
     </div>
     </div>

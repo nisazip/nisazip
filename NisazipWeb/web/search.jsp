@@ -182,6 +182,7 @@ ul {
 	                <input type="search" id="keyword" placeholder="지역이나 숙소이름을 검색하세요" value="<%= area %>" style="width: 300px; height: 40px;">
 	                <a href="#" style="color: white">
 	                    <button type="button" id="search" onclick="search();">검색하기</button>
+	                    
 	                </a>
                 </div>
                 
@@ -219,7 +220,7 @@ ul {
     						
     					
     						if(data.rlist.length > 0) {
-	    						for(var i=1 ; i<5 ; i++){
+	    						for(var i=0 ; i<4 ; i++){
 	    							var str = '<div class="col-md-6">' 
 	    								+ '<div class="thumbnail">'
 	    							+'<a href="상세 페이지.html" target="_blank"> '
@@ -242,7 +243,7 @@ ul {
     						$div = $('#trip2_thumb');
     						$div.text("");
     						if(data.tlist.length > 0){
-    							for(var i=1 ; i<5 ; i++){
+    							for(var i=0 ; i<4 ; i++){
         							var str = '<div class="col-md-6">' 
         								+ '<div class="thumbnail">'
         							+'<a href="상세 페이지.html" target="_blank"> '
@@ -385,11 +386,7 @@ ul {
 		</div>
 		<script>
 	    	
-	    	$("#sortPrice").click(function() {
-	
-	          
-	
-	        });
+	    	
 	
 	    	function moreRoom(){
 	    		location.href='room.jsp';
@@ -419,46 +416,154 @@ ul {
          <div class="col-xs-6 hidden-xs" style="position:fixed;top:320px;margin-left:50%;bottom:10px;">
                 <div id="map"></div>
                 <script>
-                <% for(HashMap<String,Object> map : rlist) { %>
-                        var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-                        mapOption = {
-                            center: new daum.maps.LatLng(33.499970, 126.535388), // 지도의 중심좌표
-                            level: 3 // 지도의 확대 레벨
-                        };  
-                        
-                        //지도를 생성합니다    
-                        var map = new daum.maps.Map(mapContainer, mapOption); 
-                        
-                        //주소-좌표 변환 객체를 생성합니다
-                        var geocoder = new daum.maps.services.Geocoder();
-                        
-                        //주소로 좌표를 검색합니다
-                        geocoder.addressSearch('<%= map.get("r_addr")%>', function(result, status) {
-                        
-                        console.log(r_addr);
-                        // 정상적으로 검색이 완료됐으면 
-                         if (status === daum.maps.services.Status.OK) {
-                        
-                            var coords = new daum.maps.LatLng(result[0].y, result[0].x);
-                        
-                            // 결과값으로 받은 위치를 마커로 표시합니다
-                            var marker = new daum.maps.Marker({
-                                map: map,
-                                position: coords
-                            });
-                        
-                            // 인포윈도우로 장소에 대한 설명을 표시합니다
-                            var infowindow = new daum.maps.InfoWindow({
-                                content: '<div style="width:150px;text-align:center;padding:6px 0;">우리 집</div>'
-                            });
-                            infowindow.open(map, marker);
-                        
-                            // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-                            map.setCenter(coords);
-                        } 
-                        });    
-                        
-                        <%}%>
+             // 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
+             
+                var infowindow = new daum.maps.InfoWindow({zIndex:1});
+
+                var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+                    mapOption = {
+                        center: new daum.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
+                        level: 3 // 지도의 확대 레벨
+                    };  
+
+                // 지도를 생성합니다    
+                var map = new daum.maps.Map(mapContainer, mapOption); 
+
+                
+                // 키워드로 장소를 검색합니다
+                
+                
+                /////////////////////////////////////////////////////
+              
+                var geocoder = new daum.maps.services.Geocoder();
+                
+                var addrs = new Array();
+                var origin_data = new Array();
+                <% for(HashMap<String,Object> map : rlist ){%>
+                	var addr1 = '<%=map.get("r_addr")%>'.split("| ");
+                	addrs.push(addr1[1]); 
+                <% } %>
+               
+                for(var i = 0; i<addrs.length ;i++){
+
+                	// 주소로 좌표를 검색합니다
+	                geocoder.addressSearch(addrs[i], function(result, status) {
+	
+	                    // 정상적으로 검색이 완료됐으면 
+	                     if (status === daum.maps.services.Status.OK) {
+	
+	                        var coords = new daum.maps.LatLng(result[0].y, result[0].x);
+							var subst = coords.toString();
+							var tmp = subst.substring(1,subst.length-1);
+							
+							origin_data.push(tmp);
+							///  console.log(origin_data);
+							 // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+	                        // LatLngBounds 객체에 좌표를 추가합니다
+	                        var bounds = new daum.maps.LatLngBounds();
+
+	                        for (var i=0; i<origin_data.length; i++) {
+	                        	// console.log('origin_data[i] : '+origin_data[i]);
+	                            displayMarker(origin_data[i]);    
+
+	                            var places = origin_data[i].split(", ");
+	                        	var resultX = places[1];
+	                        	var resultY = places[0];
+	                        	
+	                            bounds.extend(new daum.maps.LatLng(resultY,resultX));
+	                        }       
+	                        
+	                        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+	                        map.setBounds(bounds);
+	                    } 
+	                }); 
+
+                }
+                
+                // 지도에 마커를 표시하는 함수입니다
+                 function displayMarker(place) {
+                	<% for(HashMap<String,Object> map : rlist ){%>
+                	var places = place.split(", ");
+                	var resultX = places[1];
+                	var resultY = places[0];
+                	// console.log('resultY : '+resultY);
+                	// console.log('resultX : '+resultX);
+                	
+                    // 마커를 생성하고 지도에 표시합니다
+                    var marker = new daum.maps.Marker({
+                        map: map,
+                        position: new daum.maps.LatLng(resultY, resultX) 
+                    });
+                    
+             
+                    // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
+                    infowindow.setContent('<div style="width:max-content;padding:5px;font-size:12px;">' +'<%=map.get("price")%>'+ '</div>');
+                    infowindow.open(map, marker);
+                    
+                    <%}%>
+                    /* // 마커에 클릭이벤트를 등록합니다
+                    daum.maps.event.addListener(marker, 'click', function() {
+                        // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
+                        infowindow.setContent('<div style="width:max-content;padding:5px;font-size:12px;">' + '</div>');
+                        infowindow.open(map, marker);
+                    }); */
+                }
+
+               
+               
+               
+                
+                <%-- /////////////////////////////////////////////
+                /* if($('#keyword').val().equals('서귀포시')){ */
+                ps.keywordSearch('서귀포시', placesSearchCB); 
+
+                // 키워드 검색 완료 시 호출되는 콜백함수 입니다
+                function placesSearchCB (origin_data, status, pagination) {
+                    if (status === daum.maps.services.Status.OK) {
+                       console.log("----- 변경 전 -----");
+                       console.log(origin_data); // 원본 데이터
+                       
+                       // 이후 ajax등을 활용하여 데이터 덮어쓰기
+                       // 위도, 경도 찾는 웹 사이트
+                       // http://www.iegate.net/maps/rgeogoogle.php
+                       console.log('origin_data[0].address_name'+origin_data[0].address_name);
+                       <% for(HashMap<String,Object> map : rlist ){%>
+                       if((origin_data[0].address_name).includes("서귀포")==true){
+                       		console.log(typeof(origin_data[0].address_name));
+                    	  var tmp = '<%=map.get("r_loc")%>';
+                    	  var loc  = tmp.split(",");
+                    	  
+                    	   console.log('위도'+loc[0]);
+                    	   console.log('경도'+loc[1]);
+                    	   
+                       origin_data = [
+                          { place_name : "test1_서귀포해양도립공원",
+                              x : "<%=map.get("r_loc")%>",
+                              y : "33.239872" },
+                            { place_name : "test2_걸매생태공원",
+                             x : "126.554952",
+                             y : "33.250029" },
+                            { place_name : "test3_백호모텔",
+                              x : "126.563581",
+                              y : "33.240805" },
+                            { place_name : "test4_정방폭포",
+                              x : "126.571905",
+                              y : "33.244321" },
+                       ];
+                       console.log("----- 변경 후 -----");
+                      console.log(origin_data);
+                      
+                       }
+                      <%}%>
+                      
+                      
+                       
+                    } 
+                }
+
+               
+ --%>
+               
                 </script>
               
         </div>
