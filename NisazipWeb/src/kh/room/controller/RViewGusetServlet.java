@@ -35,12 +35,13 @@ public class RViewGusetServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String num = request.getParameter("num");
 		HashMap<String,Object> map = new rService().selectOne(num);
-		
+		System.out.println("tjqmfflt sjdjdha"+num);
 		String page = "";
 		if(map != null){
 			page = "views/room/RoomInfo(guest).jsp";
 			request.setAttribute("room", ((Room)map.get("room")));
 			request.setAttribute("fileList", ((ArrayList<Attachment>)map.get("fileList")));
+			System.out.println("tjqmfflt sjdjdha : "+map);
 		} else {
 			System.out.println("접근 실패");
 			page = "views/common/errorPage.jsp";

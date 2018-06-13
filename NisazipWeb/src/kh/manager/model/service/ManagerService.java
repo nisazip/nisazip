@@ -12,6 +12,8 @@ import java.util.HashMap;
 import kh.manager.model.dao.mDao;
 import kh.manager.model.vo.MemberList;
 import kh.manager.model.vo.ReportList;
+import kh.manager.model.vo.RoomReservList;
+import kh.manager.model.vo.TripReservList;
 import kh.report.model.vo.Report;
 import kh.room.model.vo.Room;
 import kh.trip.model.vo.Trip;
@@ -538,6 +540,104 @@ public class ManagerService {
 		
 		close(con);
 		
+		return result;
+	}
+
+	public int getTripReservListCount() {
+		Connection con = getConnection();
+		int result =new mDao().getTripReservListCount(con);
+		
+		close(con);
+		
+		return result;
+	}
+
+	public int searchTIdCount(String keyword) {
+		Connection con = getConnection();
+		int result =new mDao().searchTIdCount(con, keyword);
+		
+		close(con);
+		
+		return result;
+	}
+
+	public ArrayList<TripReservList> getTripReservList(int currentPage, int limit) {
+		Connection con = getConnection();
+		mDao mDao = new mDao();
+		
+		ArrayList<TripReservList> list =mDao.getTripReservList(con, currentPage, limit);
+		close(con);
+		return list;
+	}
+
+	public ArrayList<TripReservList> searchTId(int currentPage, int limit, String keyword) {
+		Connection con = getConnection();
+		mDao mDao = new mDao();
+		
+		ArrayList<TripReservList> list =mDao.searchTId(con, currentPage, limit, keyword);
+		close(con);
+		return list;
+	}
+
+	public int getRoomReservListCount() {
+		Connection con = getConnection();
+		int result =new mDao().getRoomReservListCount(con);
+		
+		close(con);
+		
+		return result;
+	}
+
+	public int searchrIdCount(String keyword) {
+		Connection con = getConnection();
+		int result =new mDao().searchrIdCount(con, keyword);
+		
+		close(con);
+		
+		return result;
+	}
+
+	public ArrayList<RoomReservList> getRoomReservList(int currentPage, int limit) {
+		Connection con = getConnection();
+		mDao mDao = new mDao();
+		
+		ArrayList<RoomReservList> list =mDao.getRoomReservList(con, currentPage, limit);
+		close(con);
+		return list;
+	}
+
+	public ArrayList<RoomReservList> searchrId(int currentPage, int limit, String keyword) {
+		Connection con = getConnection();
+		mDao mDao = new mDao();
+		
+		ArrayList<RoomReservList> list =mDao.searchrId(con, currentPage, limit, keyword);
+		close(con);
+		return list;
+	}
+
+	public int cancelRoom(int roomReservNo) {
+		Connection con = getConnection();
+		
+		int result = new mDao().cancelRoom(con, roomReservNo);
+		
+		if(result >0) commit(con);
+		else rollback(con);
+		
+		close(con);
+
+		return result;
+	}
+
+	public int cancelTrip(String tripReservNo) {
+		Connection con = getConnection();
+		
+		int result = new mDao().cancelTrip(con, tripReservNo);
+		
+		if(result >0) commit(con);
+		else rollback(con);
+		
+		close(con);
+
 		return result;
 	}
 

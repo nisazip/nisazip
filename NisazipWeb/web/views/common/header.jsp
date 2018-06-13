@@ -9,6 +9,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/holder/2.9.4/holder.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 <style>
 #main {
    position: absolute;
@@ -277,13 +278,25 @@ ul {
 
                   <div class="collapse navbar-collapse" id="myNavbar">
                      <ul class="nav navbar-nav">
-                        <li class="navbtn"><a href='room.jsp'>숙소</a></li>
-                        <li class="navbtn"><a href="trip.jsp">트립</a></li>
+                        <li class="navbtn"><a href='<%=request.getContextPath()%>/room.jsp'>숙소</a></li>
+                        <li class="navbtn"><a href="<%=request.getContextPath()%>/trip.jsp">트립</a></li>
                         <li class="dropdown navbtn"><a class="dropdown-toggle"
                            data-toggle="dropdown" href="#">호스트 <span class="caret"></span></a>
                            <ul class="dropdown-menu">
-                              <li><a href="<%=request.getContextPath()%>/views/room/Room.jsp">숙소 등록/관리</a></li>
-                              <li><a href="<%=request.getContextPath() %>/views/regist/1trip_name.jsp">트립 등록/관리</a></li>
+                              <li>
+                              <% if(m != null) {%>
+                              <a href="<%=request.getContextPath()%>/views/room/Room.jsp">숙소 등록/관리</a>
+                              <% } else { %>
+                              <a id="login" onclick="userLogin();" style="color:black">숙소 등록/관리</a>
+                              <% } %>
+                              </li>
+                              <li>
+                              <% if(m != null) {%>
+                              <a href="<%=request.getContextPath()%>/views/regist/1trip_name.jsp">트립 등록/관리</a>                        
+                              <% } else { %>
+                              <a id="login" onclick="userLogin();" style="color:black">트립 등록/관리</a>
+                              <% } %>
+                              </li>
                            </ul></li>
                         <li class="navbtn"><a href="<%= request.getContextPath()%>/messageList.m">메시지</a></li>
                         <li class="navbtn"><a href="<%=request.getContextPath()%>/boardList.bo">Q&A</a></li>

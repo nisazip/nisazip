@@ -9,8 +9,8 @@ import java.util.HashMap;
 
 import kh.home.model.dao.RoomDao;
 import kh.home.model.dao.TripDao;
-import kh.home.model.vo.Room;
-import kh.home.model.vo.Trip;
+import kh.room.model.vo.Room;
+import kh.trip.model.vo.Trip;
 
 public class TripService {
 

@@ -108,19 +108,30 @@ public class RUpdateServlet extends HttpServlet {
 
 			System.out.println(room);
 			System.out.println("서블릿 확인: " + fileList);
+			
+			int updateSearch = rs.updateSearch(R_NUM);
+			
+			if(updateSearch == 0){
+				
+				int result = rs.updateRoom(room);
+				int result2 = rs.updatePicture(fileList);
 
-			int result = rs.updateRoom(room);
-			int result2 = rs.updatePicture(fileList);
-
-			String page = "";
-			if (result > 0 || result2 > 0) {
-				page = "views/room/Roomlist.jsp";
-				request.setAttribute("list", rs.selectList());
+				String page = "";
+				if (result > 0 || result2 > 0) {
+					page = "views/room/Roomlist.jsp";
+					request.setAttribute("list", rs.selectList());
+				} else {
+					System.out.println("수정 실패!");
+					page = "views/common/errorPage.jsp";
+				}
+				request.getRequestDispatcher(page).forward(request, response);
+				
 			} else {
-				System.out.println("수정 실패!");
-				page = "views/common/errorPage.jsp";
+				String uesMsg = "남아있는 예약이 있어서 수정이 불가능 합니다., 남아있는 수정수: " + updateSearch;
+				request.setAttribute("uesMsg", uesMsg);
+				request.getRequestDispatcher("/views/room/Room.jsp").forward(request, response);
 			}
-			request.getRequestDispatcher(page).forward(request, response);
+			
 		}
 	}
 

@@ -41,8 +41,6 @@ public class ReservationDetailServlet extends HttpServlet {
 		int R_MAX_NUM = Integer.parseInt(request.getParameter("max_num"));
 		String id = request.getParameter("id");
 		
-		System.out.println("유저 아이디 값: "+id);
-		
 		int result = 0;
 		R_RESERVATION res = new R_RESERVATION();
 		Room room = new Room();
@@ -55,7 +53,6 @@ public class ReservationDetailServlet extends HttpServlet {
 		room.setR_max_num(R_MAX_NUM);
 		res.setUser_id(id);
 		
-		result = new rService().ReservationPrice(res);
 		int roomTotalpeople = new rService().roomTotalcount(res.getR_id(), res.getCheck_in(), res.getCheck_out());
 		
 		String page = "";
@@ -63,18 +60,25 @@ public class ReservationDetailServlet extends HttpServlet {
 		if(roomTotalpeople + res.getPeople() >= room.getR_max_num() ){
 			String countMsg = "예약가능한 인원을 초과하였습니다.예약 가능 인원 : "+(room.getR_max_num()-roomTotalpeople);
 			request.setAttribute("countMsg", countMsg);
-			page = "/ViewRoom.no";
-		} else if(result > 0){
-			res = new rService().selectRecent();
+			page = "/ViewRoom.no";	
+			//request.getRequestDispatcher("ViewRoom.no").forward(request, response);
+		} else {
+			result = new rService().ReservationPrice(res);
+		
+		
+		if(result > 0){
+			res = new rService().selectRecent(res);
 			System.out.println("성공!");
 			System.out.println(res);
 			page = "views/room/ReservationRoom.jsp";
 			request.setAttribute("res", res);
 		} else {
 			System.out.println("실패");
-			page = "views/common/errorPage.jsp";
-		}request.getRequestDispatcher(page).forward(request, response);
-		
+//			page = "views/common/errorPage.jsp";
+		}
+			
+		}
+		request.getRequestDispatcher(page).forward(request, response);
 		/*String page = "";
 		if(result > 0){
 			res = new rService().selectRecent();

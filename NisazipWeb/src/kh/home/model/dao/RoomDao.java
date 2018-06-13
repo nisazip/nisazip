@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Properties;
 
 import kh.home.model.vo.RecRoom;
-import kh.home.model.vo.Room;
+import kh.room.model.vo.Room;
 
 public class RoomDao {
 	private Properties prop;
@@ -275,8 +275,8 @@ public class RoomDao {
 				hmap.put("r_id", rset.getString("r_id"));
 				hmap.put("r_name", rset.getString("r_name"));
 				hmap.put("price", rset.getInt("price"));
-				hmap.put("r_start_date", rset.getDate("r_start_date"));
-				hmap.put("r_end_date", rset.getDate("r_end_date"));
+				hmap.put("r_start_date", rset.getString("r_start_date"));
+				hmap.put("r_end_date", rset.getString("r_end_date"));
 				hmap.put("r_max_num", rset.getInt("r_max_num"));
 				hmap.put("r_loc", rset.getString("r_loc"));
 				hmap.put("r_addr", rset.getString("r_addr"));

@@ -122,11 +122,11 @@ public class TripRegistService {
 		return result;
 	}
 
-	public Trip getTrip(String userId) {
+	public Trip getTrip(String tripNumber) {
 		Connection con = getConnection();
 		TripRegistDao tDao = new TripRegistDao();
 
-		Trip tregist = tDao.getTrip(con, userId);
+		Trip tregist = tDao.getTrip(con, tripNumber);
 
 		System.out.println("수정 서비스 부분 tregist : " + tregist);
 		
@@ -134,11 +134,11 @@ public class TripRegistService {
 		return tregist;
 	}
 
-	public ArrayList<Attachment> getPicture(String userId) {
+	public ArrayList<Attachment> getPicture(String tripNumber) {
 		Connection con = getConnection();
 		TripRegistDao tDao = new TripRegistDao();
 
-		ArrayList<Attachment> at = tDao.getPicture(con, userId);
+		ArrayList<Attachment> at = tDao.getPicture(con, tripNumber);
 
 		System.out.println("at : " + at);
 
@@ -283,5 +283,29 @@ public class TripRegistService {
 		close(con);
 
 		return result;
+	}
+
+	public Trip getTripGuest(String tripNumber) {
+		Connection con = getConnection();
+		TripRegistDao tDao = new TripRegistDao();
+
+		Trip tregist = tDao.getTripGuest(con, tripNumber);
+
+		System.out.println("수정 서비스 부분 tregist : " + tregist);
+		
+		close(con);
+		return tregist;
+	}
+
+	public ArrayList<Attachment> getPictureGuest(String tripNumber) {
+		Connection con = getConnection();
+		TripRegistDao tDao = new TripRegistDao();
+
+		ArrayList<Attachment> at = tDao.getPictureGuest(con, tripNumber);
+
+		System.out.println("at : " + at);
+
+		close(con);
+		return at;
 	}
 }

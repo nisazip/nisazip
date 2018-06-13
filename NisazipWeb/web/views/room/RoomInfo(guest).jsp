@@ -17,13 +17,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
-<script src="<%=request.getContextPath()%>/resources/js/jquery-3.3.1.min.js"></script>
+<%-- <script src="<%=request.getContextPath()%>/resources/js/jquery-3.3.1.min.js"></script> --%>
  
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <style>
 body,h1,h2,h3,h4,h5 {font-family: "Poppins", sans-serif}
 body {font-size:16px;}
 
+     .messageModal {
+  width: 50%;
+  margin: 0;
+  padding: 0;
+}
+.messageModal-content{
+  height: auto;
+  border-radius: 0; 
+}
 .review_img{
 max-width: 70px;
 height:70px;
@@ -38,21 +47,17 @@ float:left;
 .form-check-label{
 	margin-right:10px;
 }
+.messageLi{
+font-size:18px;
+text-align:left;
+}
+</style>
 
- .modal-dialog {
-  width: 50%;
-  /* height: 100%; */
-  margin: 0;
-  padding: 0;
-}
-.modal-content {
-  height: auto;
-  /* min-height: 100%; */
-  border-radius: 0; 
-}
 </style>
 <body>
       <%@ include file="../common/header.jsp" %>  <br /><br /><br /><br /><br /><br /><br /><br /><br />
+      
+  
       
       
 <!-- Sidebar/menu -->
@@ -64,7 +69,9 @@ float:left;
   <div class="w3-bar-block">
     
     <a href="<%=request.getContextPath()%>/views/room/RoomInsert.jsp" class="w3-bar-item w3-button w3-hover-white">숙소 등록하기</a>  
-    <div class="w3-bar-item w3-button w3-hover-white" onclick="location.href='<%=request.getContextPath()%>/roomselectList.no'">등록 숙소 보기</div> 
+    
+    <div class="w3-bar-item w3-button w3-hover-white" onclick="location.href='<%=request.getContextPath()%>/roomselectList.no'">등록 숙소 보기</div>
+    
     <div class="w3-bar-item w3-button w3-hover-white" onclick="location.href='<%=request.getContextPath()%>/Rstatistics.no'">통계 페이지</div>
     <div class="w3-bar-item w3-button w3-hover-white" onclick="location.href='<%=request.getContextPath()%>/roomReservationList.no'">등록 숙소 예약자 명단</div>
 </div>
@@ -89,12 +96,11 @@ float:left;
         <p style="color:burlywood; margin-right: 600px;">
         <%=r.getR_detail() %>
         </p>
-        
-        <input type="button" class="btn btn-success" data-toggle="modal" data-target="#messageModal" value="연락하기" ><br /><br />
+       
+   
+       
         <p id="" style="color: black; margin-left: -600px; font-family: ;">○편의시설: &nbsp;<%=r.getR_option() %></p>
-        
-        
-        
+       
         <form id="reservationForm" action="" method="post" style="color: green; position: fixed; top: 450px; right: -150px; /* border: 1px solid; */ /* z-index: -1000; background: linear-gradient( to left, white, lightgreen ); */">
             <%-- <h3 style="margin-left: 1200px;">등록번호: <%=r.getR_id() %>번</h3> --%>
             <h3 style="margin-left: 1200px;">￦<%=r.getPrice() %> /박</h3>
@@ -103,190 +109,36 @@ float:left;
             <input type="number" style="margin-left: 1200px;" size="5" name="people">명
             <!-- <input type="button" value="예약하기" style="margin-left: 1200px;" onclick="reservation();"><br><br> -->
             <button style="margin-left: 1200px;" onclick="reservation()">예약하기</button><br><br>
-            <input type="button" value="신고하기" style="margin-left: 1200px; border-radius: 40px; color: darkred;"
-            data-toggle="modal" id ="reportBtn"
-			data-target="#reportModal" value="신고하기">
+	        	<%if(m==null){ %>
+				<input type="button" style="margin-left: 1200px; border-radius: 40px; color: darkred;" value="신고하기" id ="reportBtn" onclick="alert('로그인 후 이용해주세요');">	
+				<%}else{ %>
+				<input type="button" style="margin-left: 1200px; border-radius: 40px; color: darkred;" data-toggle="modal" id ="reportBtn"data-target="#reportModal" value="신고하기">
+				 <input type="hidden"   id="rp_writer"name="rp_writer" value="<%=m.getUser_id() %>"/> 
+				 <input type="hidden"  id="rp_receiver" name="rp_receiver" value="<%=r.getHost_id()%> "/> 
+				<%} %>
         	</form>
         
+        
 </div><br><br><br><br />
-	<!-- 메세지 보내는 부분 -->
-	보내는 사람 이라능 :
-	<input id="m_writer" name="m_writer" type="hidden" value="로그이ㅣㄴ" />
-	<br /> 받는 사람이라능 :
-	<input id="m_receiver" name="m_receiver" type="hidden"
-		value="<%=r.getHost_no()%>" /> 상세페이지에서 받을 것
-	<br /> 호스팅 아이디 정보도 넘겨야함 :
-	<input id="hosting_id" name="hosting_id" type="hidden"
-		value="<%=r.getR_id()%>" /> 상세페이지에서 받을 것 EX) R2 /T2
-
-	<input type="button" class="btn btn-success" data-toggle="modal"
-		data-target="#messageModal" value="연락하기">
-
-	<div class="container" style="width: 100%;">
-		<!-- The Modal -->
-		<div class="modal fade" id="messageModal">
-			<div class="modal-dialog">
-				<div class="modal-content">
-
-					<!-- Modal Header -->
-					<div class="modal-header"
-						style="background-color: #5cb85c; color: white;">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h2 class="modal-title" id="who">
-							<b>ooo 님에게 메시지 보내기</b>
-						</h2>
-					</div>
-
-					<!-- Modal body -->
-					<div class="modal-body">
-
-						<div class="container " style="width: 100%;">
-							<div class="row " style="width: 100%;">
-								<h3>
-									<b>HOST 님에게 연락하기!<b>
-								</h3>
-								<h4>
-									<ul>
-										<li>이곳에 오시게 된 이유는 무엇인가요?</li>
-										<li>누구와 같이 오시나요?</li>
-										<li>언제쯤 오시나요?</li>
-										<li>필요한 것이 있으신가요?</li>
-										<li>궁금한 점이 더 있으신가요?</li>
-									</ul>
-								</h4>
-							</div>
-
-							<hr>
-
-							<h3>
-								<b>여행계획<b>
-							</h3>
-							<div class="row" style="width: 100%;">
-								<div class="col-sm-4">
-									체크인 <input type="date" id="checkin" name="checkin"
-										class="form-control col1-sm-4  " placeholder="체크아웃">
-								</div>
-
-								<div class="col-sm-4 col-sm-offset-1">
-									체크아웃 <input type="date" id="checkout" name="checkout"
-										class="form-control col1-sm-4  " placeholder="체크아웃">
-								</div>
-
-								<div class="col-sm-2 col-sm-offset-1">
-									인원 <input type="number" id="guest_num" name="guest_num"
-										value="" min="1" max="10" class="form-control" placeholder="명">
-								</div>
-							</div>
-							<hr>
-							<h4>
-								<b>메세지보내기<b>
-							</h4>
-							<div class="row" style="width: 100%;">
-								<textarea class="form-control" rows="5" id="m_content"
-									name="m_content" style="margin-left: 10px;"></textarea>
-								<p id="keyCounter" align=right>0/200 자</p>
-							</div>
-
-						</div>
-					</div>
-
-					<div class="modal-footer">
-						<input type="button" value="보내기"
-							class="btn btn-success col-sm-3 pull-right "
-							onclick="valueChk();">
-					</div>
-				</div>
-			</div>
-		</div>
-
-	</div>
-
-	<!-- 신고자 / 신고당하는사람  -->
-	신고자:
-	<input type="hidden" id="rp_writer" name="rp_writer"
-		value="<%-- <%=m.getUser_id() %> --%>" />
-	<%-- <%=m.getUser_id() %> --%>
-	<br /> 신고당하는사람:
-	<input type="hidden" id="rp_receiver" name="rp_receiver"
-		value="신고당하는자 " /> 호스트 아이디 넣기
-
-	<div class="container">
-		<!-- The Modal -->
-		<div class="modal fade" id="reportModal">
-			<div class="modal-dialog">
-				<div class="modal-content">
-
-					<!-- Modal Header -->
-					<div class="modal-header bg-success"
-						style="background-color: #5cb85c; color: white;">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h2 class="modal-title" id="who">ooo 님 신고하기</h2>
-					</div>
-
-					<!-- Modal body -->
-					<div class="modal-body">
-						<div class="container" style="width: 100%;">
-							<label for="comment">
-								<h4>
-									<b>1. 신고하는 이유를 알려주세요<b>
-								</h4>
-							</label> <br>
-
-							<div class="form-check">
-								<label class="form-check-label"> <input type="radio"
-									class="form-check-input" value="틀린정보" name="rp_type">
-									부정확하거나 틀린 정보가 있어요.
-								</label>
-							</div>
-							<div class="form-check">
-								<label class="form-check-label"> <input type="radio"
-									class="form-check-input" value="불친절" name="rp_type">
-									불친절합니다.
-								</label>
-							</div>
-							<div class="form-check">
-								<label class="form-check-label"> <input type="radio"
-									class="form-check-input" value="사기" name="rp_type">
-									사기입니다.
-								</label>
-							</div>
-							<div class="form-check">
-								<label class="form-check-label"> <input type="radio"
-									class="form-check-input" value="기타" name="rp_type"> 기타
-								</label>
-							</div>
-
-							<hr>
-
-							<div class="form-group">
-								<label for="rp_content">
-									<h4>
-										<b>2. 자세히 알려주세요<b>
-									</h4>
-								</label>
-								<textarea class="form-control" rows="5" id="rp_content"
-									name="rp_content"></textarea>
-								<p id="keyCounter" align=right>0/200 자</p>
-							</div>
-						</div>
-					</div>
-
-					<!-- Modal footer -->
-					<div class="modal-footer ">
-						<input type="button" value="신고하기"
-							class="btn btn-success col-sm-3 pull-right" id="report"
-							onclick="valueChk();">
-					</div>
-				</div>
-			</div>
-		</div>
-
-	</div>
+	
 
 <!-- 기본 정보 -->
+
 <div style="font-weight: bold; font-size: 20px; margin-left: -600px;" class="w3-center">
+
+	  <%if(m==null){ %>
+        <input type="button" class="btn btn-success" value="호스트에게 연락하기" onclick="alert('로그인 후 이용해주세요');" >
+		<% }else {%>
+				 <input id="m_writer"  name="m_writer" type="hidden" value = "<%= m.getUser_id() %>"/> 
+				 <input  id="m_receiver" name="m_receiver" type ="hidden" value="<%=r.getHost_id()%>"/> 
+				 <input  id="hosting_id" name="hosting_id" type="hidden" value="<%=r.getR_id()%>" /> 
+			<input type="button" class="btn btn-success" data-toggle="modal" data-target="#messageSendModal" value="호스트에게 연락하기" >
+		 <%} %>
+      	<br>
+
+
     ※ 숙소 규칙
-    <p> <%=r.getR_rule() %></p>
+    <p> <%=r.getR_role() %></p>
 </div><br />
 <%-- <input type="hidden" value="<%=r.getR_max_num() %>" name="R_MAX_NUM" /> --%>
 <div style="font-weight: bold; font-size: 20px; margin-left: -600px;" class="w3-center">
@@ -299,7 +151,7 @@ float:left;
        	<p style="color: "><%=r.getR_loc() %></p>
         <p style="color: "><%=r.getR_addr() %></p><br>
         <!-- 지도 -->
-        <div id="map" style="width:100%;height:350px;"></div>
+        <div id="map" style="width:100%;height:350px; z-index: -1;"></div>
 		<br><br>
 </div>
 <div style="font-weight: bold; font-size: 20px; color: ; margin-left: -600px;" class="w3-center">
@@ -308,16 +160,21 @@ float:left;
          체크인까지 30일이 남지 않은 시점에 취소하면<br> 총 숙박 요금의 50%와 수수료 전액이 환불됩니다.
 </div><br><br>
 <div style="font-weight: bold; font-size: 20px; color: ; margin-left: -600px;" class="w3-center">
-        호스트 정보:&nbsp;&nbsp;&nbsp; <%=r.getHost_no() %> (인증됨) <br>
+        호스트 정보:&nbsp;&nbsp;&nbsp; <%=r.getHost_id() %>(인증됨) <br>
         
 </div><br><br>
 <div style="font-weight: bold; font-size: 20px; color: ; margin-left: -600px;" class="w3-center">
-        현재 예약 가능 여부:&nbsp;&nbsp;&nbsp; YES <br>
+        현재 예약 가능 여부:&nbsp;&nbsp;&nbsp; YES <br><br /><br />
         
 </div>
+        	
 
-<!-- 리뷰 화면 -->
-<div class="container" >
+
+<!-- 리뷰화면  -->
+
+
+    <div class="container" >
+    			<input type="hidden" name="hosting_id_r" id="hosting_id_r" value="<%=r.getR_id()%>"/>
    				
    				<div class="container col-sm-6  col-sm-offset-3">
 					<label class="form-check-label"> 
@@ -331,7 +188,6 @@ float:left;
 					</label>
 				</div>
 				<!-- 호스팅 아이디 추가핤것! -->
-    			<input type="hidden" name="hosting_id" id="hosting_id" value="<%=r.getR_id()%>"/>
     	<!--  후기 봄ㅁ --> 
         <div class="container col-sm-6  col-sm-offset-3" id="reviewArea" ></div>
     </div>
@@ -351,8 +207,8 @@ float:left;
 					        <div class="col-sm-10" >
 			                    <label >작성자</label>
 			                    
+ 									<input type="hidden" name="userId" id="userId" value="<%=m.getUser_id()%>"/>
 			                   		 
- 									<input type="hidden" name="user_id" id="user_id" value="<%-- <%=m.getUser_id()% --%>>"/>
 			                    <span ><%=m.getUser_name()%></span>
 			                 
 			                </div>
@@ -373,7 +229,7 @@ float:left;
 		                <div class="form-group">
 			                <label for="re_score">내용</label>
 		                        <textarea class="form-control" rows="3" id="re_content" class="re_content" ></textarea>
-		                		<p id = "keyCounter" align=right> 0/200 자</p>
+		                		<p id = "reviewkeyCounter" align=right> 0/200 자</p>
 		                </div>
 			                   
 		                 <div class="pull-right">
@@ -386,13 +242,305 @@ float:left;
  		</div>
   			
 	</div>
-  					
-    <%} %>
+ <%} %>	
+
+
+
+
+
+
+
+    <!-- 메세지 모달  -->
+		    <div class="container" style="width:100%;">
+		        <!-- The Modal -->
+		        <div class="modal fade" id="messageSendModal" >
+		          <div class="modal-dialog messageModal">
+		            <div class="modal-content messageModal-content">
+		            
+		              <!-- Modal Header -->
+		              <div class="modal-header" style="background-color: #5cb85c; color:white;" >
+		                <button type="button" class="close" data-dismiss="modal">&times;</button>
+		                <h2 class="modal-title" id="who" style="text-align:left;"><%=r.getHost_id()%> 님에게 메시지 보내기</h2>
+		              </div> 
+		
+		              <!-- Modal body -->
+		              <div class="modal-body">
+		                    
+		                <div class="container " style="width:100%;">
+		                    <div class="row " style="width:100%;">
+		              		<h3 style="text-align:left; font-size:18px; margin-left:15px;"><b>1. <%=r.getHost_id()%> 님에게 문의하기!</b></h3>
+		                        <h4> 
+		                            <ul>
+		                              <li class="messageLi">이곳에 오시게 된 이유는 무엇인가요? </li>
+		                              <li class="messageLi">누구와 같이 오시나요?</li>
+		                              <li class="messageLi">언제쯤 오시나요?</li>
+		                              <li class="messageLi">필요한 것이 있으신가요?</li>
+		                              <li class="messageLi">궁금한 점이 더 있으신가요?</li>
+		                            </ul>  
+		                       </h4>
+		                    </div>
+		                    
+		                    <hr>
+		                    
+		                    <h3 style="text-align:left; font-size:18px;"><b>2. 여행계획</b></h3>
+		                    <div class="row" style="width:100%;">
+		                        <div class="col-sm-4">체크인
+		                          <input type="date" id="checkin" name="checkin" class="form-control col1-sm-4  " placeholder="체크아웃">  
+		                       </div>
+						
+		                        <div class="col-sm-4 col-sm-offset-1">체크아웃
+		                          <input type="date" id="checkout" name="checkout" class="form-control col1-sm-4  " placeholder="체크아웃">
+		                        </div>
+		
+		                        <div class="col-sm-2 col-sm-offset-1">인원
+		                          <input type="number" id = "guest_num" name="guest_num" value="" min="1" max="10" class="form-control" placeholder="명" > 
+		                        </div>
+		                  	</div>
+		                    <hr>
+		                     <h4 style="text-align:left; font-size:18px;"><b>3. 메세지보내기</b></h4>
+		                    <div class="row" style="width:100%;">
+			                 <textarea class="form-control" rows="5" id="m_content" name="m_content" style="margin-left:10px;"></textarea>
+							<p id = "messagekeyCounter" align=right> 0/200 자</p>
+		                    </div>
+		                        
+		                </div>
+		              </div>
+		              
+		                  <div class="modal-footer">
+		                        <input type="button" value="보내기" class="btn btn-success col-sm-3 pull-right " onclick="messagevalueChk();">
+		                  </div>
+		            </div>
+		          </div>
+		        </div>
+		        
+		      </div>
+ <!-- 메세지 모달  -->
+ 
+   <!-- 신고 모달-->
+		<div class="container" >
+			<!-- The Modal -->
+			<div class="modal fade" id="reportModal" >
+				<div class="modal-dialog">
+					<div class="modal-content">
+						
+						<!-- Modal Header -->
+						<div class="modal-header bg-success" style="background-color: #5cb85c; color:white;" >
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+							<h2 class="modal-title" id="who" style="text-align:left;"> <%=r.getHost_id()%> 님 신고하기</h2>
+						</div>
+
+						<!-- Modal body -->
+						<div class="modal-body">
+							<div class="container" style="width:100%;">
+								<label for="comment">
+									<h4 style="text-align:left; font-size:18px;"><b>1. 신고하는 이유를 알려주세요</b></h4>
+								</label> <br>
+	
+								<div class="form-check">
+									<label class="form-check-label"> 
+										<input type="radio"class="form-check-input" value="틀린정보" name="rp_type"> 부정확하거나 틀린 정보가 있어요.
+									</label>
+								</div>
+								<div class="form-check">
+									<label class="form-check-label">
+										 <input type="radio"class="form-check-input" value="불친절" name="rp_type"> 불친절합니다.
+									</label>
+								</div>
+								<div class="form-check">
+									<label class="form-check-label"> 
+										<input type="radio"class="form-check-input" value="사기" name="rp_type"> 사기입니다.
+									</label>
+								</div>
+								<div class="form-check">
+									<label class="form-check-label"> 
+										<input type="radio"class="form-check-input"  value="기타" name="rp_type"> 기타
+									</label>
+								</div>
+	
+								<hr>
+								
+								<div class="form-group">
+									<label for="rp_content">
+										<h4 style="text-align:left; font-size:18px;"><b>2. 자세히 알려주세요</b></h4>
+									</label>
+									<textarea class="form-control" rows="5" id="rp_content" name="rp_content"></textarea>
+									 <p id = "reportkeyCounter" align=right> 0/200 자</p>
+								</div>
+							</div>
+						</div>
+	
+						<!-- Modal footer -->
+						<div class="modal-footer ">
+							<input type="button" value="신고하기" class="btn btn-success col-sm-3 pull-right" id="report" onclick="reportvalueChk();">
+						</div>
+					</div>
+				</div>
+			</div>
+	
+		</div>
+<!-- 신고 모달-->
+
+
+
+
 
 
 <script>
+/* 리뷰 스크립트 */
+function reviewInsert(){
+	 if($.trim($('#re_content').val())==""){
+		alert("내용을 입력해주세요");
+		return false;
+	} else{
+		
+		$.ajax({
+			url:"<%=request.getContextPath() %>/reviewInsert.re",
+			type:"post",
+			data: {
+				userId : $('#userId').val() ,
+				hosting_id_r : $('#hosting_id_r').val(),
+				re_content : $('#re_content').val(),
+				re_score : $('#re_score').val()
+			}, success : function(data){
+				if(data==1){
+					alert('추가 성공');
+					re_content : $('#re_content').val('');
+					reviewList("time"); 
+				}else if(data ==0){
+					alert('이용 고객만 작성할 수 있습니다');
+				}
+				else{
+					alert('등록 오류');
+				}
+			}
+		});
+	}
+}
+
 $(function(){
-	$('#rp_content').keyup(function(){
+	reviewList("time");
+});
+
+function deleteReview(obj){
+	var num = $(obj).parent().siblings('input').val();
+	console.log(num);
+
+	$.ajax({
+		url:"<%=request.getContextPath()%>/reviewDelete.re",
+		type : "post",
+		data : {review_no : num},
+		success : function(data){
+			if(data==1){
+				alert("후기삭제 성공");
+				reviewList("time");
+			}else{
+				alert("후기삭제 실패");
+			}
+		},  error : function(request,status,error){
+			 alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
+		}
+	}) 
+		
+}
+
+function reviewLlstSort(){
+	console.log($("input[name='re_type']:checked").val());
+	var type =$("input[name='re_type']:checked").val();
+	reviewList(type);
+}
+
+function reviewList(sorttype){
+	$.ajax({
+		url: "<%= request.getContextPath()%>/reviewList.re",
+		type: "post",
+		data:{
+			hosting_id_r : $('#hosting_id_r').val(),
+			type : sorttype
+		}, success : function(data){							
+			 var totalStar ="" ;
+			 	
+			 var $reviewArea = $('#reviewArea');
+				$reviewArea.text('');
+			 	$reviewArea.append('<h2> 이용후기 ('+  data.length +' 개)' +' <span style="font-size:20px;"> <span id ="total"></span> </span></h2> ' 
+						+'<hr style="border :1px solid black;"/>'); 
+				
+			 	var total=0.0;
+			
+			 	for(var i = 0 ; i<data.length; i++){
+				var re = data[i].review;
+				var profile = data[i].userProfile;	
+				var user_name =data[i].user_name;
+				 total += re.re_score;
+				console.log(total/data.length);
+				
+					 var star ="" ;
+					 for( var j=1; j<=5; j++){
+							if(j<=parseFloat(re.re_score)){
+								star+=('<span class="fa fa-star checked"></span>');
+							}else{
+								star+=('<span class="fa fa-star "></span>'); 
+							}	
+						} 		
+					 
+					 
+					var btn="";
+					var btn1 ="";
+					 <% if((m!=null && m.getUser_id().equals("admin")) ) {  %>
+						btn = '<button onclick="deleteReview(this);" class="btn btn-success btn-xs" >삭제</button>';
+					<%}%> 
+					<% if(m!=null){%>
+					 btn1 = (re.user_id)=="<%=m.getUser_id()%>" ? "<button onclick='deleteReview(this)' class='btn btn-success btn-xs' >삭제</button>" :"" ; 
+					<%}%> 
+					
+					$reviewArea.append(
+							'<div class="row " style="margin-bottom: 10px; margin-left:20px;">'
+							+'<div class="col-sm-1"> '
+							+'<img  class="rounded-circle review_img" src="<%=request.getContextPath()%>/resources/thumbnail_uploadFiles/'+profile+'">'
+							+'</div>'
+							+'<div  class= "col-sm-10" style="margin-left: 30px;">'
+							+' <div id="starRating" > '
+							+  star 	 
+							+ '<b>' + parseFloat(re.re_score)+ '</b>점'
+							+ '</div>'
+							+'<div style="margin-top:5px; ">'
+							+'<span > <b>'+user_name+'</b></span><br />'
+							+' <span >'+re.re_date+'</span>'
+							+'</div>'
+							+' </div>'
+							+'</div>'
+							+'<div class="row col-sm-12" style="margin-left:30px;">'
+							+' <p>'+re.re_content+'</p>'
+							+'<input type="hidden" value="'+re.review_no +'">'
+							+'<div align="right">'
+							+btn
+							+btn1 
+							+'</div>'
+							+'<hr >'
+							+'</div>'
+							
+					);
+					 var str ="";
+					 for( var j=1;  j<=5; j++){
+							if(j<=total/data.length){
+								str+=('<span class="fa fa-star checked"></span>');
+							}else{
+								str+=('<span class="fa fa-star "></span>'); 
+							}	
+						} 	 
+					
+			}		
+			 		if(data.length !=0)
+					$('#total').html(str +" "+ Math.round(total/(data.length)*10)/10 +" / 5 점");
+
+		}, error : function(request,status,error){
+			 alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); 
+		}
+	});
+}
+
+ 
+	$(function(){
+	$('#re_content').keyup(function(){
 		var input = $(this).val().length;
 		
 		var remain = 200 -input;
@@ -403,58 +551,146 @@ $(function(){
 			input--;
 		}
 		
-		$('#keyCounter').html(input+"/200 자");
+		$('#reviewkeyCounter').html(input+"/200 자");
 	});
 });
-	 
-	 
-	 // 빈값 체크
-	 function valueChk(){
+	/* 리뷰 스크립트 */
+	
+	
+	  /* 메시지 스크립트  */
+	$(function(){
+	$('#m_content').keyup(function(){
+		var input = $(this).val().length;
+		
+		var remain = 200 -input;
+		
+		if(remain<0){
+			alert('글자 수 초과');
+			$(this).val($(this).val().substring(0,200));
+			input--;
+		}
+		
+		$('#messagekeyCounter').html(input+"/200 자");
+	});
+});
 
-		var rpType =$("input[name='rp_type']:checked").val();
-		console.log(rpType);
-		 if( !rpType || $.trim($('#rp_content').val())==""  ){
-  	           if(!rpType){
-  	               alert("신고하는 이유를 알려주세요");
-  	           }else if($.trim($('#rp_content').val())=="" ){
-  	        	 alert("자세히 알려주세요");
-  	                $('#rp_content').focus();
-  	           }
-		}else{
-			insert();
-		} 		 
-	 }
+function messagevalueChk(){
+console.log($('#checkin').val());
+var stDateArr = $('#checkin').val().split('-');
+var endDateArr = $('#checkout').val().split('-');
+var stDate = new Date(stDateArr[0],stDateArr[1],stDateArr[2]);
+var endDate = new Date(endDateArr[0],endDateArr[1],endDateArr[2]);
 
-	 function insert(){
-  	 $.ajax({
-			 url:"<%=request.getContextPath() %>/reportInsert.re",
-			 type: "post",
-			 data : { rp_writer: $('#rp_writer').val(),
-					rp_receiver:$('#rp_receiver').val(),
-					rp_type:$("input[name='rp_type']:checked").val(),
-					rp_content:$('#rp_content').val()
-					},
-			success : function(data){
-				if(data==0){
-					alert('전송실패');
-  				}else{
-					alert('전송완료');
-					  $('#rp_content').val("");
-					  $("input[name='rp_type']:checked").prop('checked',false);
-					  $("#reportModal").modal("hide");
-					  $('#reportBtn').prop('disabled',true).val('신고완료');
-					}
-			}, error : function(data){
-				console.log("에러");
-			}
-		 });
-	 }
+
+if($('#checkin').val()==""  || $('#checkout').val()==""||$('#guest_num').val()==""){			
+	alert("여행계획을 알려주세요");			
+}else if($.trim($('#m_content').val())=="" || $('#m_content').val()==null){
+		alert("메시지를 입력해주세요");
+}else if(stDate >endDate){
+	alert('기간을 다시 확인해주세요');
+}else{
+	insertMessage(); 
+}
+}
+
+function insertMessage(){
+$.ajax({
+	url: "<%=request.getContextPath()%>/messageSend.m",
+	type : "post",
+	data : {
+		m_writer : $('#m_writer').val(),
+		m_receiver : $('#m_receiver').val(),
+		hosting_id : $('#hosting_id').val(),
+		checkin : $('#checkin').val(),
+		checkout : $('#checkout').val(),
+		guest_num : $('#guest_num').val(),
+		m_content : $('#m_content').val().replace(/[\r\n]/gim,"<br>")
+		
+	}, success: function(data){
+		if(data==0)
+			alert('전송실패');
+		else{
+			alert('전송완료');
+			$('#m_content').val('');
+			$('#messageSendModal').modal('hide');
+			
+		}
+	}, error: function(data){
+		console.log('에러');
+	}
+	
+});
+
+}
+/* 메시지 스크립트  */
+
+<!-- 신고 스크립트-->
+$(function(){
+$('#rp_content').keyup(function(){
+	var input = $(this).val().length;
+	
+	var remain = 200 -input;
+	
+	if(remain<0){
+		alert('글자 수 초과');
+		$(this).val($(this).val().substring(0,200));
+		input--;
+	}
+	
+	$('#reportkeyCounter').html(input+"/200 자");
+});
+});
+
+
+// 빈값 체크
+function reportvalueChk(){
+
+	var rpType =$("input[name='rp_type']:checked").val();
+	console.log(rpType);
+	 if( !rpType || $.trim($('#rp_content').val())==""  ){
+	           if(!rpType){
+	               alert("신고하는 이유를 알려주세요");
+	           }else if($.trim($('#rp_content').val())=="" ){
+	        	 alert("자세히 알려주세요");
+	                $('#rp_content').focus();
+	           }
+	}else{
+		insertReport();
+	} 		 
+}
+
+function insertReport(){
+	 $.ajax({
+		 url:"<%=request.getContextPath() %>/reportInsert.re",
+		 type: "post",
+		 data : { rp_writer: $('#rp_writer').val(),
+				rp_receiver:$('#rp_receiver').val(),
+				rp_type:$("input[name='rp_type']:checked").val(),
+				rp_content:$('#rp_content').val()
+				},
+		success : function(data){
+			if(data==0){
+				alert('전송실패');
+				}else{
+				alert('전송완료');
+				  $('#rp_content').val("");
+				  $("input[name='rp_type']:checked").prop('checked',false);
+				  $("#reportModal").modal("hide");
+				  $('#reportBtn').prop('disabled',true).val('신고완료');
+				}
+		}, error : function(data){
+			console.log("에러");
+		}
+	 });
+}
+
+
 
 var slideIndex = 1;
 showDivs(slideIndex);
 
 function plusDivs(n) {
-  showDivs(slideIndex += n);
+	showDivs(slideIndex += n);
 }
 
 function showDivs(n) {
@@ -523,7 +759,8 @@ $(function() {
         changeMonth: true,             //월변경가능
         changeYear: true,             //년변경가능
         showMonthAfterYear: true,       //년 뒤에 월 표시
-        minDate: 0,                       // 선택할수있는 최소날짜, ( 0 : 오늘 이전 날짜 선택 불가)
+        minDate: new Date("<%=r.getR_start_date()%>"),                       // 선택할수있는 최소날짜, ( 0 : 오늘 이전 날짜 선택 불가)
+        
         dateFormat: 'yymmdd',
         onClose: function( selectedDate ) {    
             // 시작일(fromDate) datepicker가 닫힐때
@@ -535,7 +772,7 @@ $(function() {
     //종료일
     $('.datepicker2').datepicker({
        dateFormat: 'yymmdd',
-        minDate: 0,
+        maxDate: new Date("<%=r.getR_end_date()%>"),
         monthNamesShort: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
         dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
         changeMonth: true, //월변경가능
@@ -554,248 +791,11 @@ if("<%=countMsg%>"!="null"){
 	alert("<%=countMsg%>");
 }
 
-/* 리뷰 스크립트 */
-function reviewInsert(){
-			 if($.trim($('#re_content').val())==""){
-				alert("내용을 입력해주세요");
-				return false;
-			} else{
-				
-				$.ajax({
-					url:"<%=request.getContextPath() %>/reviewInsert.re",
-					type:"post",
-					data: {
-						user_id : $('#user_id').val() ,
-						hosting_id : $('#hosting_id').val(),
-						re_content : $('#re_content').val(),
-						re_score : $('#re_score').val()
-					}, success : function(data){
-						if(data==1){
-							alert('추가 성공');
-							re_content : $('#re_content').val('');
-							reviewList("time"); 
-						}else if(data ==0){
-							alert('이용 고객만 작성할 수 있습니다');
-						}
-						else{
-							alert('등록 오류');
-						}
-					}
-				});
-			}
-		}
-		
-		$(function(){
-			reviewList("time");
-		});
-		
-		function deleteReview(obj){
-			var num = $(obj).parent().siblings('input').val();
-			console.log(num);
-		
-			$.ajax({
-				url:"<%=request.getContextPath()%>/reviewDelete.re",
-				type : "post",
-				data : {review_no : num},
-				success : function(data){
-					if(data==1){
-						alert("후기삭제 성공");
-						reviewList("time");
-					}else{
-						alert("후기삭제 실패");
-					}
-				},  error : function(request,status,error){
-					 alert("code = "+ request.status + " message = " + request.responseText + " error = " + error);
-				}
-			}) 
-				
-		}
-		
-		function reviewLlstSort(){
-			console.log($("input[name='re_type']:checked").val());
-			var type =$("input[name='re_type']:checked").val();
-			reviewList(type);
-		}
-		
-		function reviewList(sorttype){
-			$.ajax({
-				url: "<%= request.getContextPath()%>/reviewList.re",
-				type: "post",
-				data:{
-					hosting_id : $('#hosting_id').val(),
-					type : sorttype
-				}, success : function(data){							
-					 var totalStar ="" ;
-					 	
-					 var $reviewArea = $('#reviewArea');
-						$reviewArea.text('');
-					 	$reviewArea.append('<h2> 이용후기 ('+  data.length +' 개)' +' <span style="font-size:20px;"> <span id ="total"></span> </span></h2> ' 
-								+'<hr style="border :1px solid black;"/>'); 
-						
-					 	var total=0.0;
-					
-					 	for(var i = 0 ; i<data.length; i++){
-						var re = data[i].review;
-						var profile = data[i].userProfile;	
-						var user_name =data[i].user_name;
-						 total += re.re_score;
-						console.log(total/data.length);
-						
-							 var star ="" ;
-							 for( var j=1; j<=5; j++){
-									if(j<=parseFloat(re.re_score)){
-										star+=('<span class="fa fa-star checked"></span>');
-									}else{
-										star+=('<span class="fa fa-star "></span>'); 
-									}	
-								} 		
-							 
-							 
-							var btn="";
-							var btn1 ="";
-							 <% if((m!=null && m.getUser_id().equals("admin")) ) {  %>
-								btn = '<button onclick="deleteReview(this);" class="btn btn-success btn-xs" >삭제</button>';
-							<%}%> 
-							<% if(m!=null){%>
-							 btn1 = (re.user_id)=="<%=m.getUser_id()%>" ? "<button onclick='deleteReview(this)' class='btn btn-success btn-xs' >삭제</button>" :"" ; 
-							<%}%> 
-							
-							$reviewArea.append(
-									'<div class="row " style="margin-bottom: 10px; margin-left:20px;">'
-									+'<div class="col-sm-1"> '
-									+'<img  class="rounded-circle review_img" src="<%=request.getContextPath()%>/resources/thumbnail_uploadFiles/'+profile+'">'
-									+'</div>'
-									+'<div  class= "col-sm-10" style="margin-left: 30px;">'
-									+' <div id="starRating" > '
-									+  star 	 
-									+ '<b>' + parseFloat(re.re_score)+ '</b>점'
-									+ '</div>'
-									+'<div style="margin-top:5px; ">'
-									+'<span > <b>'+user_name+'</b></span><br />'
-									+' <span >'+re.re_date+'</span>'
-									+'</div>'
-									+' </div>'
-									+'</div>'
-									+'<div class="row col-sm-12" style="margin-left:30px;">'
-									+' <p>'+re.re_content+'</p>'
-									+'<input type="hidden" value="'+re.review_no +'">'
-									+'<div align="right">'
-									+btn
-									+btn1 
-									+'</div>'
-									+'<hr >'
-									+'</div>'
-									
-							);
-							 var str ="";
-							 for( var j=1; j<=5; j++){
-									if(j<=total/data.length){
-										str+=('<span class="fa fa-star checked"></span>');
-									}else{
-										str+=('<span class="fa fa-star "></span>'); 
-									}	
-								} 	 
-							
-					}		
-					 		if(data.length !=0)
-							$('#total').html(str +" "+ Math.round(total/data.length*10)/10 +" / 5 점");
-
-				}, error : function(request,status,error){
-					 alert("code = "+ request.status + " message = " + request.responseText + " error = " + error); 
-				}
-			});
-		}
-		
-		 
-	 	$(function(){
-			$('#re_content').keyup(function(){
-				var input = $(this).val().length;
-				
-				var remain = 200 -input;
-				
-				if(remain<0){
-					alert('글자 수 초과');
-					$(this).val($(this).val().substring(0,200));
-					input--;
-				}
-				
-				$('#keyCounter').html(input+"/200 자");
-			});
-		}); 
-	 	$(function(){
-    		$('#m_content').keyup(function(){
-    			var input = $(this).val().length;
-    			
-    			var remain = 200 -input;
-    			
-    			if(remain<0){
-    				alert('글자 수 초과');
-    				$(this).val($(this).val().substring(0,200));
-    				input--;
-    			}
-    			
-    			$('#keyCounter').html(input+"/200 자");
-    		});
-    	});
-
-	function valueChk(){
-	console.log($('#checkin').val());
-	var stDateArr = $('#checkin').val().split('-');
-	var endDateArr = $('#checkout').val().split('-');
-	var stDate = new Date(stDateArr[0],stDateArr[1],stDateArr[2]);
-	var endDate = new Date(endDateArr[0],endDateArr[1],endDateArr[2]);
-	
-	
-		if($('#checkin').val()==""  || $('#checkout').val()==""||$('#guest_num').val()==""){			
-			alert("여행계획을 알려주세요");			
-		}else if($.trim($('#m_content').val())=="" || $('#m_content').val()==null){
-				alert("메시지를 입력해주세요");
-		}else if(stDate >endDate){
-			alert('기간을 다시 확인해주세요');
-		}else{
-			 insert(); 
-		}
-     }
-	
-	
-	/* m_receiver hosting_id checkin checkout guest_num m_content */
-	function insert(){
-		
-		$.ajax({
-			url: "<%=request.getContextPath()%>/messageSend.m",
-			type : "post",
-			data : {
-				m_writer : $('#m_writer').val(),
-				m_receiver : $('#m_receiver').val(),
-				hosting_id : $('#hosting_id').val(),
-				checkin : $('#checkin').val(),
-				checkout : $('#checkout').val(),
-				guest_num : $('#guest_num').val(),
-				m_content : $('#m_content').val().replace(/[\r\n]/gim,"<br>")
-				
-			}, success: function(data){
-				if(data==0)
-					alert('전송실패');
-				else{
-					alert('전송완료');
-					$('#m_content').val('');
-					$('#messageModal').modal('hide');
-					
-				}
-			}, error: function(data){
-				console.log('에러');
-			}
-			
-			
-			
-		});
-		
-	}
 </script>
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" />
-    <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+    <!-- <script src="http://code.jquery.com/jquery-1.8.3.js"></script> -->
     <script src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script>
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" />
+    <!-- <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" /> -->
     <!-- <link rel="stylesheet" href="/resources/demos/style.css" /> -->
 </body>
 </html>

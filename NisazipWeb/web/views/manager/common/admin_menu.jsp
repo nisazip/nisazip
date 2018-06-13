@@ -72,6 +72,12 @@
                         <a href="#" onclick="goTrip();" class="col-sm-12">트립 관리</a>
                     </li>
                     <li>
+                        <a href="#" onclick="goReservRoom();" class="col-sm-12">숙소 예약 관리</a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="goReservTrip();" class="col-sm-12">트립 예약 관리</a>
+                    </li>
+                    <li>
                         <a href="#" onclick="goReport();" class="col-sm-12">신고 관리</a>
                     </li>
                     <li>
@@ -102,6 +108,12 @@
 		                    <li>
 		                        <a href="#" onclick="goTrip();" class="col-sm-12">트립 관리</a>
 		                    </li>
+		                     <li>
+		                        <a href="#" onclick="goReservRoom();" class="col-sm-12">숙소 예약 관리</a>
+		                    </li>
+		                    <li>
+		                        <a href="#" onclick="goReservTrip();" class="col-sm-12">트립 예약 관리</a>
+		                    </li>
 		                    <li>
 		                        <a href="#" onclick="goReport();" class="col-sm-12">신고 관리</a>
 		                    </li>
@@ -129,15 +141,25 @@
 		$('li').removeClass("active");
 		$('li:nth-child(3)').addClass("active");
 	}
+	function goReservRoom(){
+		location.href="<%=request.getContextPath()%>/reservRoomList.mg";
+		$('li').removeClass("active");
+		$('li:nth-child(4)').addClass("active");
+	}
+	function goReservTrip(){
+		location.href="<%=request.getContextPath()%>/reservTripList.mg";
+		$('li').removeClass("active");
+		$('li:nth-child(5)').addClass("active");
+	}
 	function goReport(){
 		location.href="<%=request.getContextPath()%>/reportList.mg";
 		$('li').removeClass("active");
-		$('li:nth-child(4)').addClass("active");
+		$('li:nth-child(6)').addClass("active");
 	}
 	function goAdmin(){
 		location.href="<%=request.getContextPath()%>/views/manager/admin_home.jsp";
 		$('li').removeClass("active");
-		$('li:nth-child(5)').addClass("active");
+		$('li:nth-child(7)').addClass("active");
 	}	
 	
 	/* 

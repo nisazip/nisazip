@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="kh.home.model.vo.*, java.util.*"%>
+    pageEncoding="UTF-8" import="kh.room.model.vo.*,kh.trip.model.vo.*,kh.home.model.vo.RecRoom, java.util.*"%>
+    <%Trip t = new Trip(); %>
 <!DOCTYPE html>
 <html>
 <html>
@@ -7,12 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <title>네가 사는 제주</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="../js/jquery-3.3.1.min.js"></script>
+
     <style>
     #price {
 	text-align: right;
@@ -147,41 +143,89 @@ ul {
                 </div>
                 <script>
                 function search(){
+              	   
+                    if($('input:checkbox[id="sortPrice"]').is(":checked") == true){
+               		 var checkVal = "true";
+               		 
+             	  	}else{
+               		var checkVal = "false";
+               		
+             	  	}
         			$.ajax({
     					url:'<%=request.getContextPath()%>/keywordSearch.ho',
     					type:"get",
     					data : {
-    						keyword : $('#keyword').val()
+    						keyword : $('#keyword').val(),
+    						checkVal : checkVal
     					},
     					success:function(data){
     						
     						console.log(data);
-    						console.log(data.rlist);
     						console.log(data.tlist);
     						// 전체 영역
     						
-    						
-    						$div = $('#trip2_thumb');
+    						var $div = $('#trip2_thumb');
     						$div.text("");
+	    						for(var i in data.tlist){
+	    							var str = '<div class="col-md-3">' 
+	    								+ '<div class="thumbnail">'
+	    								+'<a onclick="ViewRegist(this);"> '
+	    							+'<img src="'+data.tlist[i].file_path+data.tlist[i].change_name+'.jpg" class="img" style="height:190px;">'
+	    							+' <div class="caption">'
+	    							+'<p>'+data.tlist[i].t_name+'</p>'
+	    							+'<p id="score">'+data.tlist[i].score+'점</p>'
+									+ '<p id="price">' + data.tlist[i].price + '￦</p>'
+									+'<input type="hidden" value="'+data.tlist[i].t_id+'">'
+	    							+'</div></a></div></div>';
+	    							
+	    							$div.append(str);
+	    						}
     						
-    						for(var i in data.tlist){
-    							var str = '<div class="col-md-3">' 
-    								+ '<div class="thumbnail">'
-    							+'<a href="상세 페이지.html" target="_blank"> '
-    							+'<img src="'+data.tlist[i].file_path+data.tlist[i].change_name+'.jpg" class="img" style="height:190px;">'
-    							+' <div class="caption">'
-    							+'<p>'+data.tlist[i].t_name+'</p>'
-    							+'<p id="score">'+data.tlist[i].score+'점</p>'
-								+ '<p id="price">' + data.tlist[i].price + '￦</p>'
-    							+'</div></a></div></div>';
-    							
-    							$div.append(str);
-    						}
-    						
+    				
     					
     					}
     				});
         		};
+        		
+        		$("#sortPrice").click(function() {
+					search();
+
+            });
+        		
+
+	        	 $(function(){
+	 				$.ajax({
+	 					url:"<%=request.getContextPath()%>/list.tr",
+	 					type:"get",
+	 					success:function(data){
+	 						// 전체 영역
+	 						var $div = $('#trip2_thumb');
+	 						
+	 						for(var i in data){
+	 							var str = '<div class="col-md-3">' 
+	 								+ '<div class="thumbnail">'
+	 								+'<a onclick="ViewRegist(this);"> '
+	 							+'<img src="'+data[i].file_path+data[i].change_name+'.jpg" class="img" style="height:190px;">'
+	 							+' <div class="caption">'
+	 							+'<p>'+data[i].t_name+'</p>'
+	 							+'<p id="score">'+data[i].score+'점</p>'
+	 							+ '<p id="price">' + data[i].price + '￦</p>'
+	 							+'<input type="hidden" value="'+data[i].t_id+'">'
+	 							+'</div></a></div></div>';
+	 							
+	 							$div.append(str);
+	 						}
+	 					}
+	 				});
+	 				
+	 			}); 
+	        	 
+	        	 function ViewRegist(obj){
+					 var num2 = $(obj).find('input').val();
+					 console.log(num2);
+					location.href="<%=request.getContextPath()%>/registedTrip_guest.trip?TripNum="+num2; 
+							} 
+	 			 
                 </script>
 
                 
@@ -266,53 +310,7 @@ ul {
 			</div>
 			
 		</div>
-		<script>
-			 $(function(){
-				 
-          	   
-                 if($('input:checkbox[id="sortPrice"]').is(":checked") == true){
-            		 var checkVal = "true";
-            		 
-          	  	}else{
-            		var checkVal = "false";
-            		
-          	  	}
-				$.ajax({
-					url:"<%=request.getContextPath()%>/list.tr",
-					type:"get",
-					data : {
-						keyword : $('#keyword').val(),
-						checkVal : checkVal
-					},
-					success:function(data){
-						// 전체 영역
-						var $div = $('#trip2_thumb');
-						
-						for(var i in data){
-							var str = '<div class="col-md-3">' 
-								+ '<div class="thumbnail">'
-							+'<a href="상세 페이지.html" target="_blank"> '
-							+'<img src="'+data[i].file_path+data[i].change_name+'.jpg" class="img" style="height:190px;">'
-							+' <div class="caption">'
-							+'<p>'+data[i].t_name+'</p>'
-							+'<p id="score">'+data[i].score+'점</p>'
-							+ '<p id="price">' + data[i].price + '￦</p>'
-							+'</div></a></div></div>';
-							
-							$div.append(str);
-						}
-					}
-				});
-				
-			}); 
-			 
-				
-	        	$("#sortPrice").click(function() {
-
-					search();
-	            });
-
-		</script>
+		
         
     </div>
     </div>

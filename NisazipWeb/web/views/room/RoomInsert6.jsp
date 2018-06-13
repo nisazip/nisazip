@@ -59,7 +59,7 @@ body {font-size:16px;}
   <div class="w3-container" id="showcase">
        <h1 class="w3-center" style="font-size: 48pt;"><b>6단계</b></h1>    
   </div><br><br>
-  <form id="joinForm" action="<%=request.getContextPath()%>/rInsert6.do" method="post">
+  <form id="joinForm1" action="<%=request.getContextPath()%>/rInsert6.do" method="post">
 
   <%-- <div style="font-weight: bold; font-size: 29px;" class="w3-center">
        ○숙박가능한 날짜를 체크해주세요.<br><br>
@@ -84,7 +84,7 @@ body {font-size:16px;}
    
   </form>
   <script>
-  $( "#joinForm" ).submit(function( event ) {
+  $( "#joinForm1" ).submit(function( event ) {
 		var p1 = $('#datepicker1').val();
 		var p2 = $('#datepicker2').val();
 		

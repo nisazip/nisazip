@@ -207,7 +207,7 @@ function remove_item(obj){
 		$(this).prop('checked', true);
 		 // console.log($(this).val()+" : "+ $.inArray($(this).val(),advantageArr));
 		});	
-	var addressArr = '<%= r.getR_addr()%>'.split(', ');
+	var addressArr = '<%= r.getR_addr()%>'.split('| ');
 		$('#zipCode').val(addressArr[0]);
 		$('#address1').val(addressArr[1]);
 		$('#address2').val(addressArr[2]);

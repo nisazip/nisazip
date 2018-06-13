@@ -64,6 +64,7 @@ body {font-size:16px;}
             </thead>
             <tbody>
             <% for(R_RESERVATION res: list){ %>
+            <% if(m.getUser_id().equals(res.getUser_id())) { %>
 			<tr>
 				<td><%= res.getR_reser_no() %></td>
 				<td><%= res.getCheck_in() %></td>
@@ -71,6 +72,7 @@ body {font-size:16px;}
 				<td><%= res.getPeople() %></td>
 				<td id="Tprice"><%= res.getTotal_price() %></td>
 			</tr>
+			<% } %>
 			<% } %>
             </tbody>
         </table>

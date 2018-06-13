@@ -63,7 +63,7 @@ body {font-size:16px;}
 	</div>
 	<br>
 	<br>
-	<form id="joinForm" action="<%=request.getContextPath()%>/rInsert4.do" method="post" encType="multipart/form-data">
+	<form id="joinForm1" action="<%=request.getContextPath()%>/rInsert4.do" method="post" encType="multipart/form-data">
 
 		<!-- <div style="font-weight: bold; font-size: 29px;" class="w3-center">
 			○회원님의 숙소의 사진을 등록해주세요.<br>
@@ -154,7 +154,7 @@ body {font-size:16px;}
 			return false;
 		}; */
  
-		$( "#joinForm" ).submit(function( event ) {
+		$( "#joinForm1" ).submit(function( event ) {
 			var p1 = $('#thumbnailImg1').val();
 			var p2 = $('#thumbnailImg2').val();
 			var p3 = $('#thumbnailImg3').val();

@@ -57,7 +57,7 @@ body {font-size:16px;}
   <div class="w3-container" style="margin-top:" id="showcase">
        <h1 class="w3-center" style="font-size: 48pt;"><b>2단계</b></h1>    
   </div><br><br>
-  <form id="joinForm" action="<%=request.getContextPath()%>/rInsert2.do" method="post">
+  <form id="joinForm1" action="<%=request.getContextPath()%>/rInsert2.do" method="post">
 
   <div style="font-weight: bold; font-size: 29px;" class="w3-center">
       ○회원님의 숙소에는 무엇이 있나요?<br><br>
@@ -86,7 +86,7 @@ body {font-size:16px;}
   
   
   <script>
-  $( "#joinForm" ).submit(function( event ) {
+  $( "#joinForm1" ).submit(function( event ) {
 		var p1 = $('#ROOM_NUM').val();
 		var p2 = $('#BED_NUM').val();
 		var p3 = $('#TOILET_NUM').val();

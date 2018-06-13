@@ -31,17 +31,17 @@ public class RInsertServlet3 extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String R_LOC = request.getParameter("R_LOC");
-		String R_ADDR = /*request.getParameter("zipCode")+", "+*/request.getParameter("address1")+", "+request.getParameter("address2");
+		String R_AREA = request.getParameter("R_AREA");
+		String R_ADDR = request.getParameter("zipCode")+", "+request.getParameter("address1")+", "+request.getParameter("address2");
 		
 		HttpSession session = request.getSession();
 		Room room = (Room)session.getAttribute("room");
 		
 		room.setR_addr(R_ADDR);
-		room.setR_loc(R_LOC);
+		room.setR_loc(R_AREA);
 		
 		System.out.println("3단계.");
-		System.out.println("지역: "+R_LOC);
+		System.out.println("지역: "+R_AREA);
 		
 		session.setAttribute("room", room);
 		request.getRequestDispatcher("views/room/RoomInsert4.jsp").forward(request, response);		

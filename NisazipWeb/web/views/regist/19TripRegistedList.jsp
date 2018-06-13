@@ -123,6 +123,7 @@
             </thead>
             <tbody>
             <% for(Trip tr: list){ %>
+             <% if(m.getUser_id().equals(tr.getHost_id())) { %>
 			<tr>
 				<td><%= tr.getT_id() %></td>
 				<td><%= tr.getT_name() %></td>
@@ -131,6 +132,7 @@
 				<td><%= tr.getT_max_num() %></td>
 				<td><%= tr.getT_date() %></td>
 			</tr>
+			<% } %>
 			<% } %>
             </tbody>
         </table>

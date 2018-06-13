@@ -63,14 +63,16 @@ body {font-size:16px;}
             </thead>
             <tbody>
             <% for(Room r: list){ %>
+            <% if(m.getUser_id().equals(r.getHost_id())) { %>
 			<tr>
 				<td><%= r.getR_id() %></td>
 				<td><%= r.getR_name() %></td>
-				<td><%= r.getHost_no() %></td>
+				<td><%= r.getHost_id() %></td>
 				<td><%= r.getPrice() %></td>
 				<td><%= r.getR_max_num() %></td>
 				<td><%= r.getR_date() %></td>
 			</tr>
+			<% } %>
 			<% } %>
             </tbody>
         </table>

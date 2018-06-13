@@ -35,7 +35,7 @@ public class TripReservationDetailServlet extends HttpServlet {
 
 		int result = 0;
 		T_RESERVATION trip_reservation = new T_RESERVATION();
-
+		
 		trip_reservation.setT_id(tripNumber);
 		trip_reservation.setUser_id(userId);
 		trip_reservation.setGuest_num(people);

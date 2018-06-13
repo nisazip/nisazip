@@ -122,14 +122,16 @@
             <tbody>
             
             <% for(T_RESERVATION trip_reservation: list){ %>
+            <% if(m.getUser_id().equals(trip_reservation.getUser_id())) { %>
 			<tr>
-				
 				<td><%= trip_reservation.getT_reser_no() %></td>
 				<td><%= trip_reservation.getUser_id()%></td>
 			</tr>
 			<% } %>
+			<% } %>
             </tbody>
         </table>
+        </div>
         </div>
 	<script>
 	$(function(){

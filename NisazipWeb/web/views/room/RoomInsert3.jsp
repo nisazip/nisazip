@@ -59,12 +59,12 @@ body {font-size:16px;}
   <div class="w3-container" id="showcase">
        <h1 class="w3-center" style="font-size: 48pt;"><b>3단계</b></h1>    
   </div><br><br>
-<form id="joinForm" action="<%=request.getContextPath()%>/rInsert3.do" method="post">
+<form id="joinForm1" action="<%=request.getContextPath()%>/rInsert3.do" method="post">
 
   <div style="font-weight: bold; font-size: 29px;" class="w3-center">
        ○회원님의 숙소는 어디에 있나요?<br>
     <div data-text-content="true" style="background: Lightgreen; text-align: center; font-size: 30px;" class="">대한민국 제주특별자치도</div>
-    <select id="R_LOC" name="R_LOC" style="width: 500px; height: 50px; color: gray; text-align: center;">
+    <select id="R_LOC" name="R_AREA" style="width: 500px; height: 50px; color: gray; text-align: center;">
                   <option value="지역명" style="color: black">지역을 선택하세요.</option>
                   <option value="제주시">제주시</option>
                   <option value="한경면">한경면</option>
@@ -94,17 +94,17 @@ body {font-size:16px;}
 </form>
  <script>
  			 
- $( "#joinForm" ).submit(function( event ) {
-		var p1 = $('#R_LOC').val();
+ $( "#joinForm1" ).submit(function( event ) {
+		var p1 = $('#R_AREA').val();
 		var p2 = $('#zipCode').val();
 		var p3 = $('#address1').val();
-		var re = /제주/;
+		var re = "제주";
 		
    if(p1 == "" || p2 == "" || p3 == ""){
    	alert("값을 입력해주세요.");
-   }/* else if(!(p2.match('/제주/'))){
+   } else if(p3.indexOf(re) == -1){
 	   alert("제주도에 있는 지역을 입력해주세요!")
-   } */ 
+   }  
    else {
         return true;
    }

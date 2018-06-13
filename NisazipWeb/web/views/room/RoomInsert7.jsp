@@ -56,7 +56,7 @@ body {font-size:16px;}
 </div>
 </nav>
 <!-- Header -->
-   <form id="joinForm" action="<%=request.getContextPath()%>/rInsert7.do" method="post">
+   <form id="joinForm1" action="<%=request.getContextPath()%>/rInsert7.do" method="post">
 
   <div class="w3-container" id="showcase">
        <h1 class="w3-center" style="font-size: 48pt;"><b>7단계</b></h1>    
@@ -70,7 +70,7 @@ body {font-size:16px;}
   </div>
   </form> 
   <script>
-  $( "#joinForm" ).submit(function( event ) {
+  $( "#joinForm1" ).submit(function( event ) {
 		var p1 = $('#PRICE').val();
 		
 		

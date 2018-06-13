@@ -24,8 +24,8 @@ public class UpdateTripServlet extends HttpServlet {
 		int maximum = Integer.parseInt(request.getParameter("maximum"));
 		String triptype = request.getParameter("triptype");
 		String language = request.getParameter("language");
-		String startTime = request.getParameter("startTime");
-		String endTime = request.getParameter("endTime");
+		String startTime ="18-06-13 "+request.getParameter("startTime");
+		String endTime = "18-06-13 "+request.getParameter("endTime");
 		int price = Integer.parseInt(request.getParameter("price"));
 		String detail = request.getParameter("detail");
 		String area = request.getParameter("area");

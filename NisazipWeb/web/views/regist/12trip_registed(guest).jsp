@@ -208,7 +208,7 @@
 			<br> <br>
 			<div style="font-weight: bold; font-size: 25px; color: darkorchid;"
 				class="w3-center">
-				호스트 정보:&nbsp;&nbsp;&nbsp; Sara & Rich님 (인증됨) <br>
+				호스트 정보:&nbsp;&nbsp;&nbsp; <%= tr.getHost_id() %> (인증됨) <br>
 
 			</div>
 			<br> <br>

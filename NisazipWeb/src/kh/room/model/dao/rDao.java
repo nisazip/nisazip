@@ -100,7 +100,7 @@ public class rDao {
 			pstmt = con.prepareStatement(query);
 			
 			pstmt.setString(1, room.getR_detail());
-			pstmt.setString(2, room.getR_rule());
+			pstmt.setString(2, room.getR_role());
 			pstmt.setString(3, room.getR_name());
 			pstmt.setString(4, room.getR_start_date());
 			pstmt.setString(5, room.getR_end_date());
@@ -155,7 +155,7 @@ public class rDao {
 			pstmt.setInt(4, room.getBed_num());
 			pstmt.setInt(5, room.getToilet_num());
 			pstmt.setString(6, room.getR_detail());
-			pstmt.setString(7, room.getR_rule());
+			pstmt.setString(7, room.getR_role());
 			pstmt.setString(8, room.getR_option());
 			pstmt.setString(9, room.getR_start_date());
 			pstmt.setString(10, room.getR_end_date());
@@ -348,7 +348,7 @@ public class rDao {
 		return result;
 	}
 
-	public R_RESERVATION selectRecent(Connection con) {
+	public R_RESERVATION selectRecent(Connection con, R_RESERVATION res) {
 		Statement stmt = null;
 		ResultSet rset = null;
 		String sql = "SELECT * FROM R_RESERVATION ORDER BY 1 DESC";
@@ -435,11 +435,11 @@ public class rDao {
 			pstmt.setInt(8, room.getToilet_num());
 			pstmt.setInt(9, room.getBed_num());
 			pstmt.setString(10, "TEST");
-			pstmt.setString(11, room.getR_rule());
+			pstmt.setString(11, room.getR_role());
 			pstmt.setInt(12, 1000);
-			pstmt.setString(13, "지역");
+			pstmt.setString(13, room.getR_area());
 			pstmt.setString(14, room.getR_addr());
-			pstmt.setString(15, "1000");
+			pstmt.setString(15, "위도,경도");
 			pstmt.setString(16, room.getR_start_date());
 			pstmt.setString(17, room.getR_end_date());
 			pstmt.setFloat(18, room.getScore());
@@ -578,6 +578,91 @@ public class rDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int deleteSearch(Connection con, String num) {
+		int result = 0;
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+
+		String query = prop.getProperty("deleteSearch");
+		System.out.println("Delete Dao 단에서 r_id  : " + num);
+		try {
+			pstmt = con.prepareStatement(query);
+
+			pstmt.setString(1, num);
+		
+			
+			rset = pstmt.executeQuery();
+			if(rset.next()){
+				result = rset.getInt("CNT");
+			}
+			
+			System.out.println("남아있는 예약 수 Dao : " + result);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int updateSearch(Connection con, String r_NUM) {
+		int result = 0;
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+
+		String query = prop.getProperty("updateSearch");
+//		System.out.println("Delete Dao 단에서 r_id  : " + num);
+		try {
+			pstmt = con.prepareStatement(query);
+
+			pstmt.setString(1, r_NUM);
+		
+			
+			rset = pstmt.executeQuery();
+			if(rset.next()){
+				result = rset.getInt("CNT");
+			}
+			
+			System.out.println("남아있는 예약 수 Dao : " + result);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int DeleteReservation(Connection con, String resname, int price) {
+		System.out.println("예약 취소 dao 접근 성공!!!");
+		System.out.println("resname : " + resname);
+		System.out.println(price);
+		int result = 0;
+		PreparedStatement pstmt = null;
+		System.out.println("예약 취소 Dao result : " + result);
+		
+		String query = prop.getProperty("DeleteReservation");
+		System.out.println(query);
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			System.out.println(pstmt);
+			pstmt.setString(1, resname);
+			pstmt.setInt(2, price);
+			
+			result = pstmt.executeUpdate();
+			
+			System.out.println("예약 취소 Dao result : " + result);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
 			close(pstmt);
 		}
 		return result;

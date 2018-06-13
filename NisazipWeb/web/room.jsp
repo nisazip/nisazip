@@ -1,16 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="kh.home.model.vo.*, java.util.*"%>
+    pageEncoding="UTF-8" import="kh.room.model.vo.*,kh.trip.model.vo.*,kh.home.model.vo.*, java.util.*"%>
+    
+    <%
+    Room r = new Room();
+    %>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <title>네가 사는 제주</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="../js/jquery-3.3.1.min.js"></script>
+ 
     <style>
     #price {
 	text-align: right;
@@ -172,12 +171,13 @@ ul {
 	    						for(var i in data.rlist){
 	    							var str = '<div class="col-md-3">' 
 	    								+ '<div class="thumbnail">'
-	    							+'<a href="상세 페이지.html" target="_blank"> '
+	    							+'<a onclick="ViewRoom(this);"> '
 	    							+'<img src="'+data.rlist[i].file_path+data.rlist[i].change_name+'.jpg" class="img" style="height:190px;">'
 	    							+' <div class="caption">'
 	    							+'<p>'+data.rlist[i].r_name+'</p>'
 	    							+'<p id="score">'+data.rlist[i].score+'점</p>'
 									+ '<p id="price">' + data.rlist[i].price + '￦</p>'
+									+'<input type="hidden" value="'+data.rlist[i].r_id+'">'
 	    							+'</div></a></div></div>';
 	    							
 	    							$div.append(str);
@@ -194,6 +194,7 @@ ul {
 
             });
 
+     
                 </script>
 
                 
@@ -289,12 +290,13 @@ ul {
 						for(var i in data){
 							var str = '<div class="col-md-3">' 
 								+ '<div class="thumbnail">'
-							+'<a href="상세 페이지.html" target="_blank"> '
+								+'<a onclick="ViewRoom(this);"> '
 							+'<img src="'+data[i].file_path+data[i].change_name+'.jpg" class="img" style="height:190px;">'
 							+' <div class="caption">'
 							+'<p>'+data[i].r_name+'</p>'
 							+'<p id="score">'+data[i].score+'점</p>'
 							+ '<p id="price">' + data[i].price + '￦</p>'
+							+'<input type="hidden" value="'+data[i].r_id+'">'
 							+'</div></a></div></div>';
 							
 							$div.append(str);
@@ -303,7 +305,12 @@ ul {
 				});
 				
 			}); 
-			 
+		   		
+    		 function ViewRoom(obj){
+				 var num = $(obj).find('input').val();
+				 console.log(num);
+				location.href="<%=request.getContextPath()%>/ViewRoom.no?num="+num; 
+						} 
 			 
 		</script>
     

@@ -126,8 +126,8 @@ public class BinDao {
 	         while(rset.next()){
 	            hmap = new HashMap<String, Object>();
 	            
-	            hmap.put("r_name", rset.getString("t_name"));
-	            hmap.put("r_area", rset.getString("t_area"));
+	            hmap.put("r_name", rset.getString("r_name"));
+	            hmap.put("r_area", rset.getString("r_area"));
 	            hmap.put("total_price", rset.getInt("total_price"));
 	            hmap.put("check_in", rset.getString(String.valueOf("check_in")));        	 
 	            hmap.put("check_out", rset.getString(String.valueOf("check_out")));        	            
@@ -167,8 +167,8 @@ public class BinDao {
 	         while(rset.next()){
 	        	  hmap = new HashMap<String, Object>();
 		            
-		            hmap.put("r_name", rset.getString("t_name"));
-		            hmap.put("r_area", rset.getString("t_area"));
+		            hmap.put("r_name", rset.getString("r_name"));
+		            hmap.put("r_loc", rset.getString("r_loc"));
 		            hmap.put("total_price", rset.getInt("total_price"));
 		            hmap.put("check_in", rset.getString(String.valueOf("check_in")));        	 
 		            hmap.put("check_out", rset.getString(String.valueOf("check_out")));        	            

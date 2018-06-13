@@ -361,7 +361,7 @@ public class TripRegistDao {
 		return tno;
 	}
 
-	public Trip getTrip(Connection con, String userId) {
+	public Trip getTrip(Connection con, String tripNumber) {
 
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -374,9 +374,9 @@ public class TripRegistDao {
 
 			pstmt = con.prepareStatement(query);
 
-			pstmt.setString(1, userId);
+			pstmt.setString(1, tripNumber);
 
-			System.out.println("userId: " + userId);
+			System.out.println("userId: " + tripNumber);
 
 			rset = pstmt.executeQuery();
 
@@ -396,6 +396,7 @@ public class TripRegistDao {
 				tregist.setT_end_date(rset.getString("T_END_DATE"));
 				tregist.setScore(rset.getFloat("SCORE"));
 				tregist.setT_date(rset.getString("T_DATE"));
+				tregist.setHost_id(rset.getString("HOST_ID"));
 				System.out.println(tregist);
 				System.out.println("T_ADDR : " + rset.getString("T_ADDR"));
 			}
@@ -414,7 +415,7 @@ public class TripRegistDao {
 		return tregist;
 	}
 
-	public ArrayList<Attachment> getPicture(Connection con, String userId) {
+	public ArrayList<Attachment> getPicture(Connection con, String tripNumber) {
 
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -428,9 +429,9 @@ public class TripRegistDao {
 
 			pstmt = con.prepareStatement(query);
 
-			pstmt.setString(1, userId);
+			pstmt.setString(1, tripNumber);
 
-			System.out.println("userId: " + userId);
+			System.out.println("tripNumber: " + tripNumber);
 
 			list = new ArrayList<Attachment>();
 			rset = pstmt.executeQuery();
@@ -861,5 +862,109 @@ public class TripRegistDao {
 			close(pstmt);
 		}
 		return result;
+	}
+
+	public Trip getTripGuest(Connection con, String tripNumber) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+
+		Trip tregist = new Trip();
+
+		String query = prop.getProperty("getTripGuest");
+
+		try {
+
+			pstmt = con.prepareStatement(query);
+
+			pstmt.setString(1, tripNumber);
+
+			System.out.println("tripNumber: " + tripNumber);
+
+			rset = pstmt.executeQuery();
+
+			if (rset.next()) {
+				tregist.setT_id(rset.getString("T_ID"));
+				tregist.setT_name(rset.getString("T_NAME"));
+				tregist.setHost_id(rset.getString("HOST_ID"));
+				tregist.setT_max_num(rset.getInt("T_MAX_NUM"));
+				tregist.setT_type(rset.getString("T_TYPE"));
+				tregist.setLanguage(rset.getString("LANGUAGE"));
+				tregist.setT_start_time(rset.getString("T_START_TIME"));
+				tregist.setT_end_time(rset.getString("T_END_TIME"));
+				tregist.setPrice(rset.getInt("PRICE"));
+				tregist.setT_detail(rset.getString("T_DETAIL"));
+				tregist.setT_area(rset.getString("T_AREA"));
+				tregist.setT_addr(rset.getString("T_ADDR")); 
+				tregist.setT_start_date(rset.getString("T_START_DATE"));
+				tregist.setT_end_date(rset.getString("T_END_DATE"));
+				tregist.setScore(rset.getFloat("SCORE"));
+				tregist.setT_date(rset.getString("T_DATE"));
+				System.out.println(tregist);
+				System.out.println("T_ADDR : " + rset.getString("T_ADDR"));
+			}
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+
+		} finally {
+
+			close(rset);
+			close(pstmt);
+
+		}
+
+		return tregist;
+	}
+
+	public ArrayList<Attachment> getPictureGuest(Connection con, String tripNumber) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+
+		ArrayList<Attachment> list = null;
+		
+
+		String query = prop.getProperty("getPicGuest");
+
+		try {
+
+			pstmt = con.prepareStatement(query);
+
+			pstmt.setString(1, tripNumber);
+
+			System.out.println("userId: " + tripNumber);
+
+			list = new ArrayList<Attachment>();
+			rset = pstmt.executeQuery();
+
+			while (rset.next()) {
+				Attachment pic = new Attachment();
+				
+				pic.setPno(rset.getString("PNO"));
+				pic.setHosting_id(rset.getString("HOSTING_ID"));
+				pic.setOrigin_name(rset.getString("ORIGIN_NAME"));
+				pic.setChange_name(rset.getString("CHANGE_NAME"));
+				pic.setFile_path(rset.getString("FILE_PATH"));
+				pic.setUpload_date(rset.getDate("UPLOAD_DATE"));
+				pic.setFile_level(rset.getInt("FILE_LEVEL"));
+
+				list.add(pic);
+				
+				System.out.println("게스트 뷰 Dao에서 list : " + list);
+			}
+
+			System.out.println("list : " + list);
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+
+		} finally {
+
+			close(rset);
+			close(pstmt);
+
+		}
+
+		return list;
 	}
 }

@@ -10,20 +10,7 @@
 	Attachment titleImg = fileList.get(0);
 	Attachment detailImg1 = fileList.get(1);
 	Attachment detailImg2 = fileList.get(2);
-	
-	/* 원하는 시간포맷으로 변경하기 */
-	// SimpleDateFormat 만약 Date / Timestamp 타입으로 올 경우 이걸 사용하시면 됩니다.
-	// 이게 아닌 경우는 날짜 월 일 정보를 직접 변경해주셔야 합니다.
-	// 얘네는 어차피 보여주기 한 번 용도 이지요?
-	// 네네
-	// 그럼 가독성도 좋지만 구차하게 변수를 선언하기보단 깔끔하게
-	// 한번에 출력하는 형식으로 변경합시다.
-	// 이렇게
-	//
-	 // String startDateFormat = myDateChange(tr.getTrip_stratReservation());
-	 // String endDateFormat = myDateChange(tr.getTrip_endReservation());
-			
-	/* 세션이 아닌 것을 사용 해야함 */
+
 	String resMsg1 ="";
 	resMsg1 = (String)request.getAttribute("resMsg1");
 	String resMsg2 ="";
@@ -71,7 +58,6 @@
 		href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" />
 	<script src="http://code.jquery.com/jquery-1.8.3.js"></script>
 	<script src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script>
-	<!-- <link rel="stylesheet" href="/resources/demos/style.css" /> -->
  </head>
 <body>
 	
@@ -103,7 +89,7 @@
 						<b>등록한 숙소 정보 (호스트 용)</b> &nbsp; 
 						 <button type="button" class="w3-padding-large w3-button w3-center" id="btn_style" onclick="location.href='<%=request.getContextPath()%>/modifyTrip.trip?tripNumber=<%=tr.getT_id()%>'">Trip 수정</button>&nbsp; 
 						 <button type="button" id="btn_style" onclick="location.href='<%=request.getContextPath()%>/deleteTrip.trip?TripNum=<%=tr.getT_id()%>'">Trip 삭제</button>&nbsp;
-						 <input type="button" id="btn_style" value="게스트용" onclick="location.href='<%=request.getContextPath() %>/registedTrip_guest.trip'">&nbsp;
+						 <input type="button" id="btn_style" value="게스트용" onclick="location.href='<%=request.getContextPath() %>/registedTrip_guest.trip?TripNum=<%=tr.getT_id()%>'">&nbsp;
 						 <a id="btn_style" onclick="goMain();">메인으로</a>
 					</h3>
 				</h1>

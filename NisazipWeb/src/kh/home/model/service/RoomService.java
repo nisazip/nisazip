@@ -9,7 +9,7 @@ import java.util.HashMap;
 
 import kh.home.model.dao.RoomDao;
 import kh.home.model.vo.RecRoom;
-import kh.home.model.vo.Room;
+import kh.room.model.vo.Room;
 
 public class RoomService {
 

@@ -59,7 +59,7 @@ body {font-size:16px;}
   <div class="w3-container" id="showcase">
        <h1 class="w3-center" style="font-size: 48pt;"><b>5단계</b></h1>    
   </div><br><br>
-  <form id="joinForm" action="<%=request.getContextPath()%>/rInsert5.do" method="post">
+  <form id="joinForm1" action="<%=request.getContextPath()%>/rInsert5.do" method="post">
   <div style="font-weight: bold; font-size: 29px;" class="w3-center">
        	○회원님의 숙소를 설명해주세요.<br>
         <textarea name="R_DETAIL" id="R_DETAIL" cols="30" rows="3" placeholder="게스트에게 알려주고자 하는 상세내용을 기입하세요"></textarea><br><br>
@@ -91,7 +91,7 @@ body {font-size:16px;}
        // obj.parentNode 를 이용하여 삭제
        document.getElementById('field').removeChild(obj.parentNode);
    }
-   $( "#joinForm" ).submit(function( event ) {
+   $( "#joinForm1" ).submit(function( event ) {
 		var p1 = $('#R_DETAIL').val();
 		var p2 = $('#R_RULE').val();
 		var p3 = $('#R_NAME').val();

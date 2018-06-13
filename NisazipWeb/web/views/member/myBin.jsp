@@ -109,6 +109,7 @@
                 <th>Check In/Out</th>
                  <th>지역</th>
                  <th>가격</th>
+                 <th>###</th>
                </tr>
                
              </thead>
@@ -119,6 +120,7 @@
                  <td><%= map.get("check_in") %> - <%= map.get("check_out") %></td>
                  <td><%= map.get("r_area") %></td>
                  <td><%= map.get("total_price") %></td>
+                 <td><button style="font-size: 5pt; " onclick="location.href='<%=request.getContextPath()%>/ResDelete.no?Resname=<%= map.get("r_name") %>&price=?<%= map.get("total_price") %>'">예약취소</button></td>
                </tr>   
                <%} %>   
              </tbody>

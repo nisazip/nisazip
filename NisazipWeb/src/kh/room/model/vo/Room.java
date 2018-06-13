@@ -9,7 +9,7 @@ public class Room  implements Serializable {
 	
 	private String r_id;
 	private String r_name;
-	private String host_no;
+	private String host_id;
 	private int r_max_num;
 	private int room_num;
 	private int bed_num;
@@ -17,7 +17,7 @@ public class Room  implements Serializable {
 	private String r_type;
 	private String r_type2;
 	private String r_detail;
-	private String r_rule;
+	private String r_role;
 	private String r_option;
 	private int price;
 	private String r_area;
@@ -34,13 +34,13 @@ public class Room  implements Serializable {
 	}
 
 
-	public Room(String r_id, String r_name, String host_no, int r_max_num, int room_num, int bed_num, int toilet_num,
-			String r_type, String r_type2, String r_detail, String r_rule, String r_option, int price, String r_area,
+	public Room(String r_id, String r_name, String host_id, int r_max_num, int room_num, int bed_num, int toilet_num,
+			String r_type, String r_type2, String r_detail, String r_role, String r_option, int price, String r_area,
 			String r_addr, String r_loc, String r_start_date, String r_end_date, float score, String r_date) {
 		super();
 		this.r_id = r_id;
 		this.r_name = r_name;
-		this.host_no = host_no;
+		this.host_id = host_id;
 		this.r_max_num = r_max_num;
 		this.room_num = room_num;
 		this.bed_num = bed_num;
@@ -48,7 +48,7 @@ public class Room  implements Serializable {
 		this.r_type = r_type;
 		this.r_type2 = r_type2;
 		this.r_detail = r_detail;
-		this.r_rule = r_rule;
+		this.r_role = r_role;
 		this.r_option = r_option;
 		this.price = price;
 		this.r_area = r_area;
@@ -58,6 +58,13 @@ public class Room  implements Serializable {
 		this.r_end_date = r_end_date;
 		this.score = score;
 		this.r_date = r_date;
+	}
+
+
+	public Room(String roomNo, String roomName, int maximum, String roomtype1, String roomtype2, String rOption,
+			int rRoomNum, int rBathNum, int rBedNum, String detail, String rRole, int price2, String area,
+			String address, String startDate, String endDate) {
+		// TODO Auto-generated constructor stub
 	}
 
 
@@ -81,13 +88,13 @@ public class Room  implements Serializable {
 	}
 
 
-	public String getHost_no() {
-		return host_no;
+	public String getHost_id() {
+		return host_id;
 	}
 
 
-	public void setHost_no(String host_no) {
-		this.host_no = host_no;
+	public void setHost_id(String host_id) {
+		this.host_id = host_id;
 	}
 
 
@@ -161,13 +168,13 @@ public class Room  implements Serializable {
 	}
 
 
-	public String getR_rule() {
-		return r_rule;
+	public String getR_role() {
+		return r_role;
 	}
 
 
-	public void setR_rule(String r_rule) {
-		this.r_rule = r_rule;
+	public void setR_role(String r_role) {
+		this.r_role = r_role;
 	}
 
 
@@ -263,9 +270,9 @@ public class Room  implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Room [r_id=" + r_id + ", r_name=" + r_name + ", host_no=" + host_no + ", r_max_num=" + r_max_num
+		return "Room [r_id=" + r_id + ", r_name=" + r_name + ", host_id=" + host_id + ", r_max_num=" + r_max_num
 				+ ", room_num=" + room_num + ", bed_num=" + bed_num + ", toilet_num=" + toilet_num + ", r_type="
-				+ r_type + ", r_type2=" + r_type2 + ", r_detail=" + r_detail + ", r_rule=" + r_rule + ", r_option="
+				+ r_type + ", r_type2=" + r_type2 + ", r_detail=" + r_detail + ", r_role=" + r_role + ", r_option="
 				+ r_option + ", price=" + price + ", r_area=" + r_area + ", r_addr=" + r_addr + ", r_loc=" + r_loc
 				+ ", r_start_date=" + r_start_date + ", r_end_date=" + r_end_date + ", score=" + score + ", r_date="
 				+ r_date + "]";
@@ -277,7 +284,7 @@ public class Room  implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + bed_num;
-		result = prime * result + ((host_no == null) ? 0 : host_no.hashCode());
+		result = prime * result + ((host_id == null) ? 0 : host_id.hashCode());
 		result = prime * result + price;
 		result = prime * result + ((r_addr == null) ? 0 : r_addr.hashCode());
 		result = prime * result + ((r_area == null) ? 0 : r_area.hashCode());
@@ -289,7 +296,7 @@ public class Room  implements Serializable {
 		result = prime * result + r_max_num;
 		result = prime * result + ((r_name == null) ? 0 : r_name.hashCode());
 		result = prime * result + ((r_option == null) ? 0 : r_option.hashCode());
-		result = prime * result + ((r_rule == null) ? 0 : r_rule.hashCode());
+		result = prime * result + ((r_role == null) ? 0 : r_role.hashCode());
 		result = prime * result + ((r_start_date == null) ? 0 : r_start_date.hashCode());
 		result = prime * result + ((r_type == null) ? 0 : r_type.hashCode());
 		result = prime * result + ((r_type2 == null) ? 0 : r_type2.hashCode());
@@ -311,10 +318,10 @@ public class Room  implements Serializable {
 		Room other = (Room) obj;
 		if (bed_num != other.bed_num)
 			return false;
-		if (host_no == null) {
-			if (other.host_no != null)
+		if (host_id == null) {
+			if (other.host_id != null)
 				return false;
-		} else if (!host_no.equals(other.host_no))
+		} else if (!host_id.equals(other.host_id))
 			return false;
 		if (price != other.price)
 			return false;
@@ -365,10 +372,10 @@ public class Room  implements Serializable {
 				return false;
 		} else if (!r_option.equals(other.r_option))
 			return false;
-		if (r_rule == null) {
-			if (other.r_rule != null)
+		if (r_role == null) {
+			if (other.r_role != null)
 				return false;
-		} else if (!r_rule.equals(other.r_rule))
+		} else if (!r_role.equals(other.r_role))
 			return false;
 		if (r_start_date == null) {
 			if (other.r_start_date != null)

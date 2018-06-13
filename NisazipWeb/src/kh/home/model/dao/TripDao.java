@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Properties;
 
-import kh.home.model.vo.Trip;
+import kh.trip.model.vo.Trip;
 
 public class TripDao {
 	private Properties prop;
@@ -240,8 +240,8 @@ public class TripDao {
 				hmap.put("t_name", rset.getString("t_name"));
 				hmap.put("host_id", rset.getString("host_id"));
 				hmap.put("price", rset.getString("price"));
-				hmap.put("t_start_date", rset.getDate("t_start_date"));
-				hmap.put("t_end_date", rset.getDate("t_end_date"));
+				hmap.put("t_start_date", rset.getString("t_start_date"));
+				hmap.put("t_end_date", rset.getString("t_end_date"));
 				hmap.put("t_max_num", rset.getInt("t_max_num"));
 				hmap.put("t_loc", rset.getString("t_loc"));
 				hmap.put("t_addr", rset.getString("t_addr"));

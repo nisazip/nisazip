@@ -14,8 +14,8 @@ import com.google.gson.Gson;
 
 import kh.home.model.service.RoomService;
 import kh.home.model.service.TripService;
-import kh.home.model.vo.Room;
-import kh.home.model.vo.Trip;
+import kh.room.model.vo.Room;
+import kh.trip.model.vo.Trip;
 
 /**
  * Servlet implementation class KeywordSearchServlet

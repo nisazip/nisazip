@@ -16,6 +16,8 @@ import java.util.Properties;
 import kh.manager.model.vo.MemberList;
 import kh.manager.model.vo.RecentCnt;
 import kh.manager.model.vo.ReportList;
+import kh.manager.model.vo.RoomReservList;
+import kh.manager.model.vo.TripReservList;
 import kh.report.model.vo.Report;
 import kh.room.model.vo.Room;
 import kh.trip.model.vo.Trip;
@@ -1787,6 +1789,338 @@ public class mDao {
 		}finally {
 			close(rset);
 			close(stmt);
+		}
+				
+		return result;
+	}
+
+	public int getTripReservListCount(Connection con) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		
+		String query = prop.getProperty("getTripReservListCount");
+		
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(rset);
+		}
+			
+		return result;
+	}
+
+	public int searchTIdCount(Connection con, String keyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		
+		String query = prop.getProperty("searchTIdCount");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, keyword);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(rset);
+		}
+			
+		return result;
+	}
+
+	public ArrayList<TripReservList> getTripReservList(Connection con, int currentPage, int limit) {
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		ArrayList<TripReservList> list = new ArrayList<TripReservList>();
+		TripReservList t = null;
+		
+		String query = prop.getProperty("getTripReservList");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			//조회할 숫자 startRow와 endRow 계산
+			int startRow = (currentPage - 1) * limit+1;
+			int endRow = startRow + (limit-1);
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			list = new ArrayList<TripReservList>();
+			
+			while(rset.next()) {
+				t = new TripReservList();
+				t.setT_reser_no(rset.getString("T_RESER_NO"));
+				t.setT_id(rset.getString("T_ID"));
+				t.setUser_id(rset.getString("USER_ID"));
+				t.setT_date(rset.getString("T_DATE"));
+				t.setGuest_num(rset.getInt("GUEST_NUM"));
+				t.setTotal_price(rset.getInt("TOTAL_PRICE"));
+				list.add(t);
+				System.out.println(t);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+
+		return list;
+	}
+
+	public ArrayList<TripReservList> searchTId(Connection con, int currentPage, int limit, String keyword) {
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		ArrayList<TripReservList> list = new ArrayList<TripReservList>();
+		TripReservList t = null;
+		
+		String query = prop.getProperty("searchTId");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			//조회할 숫자 startRow와 endRow 계산
+			int startRow = (currentPage - 1) * limit+1;
+			int endRow = startRow + (limit-1);
+			
+			pstmt.setString(1, keyword);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			list = new ArrayList<TripReservList>();
+			
+			while(rset.next()) {
+				t = new TripReservList();
+				t.setT_reser_no(rset.getString("T_RESER_NO"));
+				t.setT_id(rset.getString("T_ID"));
+				t.setUser_id(rset.getString("USER_ID"));
+				t.setT_date(rset.getString("T_DATE"));
+				t.setGuest_num(rset.getInt("GUEST_NUM"));
+				t.setTotal_price(rset.getInt("TOTAL_PRICE"));
+				list.add(t);
+				System.out.println(t);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+
+		return list;
+	}
+
+	public int getRoomReservListCount(Connection con) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		
+		String query = prop.getProperty("getRoomReservListCount");
+		
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(rset);
+		}
+			
+		return result;
+	}
+
+	public int searchrIdCount(Connection con, String keyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		
+		String query = prop.getProperty("searchrIdCount");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, keyword);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				result = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(rset);
+		}
+			
+		return result;
+	}
+
+	public ArrayList<RoomReservList> getRoomReservList(Connection con, int currentPage, int limit) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		ArrayList<RoomReservList> list = new ArrayList<RoomReservList>();
+		RoomReservList r = null;
+		
+		String query = prop.getProperty("getRoomReservList");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			//조회할 숫자 startRow와 endRow 계산
+			int startRow = (currentPage - 1) * limit+1;
+			int endRow = startRow + (limit-1);
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			list = new ArrayList<RoomReservList>();
+			
+			while(rset.next()) {
+				r = new RoomReservList();
+				r.setR_reser_no(rset.getInt("R_RESER_NO"));
+				r.setR_id(rset.getString("R_ID"));
+				r.setUser_id(rset.getString("USER_ID"));
+				r.setCheck_in(rset.getString("CHECK_IN"));
+				r.setCheck_out(rset.getString("CHECK_OUT"));
+				r.setTotal_price(rset.getInt("TOTAL_PRICE"));
+				r.setPeople(rset.getInt("PEOPLE"));
+				list.add(r);
+				System.out.println(r);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+
+		return list;
+	}
+
+	public ArrayList<RoomReservList> searchrId(Connection con, int currentPage, int limit, String keyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		ArrayList<RoomReservList> list = new ArrayList<RoomReservList>();
+		RoomReservList r = null;
+		
+		String query = prop.getProperty("searchrId");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			//조회할 숫자 startRow와 endRow 계산
+			int startRow = (currentPage - 1) * limit+1;
+			int endRow = startRow + (limit-1);
+			
+			pstmt.setString(1, keyword);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			list = new ArrayList<RoomReservList>();
+			
+			while(rset.next()) {
+				r = new RoomReservList();
+				r.setR_reser_no(rset.getInt("R_RESER_NO"));
+				r.setR_id(rset.getString("R_ID"));
+				r.setUser_id(rset.getString("USER_ID"));
+				r.setCheck_in(rset.getString("CHECK_IN"));
+				r.setCheck_out(rset.getString("CHECK_OUT"));
+				r.setTotal_price(rset.getInt("TOTAL_PRICE"));
+				r.setPeople(rset.getInt("PEOPLE"));
+				list.add(r);
+				System.out.println(r);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+
+		return list;
+	}
+
+	public int cancelRoom(Connection con, int roomReservNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("cancelRoom");
+
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, roomReservNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+				
+		return result;
+	}
+
+	public int cancelTrip(Connection con, String tripReservNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("cancelTrip");
+
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, tripReservNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
 		}
 				
 		return result;

@@ -102,7 +102,7 @@ button:hover {
 <div class="w3-container" style="margin-top:80px" id="showcase">
        <h1 class="w3-center" style="font-size: 48pt;"><b>1단계</b></h1>    
   </div><br><br>
-  	<form id="joinForm" action="<%=request.getContextPath()%>/rInsert.do" method="post">
+  	<form id="joinForm1" action="<%=request.getContextPath()%>/rInsert.do" method="post">
   	<div style="font-weight: bold; font-size: 29px;" class="w3-center">
         ○회원님의 숙소는 어떤 유형인가요?<br>
         <select name="R_TYPE">
@@ -127,7 +127,7 @@ button:hover {
   
   
   <script>
-  	$( "#joinForm" ).submit(function( event ) {
+  	$( "#joinForm1" ).submit(function( event ) {
   		var p = $('#R_MAX_NUM').val();
         if(p == ""){
         	alert("값을 입력해주세요.");

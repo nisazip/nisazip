@@ -132,10 +132,13 @@
          			var zipCode = $('#zipCode').val();
          			var address1 = $('#address1').val();
          			var address2 = $('#address2').val();
+         			var re = "제주";
          			
          			// alert("tripArea : " + tripArea)
          		 	if(tripArea == "지역을 선택하세요." || zipCode == "" || address1 == "" || address2 == ""){
          		 		alert("값을 모두 입력하세요.");
+     	        	} else if(address1.indexOf(re) == -1){
+     	        		alert("제주도에 있는 지역을 입력해주세요!");
      	        	} else {
    					 	return true;
     				}

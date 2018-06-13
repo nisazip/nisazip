@@ -96,6 +96,7 @@ public class rService {
 
 
 	public ArrayList<R_RESERVATION> selectReservation() {
+		
 		Connection con = getConnection();
 		ArrayList<R_RESERVATION> list = new rDao().selectReservation(con);
 		close(con);
@@ -117,10 +118,10 @@ public class rService {
 	}
 
 
-	public R_RESERVATION selectRecent() {
+	public R_RESERVATION selectRecent(R_RESERVATION res) {
 		Connection con = getConnection();
 		
-		R_RESERVATION r = new rDao().selectRecent(con);
+		R_RESERVATION r = new rDao().selectRecent(con, res);
 		
 		close(con);
 		
@@ -193,6 +194,45 @@ public class rService {
 		close(con);
 		
 		return result;	
+	}
+
+
+	public int deleteSearch(String num) {
+		Connection con = getConnection();
+		
+		int result = new rDao().deleteSearch(con, num);
+		System.out.println("DeleteSearch 서비스단에서 r_id : "+num);
+		close(con);
+		
+		return result;
+	}
+
+
+	public int updateSearch(String r_NUM) {
+		Connection con = getConnection();
+		
+		int result = new rDao().updateSearch(con, r_NUM);
+		System.out.println("UpdateSearch 서비스단에서 r_id : "+r_NUM);
+		close(con);
+		
+		return result;
+	}
+
+
+	public int DeleteReservation(String resname, int price) {
+		System.out.println("예약 취소 서비스 접근 성공!!!");
+		
+		Connection con = getConnection();
+		
+		int result = new rDao().DeleteReservation(con, resname, price);
+
+		System.out.println("예약 취소 Service result : " + result);
+		if( result > 0 ) commit(con);
+		else rollback(con);
+		
+		close(con);
+		
+		return result;
 	}
 
 	/*public int multipleRes(Room room) {

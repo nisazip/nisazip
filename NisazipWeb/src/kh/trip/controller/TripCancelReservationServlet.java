@@ -24,6 +24,7 @@ public class TripCancelReservationServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		System.out.println("---------- 예약 취소 서블릿 시작 ----------");
+		
 
 		String tripNumber = request.getParameter("tripNumber");
 

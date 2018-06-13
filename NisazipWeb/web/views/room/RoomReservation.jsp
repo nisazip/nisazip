@@ -56,10 +56,12 @@ body {font-size:16px;}
             </thead>
             <tbody>
             <% for(R_RESERVATION res: list){ %>
+            <% if(m.getUser_id().equals(res.getUser_id())) {%>
 			<tr>
 				<td><%= res.getR_reser_no() %></td>
 				<td><%= res.getUser_id()%></td>
 			</tr>
+			<% } %>
 			<% } %>
             </tbody>
         </table>

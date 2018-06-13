@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import kh.room.model.dao.rDao;
 import kh.room.model.service.rService;
 
 
@@ -31,17 +32,32 @@ public class RDeleteRoomServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String num = request.getParameter("num");
 		
-		int result = new rService().DeleteRoom(num);
+		int deleteSearch = new rService().deleteSearch(num);
 		
-		String page = "";
-		if(result > 0){
-			page = "views/room/Roomlist.jsp";
-			request.setAttribute("list", new rService().selectList());
+		if(deleteSearch == 0){
+			
+			int result = new rService().DeleteRoom(num);
+			
+			String page = "";
+			if(result > 0){
+				page = "views/room/Roomlist.jsp";
+				request.setAttribute("list", new rService().selectList());
+			} else {
+				System.out.println("삭제 실패!");
+				page = "views/common/errorPage.jsp";
+			}
+			request.getRequestDispatcher(page).forward(request, response);
 		} else {
-			System.out.println("삭제 실패!");
-			page = "views/common/errorPage.jsp";
+			String resMsg = "남아있는 예약이 있어서 삭제가 불가능 합니다., 남아있는 예약수: " + deleteSearch;
+			request.setAttribute("resMsg", resMsg);
+			request.getRequestDispatcher("/views/room/Room.jsp").forward(request, response);
 		}
-		request.getRequestDispatcher(page).forward(request, response);
+		
+		
+		
+		
+		
+		
 	}
 
 	/**
