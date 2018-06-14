@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=912ba5ded38a05dd53c37b8850dd2427&libraries=services"></script>
-
+<script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <title>메인페이지</title>
 </head>
 <body>
@@ -28,6 +28,8 @@
 
 
 <a href="views/manager/admin_home.jsp">관리자 페이지로 이동</a>
+<button onclick="reservation();">예약하기</button>
+
 
 
 
@@ -52,7 +54,7 @@
 
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 	mapOption = {
-	    center: new daum1.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+	    center: new daum.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
 	    level: 5 // 지도의 확대 레벨
 	};  
 	
@@ -94,9 +96,7 @@
 	    
 	    var xxx = result[0].y*1;
 	    var yyy = result[0].x*1;
-	    /* 				
-	    var yrandom = xxx+0.0020050050505011;
-	    var xrandom = yyy+0.0020050050505011; */
+	    
 	    var yrandom = xxx+randomx;
 	    var xrandom = yyy+randomy;
 	    
@@ -128,6 +128,46 @@
 	} 
 	}); 
 /* 지도 영역 script 끝 */
+
+    function reservation(){
+    	var IMP = window.IMP; // 생략가능
+    	IMP.init('imp76658870'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+    	
+    	IMP.request_pay({
+    	    pg : 'inicis', // version 1.1.0부터 지원.
+    	    pay_method : 'card',
+    	    merchant_uid : 'merchant_' + new Date().getTime(),
+    	    name : '주문명: 숙소 예약결제',
+    	    amount : 200,
+    	    buyer_email : 'iamport@siot.do',
+    	    buyer_name : '이원준',
+    	    buyer_tel : '010-1234-5678',
+    	    buyer_addr : '서울특별시 강남구 삼성동',
+    	    buyer_postcode : '123-456'
+    	   
+    	}, function(rsp) {
+    	    if ( rsp.success ) {
+    	        var msg = '결제가 완료되었습니다.';
+    	        msg += '고유ID : ' + rsp.imp_uid;
+    	        msg += '상점 거래ID : ' + rsp.merchant_uid;
+    	        msg += '결제 금액 : ' + rsp.paid_amount;
+    	        msg += '카드 승인번호 : ' + rsp.apply_num;
+    	        
+    	        changePage();
+    	        
+    	    } else {
+    	        var msg = '결제에 실패하였습니다.';
+    	        msg += '에러내용 : ' + rsp.error_msg;
+    	    }
+    	    alert(msg);
+    	});
+    }
+        
+  
+		function changePage(){
+			alert('changePage()실행');
+			location.href="<%=request.getContextPath()%>/home.jsp";
+		}
  
 </script>
 

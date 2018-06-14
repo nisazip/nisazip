@@ -2122,7 +2122,6 @@ public class mDao {
 		}finally {
 			close(pstmt);
 		}
-				
 		return result;
 	}
 
